@@ -1,0 +1,273 @@
+/*
+ * MYOKOスイーツ WordPress カスタムCSS
+ * WordPressの「外観 → カスタマイズ → 追加CSS」に貼り付けて使用する
+ * 最終更新：2026年5月
+ */
+
+/* ============================================
+   カラー変数（CSS Custom Properties）
+   ============================================ */
+:root {
+  --color-white:        #FFFFFF;
+  --color-ivory:        #F5F0E8;
+  --color-beige:        #D4C4A0;
+  --color-brown-sub:    #8B7355;
+  --color-brown-main:   #5C4A2A;
+  --color-green:        #6B8F5E;
+}
+
+/* ============================================
+   ベース設定
+   ============================================ */
+
+/* 全体背景：白 */
+body {
+  background-color: var(--color-white);
+  color: var(--color-brown-main);
+}
+
+/* リンクカラー */
+a {
+  color: var(--color-brown-sub);
+  text-decoration: none;
+}
+a:hover {
+  color: var(--color-brown-main);
+}
+
+/* ============================================
+   ヘッダー
+   ============================================ */
+.site-header,
+header {
+  background-color: var(--color-white);
+  border-bottom: 0.5px solid var(--color-beige);
+}
+
+/* サイトタイトル・ロゴ */
+.site-title a,
+.site-title {
+  color: var(--color-brown-main) !important;
+  letter-spacing: 0.1em;
+}
+
+/* ナビゲーション */
+.nav-menu a,
+.main-navigation a {
+  color: var(--color-brown-sub);
+  font-size: 0.875rem;
+  letter-spacing: 0.05em;
+}
+.nav-menu a:hover,
+.main-navigation a:hover {
+  color: var(--color-brown-main);
+}
+
+/* ============================================
+   見出し
+   ============================================ */
+h1, h2, h3, h4, h5, h6 {
+  color: var(--color-brown-main);
+  font-weight: 500;
+  letter-spacing: 0.05em;
+}
+
+/* セクション見出し（英語タグライン風） */
+.section-tagline {
+  font-size: 0.6875rem;
+  letter-spacing: 0.2em;
+  color: var(--color-brown-sub);
+  text-transform: uppercase;
+  margin-bottom: 0.5rem;
+}
+
+/* ============================================
+   アイボリー背景セクション
+   使い方：セクションに .bg-ivory クラスを追加する
+   ============================================ */
+.bg-ivory,
+.section-ivory {
+  background-color: var(--color-ivory);
+}
+
+/* ============================================
+   カード
+   ============================================ */
+.card,
+.post-card,
+.shop-card {
+  background-color: var(--color-white);
+  border: 0.5px solid var(--color-beige);
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.card:hover,
+.post-card:hover,
+.shop-card:hover {
+  border-color: var(--color-brown-sub);
+  transition: border-color 0.2s ease;
+}
+
+/* カードタイトル */
+.card-title,
+.post-card .entry-title {
+  color: var(--color-brown-main);
+  font-size: 0.9375rem;
+  font-weight: 500;
+}
+
+/* カードサブテキスト */
+.card-sub,
+.post-card .entry-meta {
+  color: var(--color-brown-sub);
+  font-size: 0.75rem;
+}
+
+/* ============================================
+   カテゴリバッジ・タグ
+   ============================================ */
+.category-badge,
+.tag-label {
+  display: inline-block;
+  background-color: var(--color-ivory);
+  color: var(--color-brown-sub);
+  border: 0.5px solid var(--color-beige);
+  border-radius: 20px;
+  font-size: 0.6875rem;
+  padding: 3px 12px;
+  letter-spacing: 0.05em;
+}
+
+/* アクセントバッジ（グリーン） */
+.category-badge.accent,
+.tag-label.accent {
+  background-color: var(--color-green);
+  color: var(--color-white);
+  border-color: var(--color-green);
+}
+
+/* ============================================
+   ボタン
+   ============================================ */
+.btn,
+.wp-block-button__link,
+.button {
+  background-color: var(--color-brown-main);
+  color: var(--color-ivory) !important;
+  border: none;
+  border-radius: 4px;
+  padding: 10px 24px;
+  font-size: 0.875rem;
+  letter-spacing: 0.08em;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.btn:hover,
+.wp-block-button__link:hover,
+.button:hover {
+  background-color: var(--color-brown-sub);
+  color: var(--color-ivory) !important;
+}
+
+/* アウトラインボタン */
+.btn-outline {
+  background-color: transparent;
+  color: var(--color-brown-main) !important;
+  border: 0.5px solid var(--color-beige);
+}
+
+.btn-outline:hover {
+  background-color: var(--color-ivory);
+}
+
+/* ============================================
+   区切り線
+   ============================================ */
+hr,
+.section-divider {
+  border: none;
+  border-top: 0.5px solid var(--color-beige);
+  margin: 2rem 0;
+}
+
+/* ============================================
+   フッター
+   ============================================ */
+.site-footer,
+footer {
+  background-color: var(--color-brown-main);
+  color: var(--color-beige);
+  border-top: none;
+}
+
+.site-footer a,
+footer a {
+  color: var(--color-beige);
+}
+
+.site-footer a:hover,
+footer a:hover {
+  color: var(--color-ivory);
+}
+
+/* フッターコピーライト */
+.site-info,
+.footer-copyright {
+  color: var(--color-brown-sub);
+  font-size: 0.75rem;
+  letter-spacing: 0.1em;
+}
+
+/* ============================================
+   記事本文
+   ============================================ */
+.entry-content p {
+  color: var(--color-brown-main);
+  line-height: 1.9;
+}
+
+.entry-content strong {
+  color: var(--color-brown-main);
+  font-weight: 500;
+}
+
+/* ============================================
+   サイドバー
+   ============================================ */
+.widget-title {
+  color: var(--color-brown-main);
+  font-size: 0.875rem;
+  letter-spacing: 0.1em;
+  border-bottom: 0.5px solid var(--color-beige);
+  padding-bottom: 0.5rem;
+  margin-bottom: 1rem;
+}
+
+/* ============================================
+   ロゴ
+   ============================================ */
+
+/* ヘッダーロゴのサイズ */
+.site-logo img,
+.custom-logo {
+  height: 48px;   /* 高さを固定（横幅は自動） */
+  width: auto;
+}
+
+/* スマートフォン時のロゴサイズ */
+@media (max-width: 768px) {
+  .site-logo img,
+  .custom-logo {
+    height: 36px;
+  }
+}
+
+/* フッターロゴ（ダーク背景バージョンを使用） */
+.site-footer .site-logo img,
+.site-footer .custom-logo {
+  height: 36px;
+  width: auto;
+  opacity: 0.9;
+}

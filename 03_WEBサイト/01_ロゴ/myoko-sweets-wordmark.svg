@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="1200" height="260" viewBox="0 0 1200 260" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <title>myoko sweets wordmark</title>
+  <desc>Clean minimalist SVG wordmark based on the provided logo direction.</desc>
+
+  <rect width="1200" height="260" fill="transparent"/>
+
+  <!-- Wordmark -->
+  <text
+    x="600"
+    y="150"
+    text-anchor="middle"
+    dominant-baseline="middle"
+    fill="#5F564E"
+    font-family="Avenir Next, Futura, Montserrat, Nunito Sans, Helvetica Neue, Arial, sans-serif"
+    font-size="88"
+    font-weight="300"
+    letter-spacing="18">
+    myoko sweets
+  </text>
+</svg>
