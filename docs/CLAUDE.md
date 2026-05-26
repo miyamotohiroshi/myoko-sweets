@@ -34,14 +34,14 @@
 
 ### 2. レポートファイルを更新する
 
-`05_メモ/claude_chat_report.md` を以下のフォーマットで更新すること。
+`docs/05_メモ/claude_chat_report.md` を以下のフォーマットで更新すること。
 （ファイルがなければ新規作成する）
 
 ---
 
 ## レポートフォーマット
 
-`05_メモ/claude_chat_report.md` に以下の内容を記載すること。
+`docs/05_メモ/claude_chat_report.md` に以下の内容を記載すること。
 
 ```
 # Claude Chat 引き継ぎレポート
@@ -86,23 +86,27 @@
 ## フォルダ構成（参照用）
 
 ```
-myoko-sweets/
-├── CLAUDE.md               ← このファイル
-├── README.md
-├── 01_タスク管理/
-│   ├── 01_ブランド・ロゴ.md
-│   ├── 02_WEBサイト.md
-│   ├── 03_SNS.md
-│   └── 04_収益化.md
-├── 02_ブランド/
-│   └── コンセプト.md
-├── 03_WEBサイト/
-│   └── サイト構成.md
-├── 04_SNS/
-│   └── 投稿ルール.md
-└── 05_メモ/
-    ├── アイデア.md
-    └── claude_chat_report.md  ← 引き継ぎレポート（自動更新）
+★myoko-sweets/
+├── docs/                         ← プロジェクト管理ドキュメント
+│   ├── 01_タスク管理/
+│   ├── 02_ブランド/
+│   ├── 03_WEBサイト/
+│   ├── 04_SNS/
+│   ├── 05_メモ/
+│   │   ├── アイデア.md
+│   │   ├── 戦略ドキュメント.md
+│   │   └── claude_chat_report.md
+│   ├── CLAUDE.md
+│   └── README.md
+└── web/                          ← Next.jsフロントエンド
+    ├── src/
+    │   ├── app/
+    │   ├── components/
+    │   ├── lib/
+    │   └── types/
+    ├── public/
+    │   └── logo/
+    └── package.json
 ```
 
 ---
@@ -111,7 +115,7 @@ myoko-sweets/
 
 作業終了時またはClaude Chatに戻るときは、以下を実行すること。
 
-1. `05_メモ/claude_chat_report.md` を最新状態に更新する
+1. `docs/05_メモ/claude_chat_report.md` を最新状態に更新する
 2. ユーザーに「レポートを更新しました。Claude Chatに `claude_chat_report.md` をアップロードして続きを相談してください。」と伝える
 
 ---
