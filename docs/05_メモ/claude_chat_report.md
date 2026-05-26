@@ -1,56 +1,49 @@
 # Claude Chat 引き継ぎレポート
 
 ## 作業日時
-2026年05月26日
+2026年05月27日
 
 ## 今回完了したタスク
-- WordPress子テーマ（myoko-sweets）の作成・有効化
-  - style.css（テーマ定義）作成
-  - functions.php（ヘッドレスCMS用設定）作成
-  - WP-CLI で子テーマを有効化
-- REST API に ACF フィールド（`acf` キー）が含まれることを確認
-- CORS ヘッダー（`Access-Control-Allow-Origin: https://myoko-sweets.com`）を確認
+- Google Maps API 設定後、ACF の地図入力が動作することを確認（ユーザー確認）
+- ACF を有料版なしで運用できる店舗情報フィールドへ変更
+  - 営業月の初期値を 1月〜12月の全選択に設定
+  - ギャラリーを `追加写真 1〜3` の画像フィールドへ変更
+  - 人気メニューを最大3件の固定入力欄へ変更
+  - スイーツ・ドリンク・お食事メニューを自由入力のテキストエリアへ変更
+  - 既存の `信濃町ICから` フィールド変更を引き継ぎ
+- 重複した旧 ACF フィールドグループを整理し、店舗編集画面に適用されるグループを1件に統一
 
 ## 作成・変更したファイル
 
 | ファイルパス | 変更内容 |
 |---|---|
-| wp-content/themes/myoko-sweets/style.css | 子テーマ定義ファイル 新規作成 |
-| wp-content/themes/myoko-sweets/functions.php | ヘッドレスCMS用設定（CORS・ACF・リダイレクト）新規作成 |
-| docs/01_タスク管理/02_WEBサイト.md | テーマ選定・購入を 🟢 完了 に更新 |
+| docs/wordpress-acf-import.json | ACF 無料版向けのフィールド構成・営業月初期値へ更新 |
+| docs/01_タスク管理/02_WEBサイト.md | ドメイン・サーバー・WordPress の実態に合わせて状態更新、ターム数を40件へ訂正 |
 
-## タスク管理の更新内容
-
-| ファイル | タスク名 | 変更前 | 変更後 |
-|---|---|---|---|
-| 02_WEBサイト.md | テーマ選定・購入 | 🔴 未着手 | 🟢 完了 |
-
-## Claude Chatへの申し送り事項
-
-### WordPressの現在の状態
+## WordPressの現在の状態
 - **有効テーマ**：myoko-sweets（twentytwentyfive の子テーマ）
-- **ACFフィールド**：REST API レスポンスに `acf` キーが含まれることを確認済み
+- **投稿タイプ**：shop / feature / spot
+- **タクソノミー**：6種、登録ターム合計40件
+- **ACF店舗情報**：無料版で入力可能な構成へ更新済み
+- **Google Maps**：店舗情報の地図フィールドで動作確認済み
+- **REST API**：レスポンスに `acf` キーが含まれることを確認済み
 - **CORS設定**：`https://myoko-sweets.com` からのアクセスを許可済み
-- **リダイレクト**：ログインしていない状態で `cms.myoko-sweets.com` にアクセスすると `myoko-sweets.com` にリダイレクト
 
-### functions.php の場所
-```
-/home/fatedesign/myoko-sweets.com/public_html/cms.myoko-sweets.com/wp-content/themes/myoko-sweets/functions.php
-```
+## メニュー入力方法
+`メニュー` タブの各入力欄には、1行に1商品を以下の形式で入力する。
 
-### 残っている手動作業
-1. **Google Maps APIキーの取得・設定**（作業5）
-   - Google Cloud Console で Maps JavaScript API + Geocoding API を有効化
-   - APIキーを取得して functions.php の `'ここにAPIキーを貼り付け'` を置き換える
-   - SSH で編集可能（Claude Code から実行できます）
+```text
+商品名 | 価格 | 備考
+いちごパフェ | ¥900 | 季節限定
+ホットコーヒー | ¥500 |
+```
 
 ## 次のステップ提案
-1. **Google Maps APIキーを取得して設定する**（店舗の地図表示に必要）
-2. **Vercel の Root Directory を `web` に変更**（まだ未完了）
-3. **テスト用の店舗情報を1件入力**して、管理画面・REST APIの両方で動作確認
-4. **Next.js（web/src/lib/wordpress.ts）をREST APIのレスポンス構造に合わせて更新**
+1. 公開済み店舗 `もちや` に画像・人気メニュー・通常メニュー等の実データを入力する
+2. REST API で店舗データと ACF 値を確認し、Next.js 側の表示実装へ進む
+3. Vercel の Root Directory が `web` になっているか確認し、必要なら再デプロイする
 
 ## 気になった点・懸念点
-- Google Maps APIキーが未設定のため、ACFのMapフィールドは現時点では地図が表示されない
-- APIキーには利用制限（HTTPリファラー制限）を設定することを推奨：`cms.myoko-sweets.com/*`
-- `cms.myoko-sweets.com` への直接アクセスは `myoko-sweets.com` にリダイレクトされる設定が有効になっているため、WordPressのフロントエンドは非公開状態
+- 無料版運用のため、追加写真は3枚、人気メニューは3件の固定枠としている
+- 通常メニューはテキスト形式のため、Next.js 側で行単位・`|` 区切りの整形処理が必要
+- `cms.myoko-sweets.com` の一般公開側は `myoko-sweets.com` にリダイレクトするヘッドレス構成

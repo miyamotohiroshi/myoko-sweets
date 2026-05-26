@@ -4,12 +4,12 @@
 
 | # | タスク | ステータス | 期限 | メモ |
 |---|---|---|---|---|
-| 1 | ドメイン取得 | 🔴 未着手 | | myoko-sweets.com など |
-| 2 | サーバー契約 | 🔴 未着手 | | ConoHa WING or Xserver |
-| 3 | WordPress インストール | 🟡 進行中 | | Next.js フロントエンド セットアップ完了・モノレポ構成（docs/ + web/）に移行完了 |
+| 1 | ドメイン取得 | 🟢 完了 | | myoko-sweets.com を利用中 |
+| 2 | サーバー契約 | 🟢 完了 | | Xserver を利用中 |
+| 3 | WordPress インストール | 🟢 完了 | | cms.myoko-sweets.com で稼働中。Google Maps・REST API 動作確認済み |
 | 4 | テーマ選定・購入 | 🟢 完了 | | ヘッドレスCMS用子テーマ（myoko-sweets）を作成・有効化 |
 | 5 | 基本ページ作成 | 🔴 未着手 | | トップ・エリア紹介・お問い合わせ |
-| 6 | 店舗カテゴリ設計 | 🟢 完了 | | CPT UI・ACF・タクソノミー（47ターム）すべて登録完了。REST API動作確認済み |
+| 6 | 店舗カテゴリ設計 | 🟢 完了 | | CPT UI・ACF・タクソノミー（40ターム）登録完了。ACF無料版対応済み |
 | 7 | Google Analytics 設置 | 🔴 未着手 | | GA4 |
 | 8 | Google Search Console 設置 | 🔴 未着手 | | |
 | 9 | AdSense 申請 | 🔴 未着手 | | 記事10本以上になってから |
