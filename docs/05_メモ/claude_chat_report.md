@@ -4,45 +4,64 @@
 2026年05月25日
 
 ## 今回完了したタスク
-- モノレポ構成への移行（docs/ + web/）
-  - ★myoko-sweets リポジトリに web/ フォルダを作成し myoko-sweets-web の全ファイルをコピー
-  - 既存管理ファイルをすべて docs/ フォルダへ移動
-  - web/.git を削除してモノレポに正しく統合
-  - docs/CLAUDE.md のフォルダ構成・パス記載を更新
-  - docs/AGENTS.md の参照ファイルパスを更新
-  - GitHub（miyamotohiroshi/myoko-sweets）へプッシュ完了
+- WordPress 用インポートファイルの作成
+  - CPT UI インポートJSON（投稿タイプ3種・タクソノミー6種）
+  - ACF フィールドグループ インポートJSON（shop用・spot用）
+  - タクソノミー ターム登録手順書（ターム一覧）
+- REST API の現在の状態を確認（カスタム投稿タイプは未登録と確認）
+- タスク管理ファイル「店舗カテゴリ設計」を 🟡 進行中 に更新
 
 ## 作成・変更したファイル
 
 | ファイルパス | 変更内容 |
 |---|---|
-| ★myoko-sweets/web/ | myoko-sweets-web の全ファイルをコピー（Next.jsプロジェクト一式） |
-| ★myoko-sweets/docs/ | 既存の管理ファイル（01〜05_*、CLAUDE.md、AGENTS.md、README.md）を移動 |
-| docs/CLAUDE.md | フォルダ構成をモノレポ構成に更新、レポートパスを docs/05_メモ/ に変更 |
-| docs/AGENTS.md | 参照ファイルパスをすべて docs/ プレフィックス付きに更新 |
-| docs/01_タスク管理/02_WEBサイト.md | タスク #3 のメモにモノレポ移行完了を追記 |
+| docs/wordpress-cptui-import.json | CPT UI インポート用JSON（投稿タイプ3種 + タクソノミー6種）新規作成 |
+| docs/wordpress-acf-import.json | ACF フィールドグループ インポート用JSON（shop・spot）新規作成 |
+| docs/wordpress-taxonomy-terms.md | タクソノミー ターム登録手順書 新規作成 |
+| docs/01_タスク管理/02_WEBサイト.md | 店舗カテゴリ設計のステータスを 🟡 進行中 に更新 |
 
 ## タスク管理の更新内容
 
 | ファイル | タスク名 | 変更前 | 変更後 |
 |---|---|---|---|
-| 02_WEBサイト.md | WordPress インストール | 🟡 進行中 | 🟡 進行中（メモ更新） |
+| 02_WEBサイト.md | 店舗カテゴリ設計 | 🔴 未着手 | 🟡 進行中 |
 
 ## Claude Chatへの申し送り事項
-- リポジトリ構成が変わりました：`★myoko-sweets` リポジトリが `docs/` + `web/` のモノレポになりました
-- **次の重要タスクは Vercel の Root Directory 設定変更**
-  - Vercel ダッシュボード → myoko-sweets プロジェクト → Settings → General → Root Directory を `web` に変更してから Redeploy
-  - これを行わないと Vercel が Next.js を正しく検出できない可能性があります
-- web/ の中身は以前の myoko-sweets-web と同じ（Next.js 16.2.6 + Tailwind CSS v4）
-- 旧フォルダ（/Users/admin/Dropbox/Hiroshi/02_プロジェクト関連/myoko-sweets-web）は動作確認後に削除予定
+
+### WordPress管理画面で残っている手動作業（優先順）
+
+1. **CPT UI インポート**（作業1・作業2）
+   - WordPress管理画面 → CPT UI → ツール → インポート
+   - `docs/wordpress-cptui-import.json` をアップロードして「インポート」
+   - 投稿タイプ3種・タクソノミー6種が一括登録される
+
+2. **ACF フィールドグループ インポート**（作業3）
+   - WordPress管理画面 → カスタムフィールド → ツール → フィールドグループをインポート
+   - `docs/wordpress-acf-import.json` をアップロードして「インポート」
+   - shop・spotのフィールドグループが一括登録される
+
+3. **タクソノミー ターム登録**（各タクソノミーに手動入力が必要）
+   - `docs/wordpress-taxonomy-terms.md` を参照して各タームを登録
+   - 6タクソノミー × 合計47ターム
+
+4. **Google Maps APIキー設定**（作業4）
+   - WordPress管理画面 → カスタムフィールド → ツール → Google Maps
+   - Google Cloud Console で Maps JavaScript API を有効化してAPIキーを取得・入力
+
+5. **REST API 動作確認**（作業5）
+   - インポート後に以下のURLにアクセスしてJSONが返ることを確認：
+     - https://cms.myoko-sweets.com/wp-json/wp/v2/shop
+     - https://cms.myoko-sweets.com/wp-json/wp/v2/feature
+     - https://cms.myoko-sweets.com/wp-json/wp/v2/spot
 
 ## 次のステップ提案
-1. **Vercel の Root Directory を `web` に変更**（Settings → General）してから Redeploy
-2. `https://myoko-sweets.com` が正常に表示されることを確認
-3. 動作確認後、旧フォルダ `myoko-sweets-web` を削除
-4. **ドメイン取得**（myoko-sweets.com）：まだなら最優先
-5. **WordPressサーバー契約・インストール**
+1. 上記5つの手動作業を完了する
+2. テスト用に店舗情報を1件入力して、フィールドが正しく表示されるか確認
+3. REST APIで `?acf_format=standard` パラメータを付けてACFフィールドが返ってくるか確認
+4. Vercel の Root Directory を `web` に変更（前回未完了）
+5. Next.js 側の `src/lib/wordpress.ts` を今回設計した投稿タイプ・フィールドに合わせて更新
 
 ## 気になった点・懸念点
-- web/ 内に CLAUDE.md / AGENTS.md / README.md が旧 myoko-sweets-web のものとして残っています。内容がルートの docs/ と重複・矛盾する可能性があるため、必要に応じて整理してください。
-- Vercel の Root Directory 設定を変更するまでは、デプロイが正しく動作しない可能性があります（作業5は手動でブラウザから行う必要があります）。
+- ACFのGoogle Mapフィールドは Maps JavaScript API キーが必須。取得・設定が必要。
+- ACFのREST API連携（`show_in_rest`）はデフォルトで無効。Next.jsから `acf` フィールドを取得するには、ACF PRO か `acf-to-rest-api` プラグインが必要な場合がある。
+- タクソノミーターム（47件）は手動入力が必要。時間がかかるため、Claude CodeのWP-CLIコマンド生成版の提供も可能（希望があれば依頼してください）。
