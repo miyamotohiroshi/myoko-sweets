@@ -11,7 +11,11 @@
         "instructions": "",
         "required": 0,
         "conditional_logic": 0,
-        "wrapper": { "width": "", "class": "", "id": "" },
+        "wrapper": {
+          "width": "",
+          "class": "",
+          "id": ""
+        },
         "placement": "top",
         "endpoint": 0
       },
@@ -23,7 +27,11 @@
         "instructions": "例：妙高高原の絶景を眺めながら味わう絶品パフェ",
         "required": 1,
         "conditional_logic": 0,
-        "wrapper": { "width": "", "class": "", "id": "" },
+        "wrapper": {
+          "width": "",
+          "class": "",
+          "id": ""
+        },
         "default_value": "",
         "maxlength": "",
         "placeholder": "",
@@ -38,7 +46,11 @@
         "instructions": "",
         "required": 1,
         "conditional_logic": 0,
-        "wrapper": { "width": "", "class": "", "id": "" },
+        "wrapper": {
+          "width": "",
+          "class": "",
+          "id": ""
+        },
         "default_value": "",
         "maxlength": "",
         "placeholder": "",
@@ -53,7 +65,11 @@
         "instructions": "例：新潟県妙高市関山○○番地",
         "required": 1,
         "conditional_logic": 0,
-        "wrapper": { "width": "", "class": "", "id": "" },
+        "wrapper": {
+          "width": "",
+          "class": "",
+          "id": ""
+        },
         "default_value": "",
         "maxlength": "",
         "placeholder": "",
@@ -68,7 +84,11 @@
         "instructions": "住所を入力して地図ピンを設置してください",
         "required": 1,
         "conditional_logic": 0,
-        "wrapper": { "width": "", "class": "", "id": "" },
+        "wrapper": {
+          "width": "",
+          "class": "",
+          "id": ""
+        },
         "center_lat": "36.8965",
         "center_lng": "138.1928",
         "zoom": 14,
@@ -82,7 +102,11 @@
         "instructions": "例：0255-86-XXXX",
         "required": 0,
         "conditional_logic": 0,
-        "wrapper": { "width": "50", "class": "", "id": "" },
+        "wrapper": {
+          "width": "50",
+          "class": "",
+          "id": ""
+        },
         "default_value": "",
         "maxlength": "",
         "placeholder": "",
@@ -97,7 +121,11 @@
         "instructions": "",
         "required": 0,
         "conditional_logic": 0,
-        "wrapper": { "width": "", "class": "", "id": "" },
+        "wrapper": {
+          "width": "",
+          "class": "",
+          "id": ""
+        },
         "default_value": "",
         "maxlength": "",
         "placeholder": "",
@@ -112,7 +140,11 @@
         "instructions": "例：車で約10分",
         "required": 0,
         "conditional_logic": 0,
-        "wrapper": { "width": "33", "class": "", "id": "" },
+        "wrapper": {
+          "width": "33",
+          "class": "",
+          "id": ""
+        },
         "default_value": "",
         "maxlength": "",
         "placeholder": "車で約○分",
@@ -127,7 +159,11 @@
         "instructions": "例：車で約5分",
         "required": 0,
         "conditional_logic": 0,
-        "wrapper": { "width": "33", "class": "", "id": "" },
+        "wrapper": {
+          "width": "33",
+          "class": "",
+          "id": ""
+        },
         "default_value": "",
         "maxlength": "",
         "placeholder": "車で約○分",
@@ -142,7 +178,11 @@
         "instructions": "例：車で約3分",
         "required": 0,
         "conditional_logic": 0,
-        "wrapper": { "width": "33", "class": "", "id": "" },
+        "wrapper": {
+          "width": "33",
+          "class": "",
+          "id": ""
+        },
         "default_value": "",
         "maxlength": "",
         "placeholder": "車で約○分",
@@ -157,7 +197,11 @@
         "instructions": "",
         "required": 0,
         "conditional_logic": 0,
-        "wrapper": { "width": "", "class": "", "id": "" },
+        "wrapper": {
+          "width": "",
+          "class": "",
+          "id": ""
+        },
         "placement": "top",
         "endpoint": 0
       },
@@ -169,7 +213,11 @@
         "instructions": "",
         "required": 0,
         "conditional_logic": 0,
-        "wrapper": { "width": "50", "class": "", "id": "" },
+        "wrapper": {
+          "width": "50",
+          "class": "",
+          "id": ""
+        },
         "choices": {
           "year_round": "通年営業",
           "winter_only": "冬季のみ",
@@ -192,7 +240,11 @@
         "instructions": "営業している月を選択してください",
         "required": 0,
         "conditional_logic": 0,
-        "wrapper": { "width": "", "class": "", "id": "" },
+        "wrapper": {
+          "width": "",
+          "class": "",
+          "id": ""
+        },
         "choices": {
           "1": "1月",
           "2": "2月",
@@ -207,7 +259,20 @@
           "11": "11月",
           "12": "12月"
         },
-        "default_value": ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12"],
+        "default_value": [
+          "1",
+          "2",
+          "3",
+          "4",
+          "5",
+          "6",
+          "7",
+          "8",
+          "9",
+          "10",
+          "11",
+          "12"
+        ],
         "return_format": "value",
         "allow_custom": 0,
         "layout": "horizontal",
@@ -222,7 +287,11 @@
         "instructions": "例：年末年始（12/29〜1/3）は休業",
         "required": 0,
         "conditional_logic": 0,
-        "wrapper": { "width": "", "class": "", "id": "" },
+        "wrapper": {
+          "width": "",
+          "class": "",
+          "id": ""
+        },
         "default_value": "",
         "maxlength": "",
         "placeholder": "",
@@ -237,7 +306,11 @@
         "instructions": "例：10:00〜17:00（LO 16:30）",
         "required": 0,
         "conditional_logic": 0,
-        "wrapper": { "width": "50", "class": "", "id": "" },
+        "wrapper": {
+          "width": "50",
+          "class": "",
+          "id": ""
+        },
         "default_value": "",
         "maxlength": "",
         "placeholder": "",
@@ -252,7 +325,11 @@
         "instructions": "例：毎週水曜日",
         "required": 0,
         "conditional_logic": 0,
-        "wrapper": { "width": "50", "class": "", "id": "" },
+        "wrapper": {
+          "width": "50",
+          "class": "",
+          "id": ""
+        },
         "default_value": "",
         "maxlength": "",
         "placeholder": "",
@@ -267,7 +344,11 @@
         "instructions": "",
         "required": 0,
         "conditional_logic": 0,
-        "wrapper": { "width": "", "class": "", "id": "" },
+        "wrapper": {
+          "width": "",
+          "class": "",
+          "id": ""
+        },
         "placement": "top",
         "endpoint": 0
       },
@@ -279,7 +360,11 @@
         "instructions": "お店の看板スイーツの写真（推奨サイズ：1200×800px）",
         "required": 0,
         "conditional_logic": 0,
-        "wrapper": { "width": "33", "class": "", "id": "" },
+        "wrapper": {
+          "width": "33",
+          "class": "",
+          "id": ""
+        },
         "return_format": "array",
         "library": "all",
         "min_width": "",
@@ -298,7 +383,11 @@
         "instructions": "お店の外観や内観写真",
         "required": 0,
         "conditional_logic": 0,
-        "wrapper": { "width": "33", "class": "", "id": "" },
+        "wrapper": {
+          "width": "33",
+          "class": "",
+          "id": ""
+        },
         "return_format": "array",
         "library": "all",
         "min_width": "",
@@ -310,33 +399,18 @@
         "mime_types": "jpg,jpeg,png,webp"
       },
       {
-        "key": "field_shop_image_extra_1",
-        "label": "追加写真 1",
-        "name": "image_extra_1",
-        "type": "image",
-        "instructions": "メニューや店内など、追加で掲載したい写真",
-        "required": 0,
-        "conditional_logic": 0,
-        "wrapper": { "width": "33", "class": "", "id": "" },
-        "return_format": "array",
-        "library": "all",
-        "min_width": "",
-        "min_height": "",
-        "min_size": "",
-        "max_width": "",
-        "max_height": "",
-        "max_size": "",
-        "mime_types": "jpg,jpeg,png,webp"
-      },
-      {
-        "key": "field_shop_image_extra_2",
-        "label": "追加写真 2",
-        "name": "image_extra_2",
+        "key": "field_shop_photo_01_image",
+        "label": "写真01 画像",
+        "name": "photo_01_image",
         "type": "image",
         "instructions": "",
         "required": 0,
         "conditional_logic": 0,
-        "wrapper": { "width": "33", "class": "", "id": "" },
+        "wrapper": {
+          "width": "40",
+          "class": "",
+          "id": ""
+        },
         "return_format": "array",
         "library": "all",
         "min_width": "",
@@ -348,14 +422,52 @@
         "mime_types": "jpg,jpeg,png,webp"
       },
       {
-        "key": "field_shop_image_extra_3",
-        "label": "追加写真 3",
-        "name": "image_extra_3",
+        "key": "field_shop_photo_01_categories",
+        "label": "写真01 カテゴリ",
+        "name": "photo_01_categories",
+        "type": "checkbox",
+        "instructions": "写真に該当するスイーツカテゴリを選択（複数可）",
+        "required": 0,
+        "conditional_logic": 0,
+        "wrapper": {
+          "width": "60",
+          "class": "",
+          "id": ""
+        },
+        "choices": {
+          "cake": "ケーキ",
+          "crepe": "クレープ",
+          "ice": "アイス",
+          "pudding": "プリン",
+          "parfait": "パフェ",
+          "gelato": "ジェラート",
+          "cookie": "クッキー",
+          "wagashi": "和菓子",
+          "local": "地元食材スイーツ",
+          "kakigori": "かき氷",
+          "cream_puff": "シュークリーム",
+          "pancake": "パンケーキ"
+        },
+        "default_value": [],
+        "return_format": "value",
+        "allow_custom": 0,
+        "layout": "vertical",
+        "toggle": 0,
+        "save_custom": 0
+      },
+      {
+        "key": "field_shop_photo_02_image",
+        "label": "写真02 画像",
+        "name": "photo_02_image",
         "type": "image",
         "instructions": "",
         "required": 0,
         "conditional_logic": 0,
-        "wrapper": { "width": "33", "class": "", "id": "" },
+        "wrapper": {
+          "width": "40",
+          "class": "",
+          "id": ""
+        },
         "return_format": "array",
         "library": "all",
         "min_width": "",
@@ -365,6 +477,1066 @@
         "max_height": "",
         "max_size": "",
         "mime_types": "jpg,jpeg,png,webp"
+      },
+      {
+        "key": "field_shop_photo_02_categories",
+        "label": "写真02 カテゴリ",
+        "name": "photo_02_categories",
+        "type": "checkbox",
+        "instructions": "写真に該当するスイーツカテゴリを選択（複数可）",
+        "required": 0,
+        "conditional_logic": 0,
+        "wrapper": {
+          "width": "60",
+          "class": "",
+          "id": ""
+        },
+        "choices": {
+          "cake": "ケーキ",
+          "crepe": "クレープ",
+          "ice": "アイス",
+          "pudding": "プリン",
+          "parfait": "パフェ",
+          "gelato": "ジェラート",
+          "cookie": "クッキー",
+          "wagashi": "和菓子",
+          "local": "地元食材スイーツ",
+          "kakigori": "かき氷",
+          "cream_puff": "シュークリーム",
+          "pancake": "パンケーキ"
+        },
+        "default_value": [],
+        "return_format": "value",
+        "allow_custom": 0,
+        "layout": "vertical",
+        "toggle": 0,
+        "save_custom": 0
+      },
+      {
+        "key": "field_shop_photo_03_image",
+        "label": "写真03 画像",
+        "name": "photo_03_image",
+        "type": "image",
+        "instructions": "",
+        "required": 0,
+        "conditional_logic": 0,
+        "wrapper": {
+          "width": "40",
+          "class": "",
+          "id": ""
+        },
+        "return_format": "array",
+        "library": "all",
+        "min_width": "",
+        "min_height": "",
+        "min_size": "",
+        "max_width": "",
+        "max_height": "",
+        "max_size": "",
+        "mime_types": "jpg,jpeg,png,webp"
+      },
+      {
+        "key": "field_shop_photo_03_categories",
+        "label": "写真03 カテゴリ",
+        "name": "photo_03_categories",
+        "type": "checkbox",
+        "instructions": "写真に該当するスイーツカテゴリを選択（複数可）",
+        "required": 0,
+        "conditional_logic": 0,
+        "wrapper": {
+          "width": "60",
+          "class": "",
+          "id": ""
+        },
+        "choices": {
+          "cake": "ケーキ",
+          "crepe": "クレープ",
+          "ice": "アイス",
+          "pudding": "プリン",
+          "parfait": "パフェ",
+          "gelato": "ジェラート",
+          "cookie": "クッキー",
+          "wagashi": "和菓子",
+          "local": "地元食材スイーツ",
+          "kakigori": "かき氷",
+          "cream_puff": "シュークリーム",
+          "pancake": "パンケーキ"
+        },
+        "default_value": [],
+        "return_format": "value",
+        "allow_custom": 0,
+        "layout": "vertical",
+        "toggle": 0,
+        "save_custom": 0
+      },
+      {
+        "key": "field_shop_photo_04_image",
+        "label": "写真04 画像",
+        "name": "photo_04_image",
+        "type": "image",
+        "instructions": "",
+        "required": 0,
+        "conditional_logic": 0,
+        "wrapper": {
+          "width": "40",
+          "class": "",
+          "id": ""
+        },
+        "return_format": "array",
+        "library": "all",
+        "min_width": "",
+        "min_height": "",
+        "min_size": "",
+        "max_width": "",
+        "max_height": "",
+        "max_size": "",
+        "mime_types": "jpg,jpeg,png,webp"
+      },
+      {
+        "key": "field_shop_photo_04_categories",
+        "label": "写真04 カテゴリ",
+        "name": "photo_04_categories",
+        "type": "checkbox",
+        "instructions": "写真に該当するスイーツカテゴリを選択（複数可）",
+        "required": 0,
+        "conditional_logic": 0,
+        "wrapper": {
+          "width": "60",
+          "class": "",
+          "id": ""
+        },
+        "choices": {
+          "cake": "ケーキ",
+          "crepe": "クレープ",
+          "ice": "アイス",
+          "pudding": "プリン",
+          "parfait": "パフェ",
+          "gelato": "ジェラート",
+          "cookie": "クッキー",
+          "wagashi": "和菓子",
+          "local": "地元食材スイーツ",
+          "kakigori": "かき氷",
+          "cream_puff": "シュークリーム",
+          "pancake": "パンケーキ"
+        },
+        "default_value": [],
+        "return_format": "value",
+        "allow_custom": 0,
+        "layout": "vertical",
+        "toggle": 0,
+        "save_custom": 0
+      },
+      {
+        "key": "field_shop_photo_05_image",
+        "label": "写真05 画像",
+        "name": "photo_05_image",
+        "type": "image",
+        "instructions": "",
+        "required": 0,
+        "conditional_logic": 0,
+        "wrapper": {
+          "width": "40",
+          "class": "",
+          "id": ""
+        },
+        "return_format": "array",
+        "library": "all",
+        "min_width": "",
+        "min_height": "",
+        "min_size": "",
+        "max_width": "",
+        "max_height": "",
+        "max_size": "",
+        "mime_types": "jpg,jpeg,png,webp"
+      },
+      {
+        "key": "field_shop_photo_05_categories",
+        "label": "写真05 カテゴリ",
+        "name": "photo_05_categories",
+        "type": "checkbox",
+        "instructions": "写真に該当するスイーツカテゴリを選択（複数可）",
+        "required": 0,
+        "conditional_logic": 0,
+        "wrapper": {
+          "width": "60",
+          "class": "",
+          "id": ""
+        },
+        "choices": {
+          "cake": "ケーキ",
+          "crepe": "クレープ",
+          "ice": "アイス",
+          "pudding": "プリン",
+          "parfait": "パフェ",
+          "gelato": "ジェラート",
+          "cookie": "クッキー",
+          "wagashi": "和菓子",
+          "local": "地元食材スイーツ",
+          "kakigori": "かき氷",
+          "cream_puff": "シュークリーム",
+          "pancake": "パンケーキ"
+        },
+        "default_value": [],
+        "return_format": "value",
+        "allow_custom": 0,
+        "layout": "vertical",
+        "toggle": 0,
+        "save_custom": 0
+      },
+      {
+        "key": "field_shop_photo_06_image",
+        "label": "写真06 画像",
+        "name": "photo_06_image",
+        "type": "image",
+        "instructions": "",
+        "required": 0,
+        "conditional_logic": 0,
+        "wrapper": {
+          "width": "40",
+          "class": "",
+          "id": ""
+        },
+        "return_format": "array",
+        "library": "all",
+        "min_width": "",
+        "min_height": "",
+        "min_size": "",
+        "max_width": "",
+        "max_height": "",
+        "max_size": "",
+        "mime_types": "jpg,jpeg,png,webp"
+      },
+      {
+        "key": "field_shop_photo_06_categories",
+        "label": "写真06 カテゴリ",
+        "name": "photo_06_categories",
+        "type": "checkbox",
+        "instructions": "写真に該当するスイーツカテゴリを選択（複数可）",
+        "required": 0,
+        "conditional_logic": 0,
+        "wrapper": {
+          "width": "60",
+          "class": "",
+          "id": ""
+        },
+        "choices": {
+          "cake": "ケーキ",
+          "crepe": "クレープ",
+          "ice": "アイス",
+          "pudding": "プリン",
+          "parfait": "パフェ",
+          "gelato": "ジェラート",
+          "cookie": "クッキー",
+          "wagashi": "和菓子",
+          "local": "地元食材スイーツ",
+          "kakigori": "かき氷",
+          "cream_puff": "シュークリーム",
+          "pancake": "パンケーキ"
+        },
+        "default_value": [],
+        "return_format": "value",
+        "allow_custom": 0,
+        "layout": "vertical",
+        "toggle": 0,
+        "save_custom": 0
+      },
+      {
+        "key": "field_shop_photo_07_image",
+        "label": "写真07 画像",
+        "name": "photo_07_image",
+        "type": "image",
+        "instructions": "",
+        "required": 0,
+        "conditional_logic": 0,
+        "wrapper": {
+          "width": "40",
+          "class": "",
+          "id": ""
+        },
+        "return_format": "array",
+        "library": "all",
+        "min_width": "",
+        "min_height": "",
+        "min_size": "",
+        "max_width": "",
+        "max_height": "",
+        "max_size": "",
+        "mime_types": "jpg,jpeg,png,webp"
+      },
+      {
+        "key": "field_shop_photo_07_categories",
+        "label": "写真07 カテゴリ",
+        "name": "photo_07_categories",
+        "type": "checkbox",
+        "instructions": "写真に該当するスイーツカテゴリを選択（複数可）",
+        "required": 0,
+        "conditional_logic": 0,
+        "wrapper": {
+          "width": "60",
+          "class": "",
+          "id": ""
+        },
+        "choices": {
+          "cake": "ケーキ",
+          "crepe": "クレープ",
+          "ice": "アイス",
+          "pudding": "プリン",
+          "parfait": "パフェ",
+          "gelato": "ジェラート",
+          "cookie": "クッキー",
+          "wagashi": "和菓子",
+          "local": "地元食材スイーツ",
+          "kakigori": "かき氷",
+          "cream_puff": "シュークリーム",
+          "pancake": "パンケーキ"
+        },
+        "default_value": [],
+        "return_format": "value",
+        "allow_custom": 0,
+        "layout": "vertical",
+        "toggle": 0,
+        "save_custom": 0
+      },
+      {
+        "key": "field_shop_photo_08_image",
+        "label": "写真08 画像",
+        "name": "photo_08_image",
+        "type": "image",
+        "instructions": "",
+        "required": 0,
+        "conditional_logic": 0,
+        "wrapper": {
+          "width": "40",
+          "class": "",
+          "id": ""
+        },
+        "return_format": "array",
+        "library": "all",
+        "min_width": "",
+        "min_height": "",
+        "min_size": "",
+        "max_width": "",
+        "max_height": "",
+        "max_size": "",
+        "mime_types": "jpg,jpeg,png,webp"
+      },
+      {
+        "key": "field_shop_photo_08_categories",
+        "label": "写真08 カテゴリ",
+        "name": "photo_08_categories",
+        "type": "checkbox",
+        "instructions": "写真に該当するスイーツカテゴリを選択（複数可）",
+        "required": 0,
+        "conditional_logic": 0,
+        "wrapper": {
+          "width": "60",
+          "class": "",
+          "id": ""
+        },
+        "choices": {
+          "cake": "ケーキ",
+          "crepe": "クレープ",
+          "ice": "アイス",
+          "pudding": "プリン",
+          "parfait": "パフェ",
+          "gelato": "ジェラート",
+          "cookie": "クッキー",
+          "wagashi": "和菓子",
+          "local": "地元食材スイーツ",
+          "kakigori": "かき氷",
+          "cream_puff": "シュークリーム",
+          "pancake": "パンケーキ"
+        },
+        "default_value": [],
+        "return_format": "value",
+        "allow_custom": 0,
+        "layout": "vertical",
+        "toggle": 0,
+        "save_custom": 0
+      },
+      {
+        "key": "field_shop_photo_09_image",
+        "label": "写真09 画像",
+        "name": "photo_09_image",
+        "type": "image",
+        "instructions": "",
+        "required": 0,
+        "conditional_logic": 0,
+        "wrapper": {
+          "width": "40",
+          "class": "",
+          "id": ""
+        },
+        "return_format": "array",
+        "library": "all",
+        "min_width": "",
+        "min_height": "",
+        "min_size": "",
+        "max_width": "",
+        "max_height": "",
+        "max_size": "",
+        "mime_types": "jpg,jpeg,png,webp"
+      },
+      {
+        "key": "field_shop_photo_09_categories",
+        "label": "写真09 カテゴリ",
+        "name": "photo_09_categories",
+        "type": "checkbox",
+        "instructions": "写真に該当するスイーツカテゴリを選択（複数可）",
+        "required": 0,
+        "conditional_logic": 0,
+        "wrapper": {
+          "width": "60",
+          "class": "",
+          "id": ""
+        },
+        "choices": {
+          "cake": "ケーキ",
+          "crepe": "クレープ",
+          "ice": "アイス",
+          "pudding": "プリン",
+          "parfait": "パフェ",
+          "gelato": "ジェラート",
+          "cookie": "クッキー",
+          "wagashi": "和菓子",
+          "local": "地元食材スイーツ",
+          "kakigori": "かき氷",
+          "cream_puff": "シュークリーム",
+          "pancake": "パンケーキ"
+        },
+        "default_value": [],
+        "return_format": "value",
+        "allow_custom": 0,
+        "layout": "vertical",
+        "toggle": 0,
+        "save_custom": 0
+      },
+      {
+        "key": "field_shop_photo_10_image",
+        "label": "写真10 画像",
+        "name": "photo_10_image",
+        "type": "image",
+        "instructions": "",
+        "required": 0,
+        "conditional_logic": 0,
+        "wrapper": {
+          "width": "40",
+          "class": "",
+          "id": ""
+        },
+        "return_format": "array",
+        "library": "all",
+        "min_width": "",
+        "min_height": "",
+        "min_size": "",
+        "max_width": "",
+        "max_height": "",
+        "max_size": "",
+        "mime_types": "jpg,jpeg,png,webp"
+      },
+      {
+        "key": "field_shop_photo_10_categories",
+        "label": "写真10 カテゴリ",
+        "name": "photo_10_categories",
+        "type": "checkbox",
+        "instructions": "写真に該当するスイーツカテゴリを選択（複数可）",
+        "required": 0,
+        "conditional_logic": 0,
+        "wrapper": {
+          "width": "60",
+          "class": "",
+          "id": ""
+        },
+        "choices": {
+          "cake": "ケーキ",
+          "crepe": "クレープ",
+          "ice": "アイス",
+          "pudding": "プリン",
+          "parfait": "パフェ",
+          "gelato": "ジェラート",
+          "cookie": "クッキー",
+          "wagashi": "和菓子",
+          "local": "地元食材スイーツ",
+          "kakigori": "かき氷",
+          "cream_puff": "シュークリーム",
+          "pancake": "パンケーキ"
+        },
+        "default_value": [],
+        "return_format": "value",
+        "allow_custom": 0,
+        "layout": "vertical",
+        "toggle": 0,
+        "save_custom": 0
+      },
+      {
+        "key": "field_shop_photo_11_image",
+        "label": "写真11 画像",
+        "name": "photo_11_image",
+        "type": "image",
+        "instructions": "",
+        "required": 0,
+        "conditional_logic": 0,
+        "wrapper": {
+          "width": "40",
+          "class": "",
+          "id": ""
+        },
+        "return_format": "array",
+        "library": "all",
+        "min_width": "",
+        "min_height": "",
+        "min_size": "",
+        "max_width": "",
+        "max_height": "",
+        "max_size": "",
+        "mime_types": "jpg,jpeg,png,webp"
+      },
+      {
+        "key": "field_shop_photo_11_categories",
+        "label": "写真11 カテゴリ",
+        "name": "photo_11_categories",
+        "type": "checkbox",
+        "instructions": "写真に該当するスイーツカテゴリを選択（複数可）",
+        "required": 0,
+        "conditional_logic": 0,
+        "wrapper": {
+          "width": "60",
+          "class": "",
+          "id": ""
+        },
+        "choices": {
+          "cake": "ケーキ",
+          "crepe": "クレープ",
+          "ice": "アイス",
+          "pudding": "プリン",
+          "parfait": "パフェ",
+          "gelato": "ジェラート",
+          "cookie": "クッキー",
+          "wagashi": "和菓子",
+          "local": "地元食材スイーツ",
+          "kakigori": "かき氷",
+          "cream_puff": "シュークリーム",
+          "pancake": "パンケーキ"
+        },
+        "default_value": [],
+        "return_format": "value",
+        "allow_custom": 0,
+        "layout": "vertical",
+        "toggle": 0,
+        "save_custom": 0
+      },
+      {
+        "key": "field_shop_photo_12_image",
+        "label": "写真12 画像",
+        "name": "photo_12_image",
+        "type": "image",
+        "instructions": "",
+        "required": 0,
+        "conditional_logic": 0,
+        "wrapper": {
+          "width": "40",
+          "class": "",
+          "id": ""
+        },
+        "return_format": "array",
+        "library": "all",
+        "min_width": "",
+        "min_height": "",
+        "min_size": "",
+        "max_width": "",
+        "max_height": "",
+        "max_size": "",
+        "mime_types": "jpg,jpeg,png,webp"
+      },
+      {
+        "key": "field_shop_photo_12_categories",
+        "label": "写真12 カテゴリ",
+        "name": "photo_12_categories",
+        "type": "checkbox",
+        "instructions": "写真に該当するスイーツカテゴリを選択（複数可）",
+        "required": 0,
+        "conditional_logic": 0,
+        "wrapper": {
+          "width": "60",
+          "class": "",
+          "id": ""
+        },
+        "choices": {
+          "cake": "ケーキ",
+          "crepe": "クレープ",
+          "ice": "アイス",
+          "pudding": "プリン",
+          "parfait": "パフェ",
+          "gelato": "ジェラート",
+          "cookie": "クッキー",
+          "wagashi": "和菓子",
+          "local": "地元食材スイーツ",
+          "kakigori": "かき氷",
+          "cream_puff": "シュークリーム",
+          "pancake": "パンケーキ"
+        },
+        "default_value": [],
+        "return_format": "value",
+        "allow_custom": 0,
+        "layout": "vertical",
+        "toggle": 0,
+        "save_custom": 0
+      },
+      {
+        "key": "field_shop_photo_13_image",
+        "label": "写真13 画像",
+        "name": "photo_13_image",
+        "type": "image",
+        "instructions": "",
+        "required": 0,
+        "conditional_logic": 0,
+        "wrapper": {
+          "width": "40",
+          "class": "",
+          "id": ""
+        },
+        "return_format": "array",
+        "library": "all",
+        "min_width": "",
+        "min_height": "",
+        "min_size": "",
+        "max_width": "",
+        "max_height": "",
+        "max_size": "",
+        "mime_types": "jpg,jpeg,png,webp"
+      },
+      {
+        "key": "field_shop_photo_13_categories",
+        "label": "写真13 カテゴリ",
+        "name": "photo_13_categories",
+        "type": "checkbox",
+        "instructions": "写真に該当するスイーツカテゴリを選択（複数可）",
+        "required": 0,
+        "conditional_logic": 0,
+        "wrapper": {
+          "width": "60",
+          "class": "",
+          "id": ""
+        },
+        "choices": {
+          "cake": "ケーキ",
+          "crepe": "クレープ",
+          "ice": "アイス",
+          "pudding": "プリン",
+          "parfait": "パフェ",
+          "gelato": "ジェラート",
+          "cookie": "クッキー",
+          "wagashi": "和菓子",
+          "local": "地元食材スイーツ",
+          "kakigori": "かき氷",
+          "cream_puff": "シュークリーム",
+          "pancake": "パンケーキ"
+        },
+        "default_value": [],
+        "return_format": "value",
+        "allow_custom": 0,
+        "layout": "vertical",
+        "toggle": 0,
+        "save_custom": 0
+      },
+      {
+        "key": "field_shop_photo_14_image",
+        "label": "写真14 画像",
+        "name": "photo_14_image",
+        "type": "image",
+        "instructions": "",
+        "required": 0,
+        "conditional_logic": 0,
+        "wrapper": {
+          "width": "40",
+          "class": "",
+          "id": ""
+        },
+        "return_format": "array",
+        "library": "all",
+        "min_width": "",
+        "min_height": "",
+        "min_size": "",
+        "max_width": "",
+        "max_height": "",
+        "max_size": "",
+        "mime_types": "jpg,jpeg,png,webp"
+      },
+      {
+        "key": "field_shop_photo_14_categories",
+        "label": "写真14 カテゴリ",
+        "name": "photo_14_categories",
+        "type": "checkbox",
+        "instructions": "写真に該当するスイーツカテゴリを選択（複数可）",
+        "required": 0,
+        "conditional_logic": 0,
+        "wrapper": {
+          "width": "60",
+          "class": "",
+          "id": ""
+        },
+        "choices": {
+          "cake": "ケーキ",
+          "crepe": "クレープ",
+          "ice": "アイス",
+          "pudding": "プリン",
+          "parfait": "パフェ",
+          "gelato": "ジェラート",
+          "cookie": "クッキー",
+          "wagashi": "和菓子",
+          "local": "地元食材スイーツ",
+          "kakigori": "かき氷",
+          "cream_puff": "シュークリーム",
+          "pancake": "パンケーキ"
+        },
+        "default_value": [],
+        "return_format": "value",
+        "allow_custom": 0,
+        "layout": "vertical",
+        "toggle": 0,
+        "save_custom": 0
+      },
+      {
+        "key": "field_shop_photo_15_image",
+        "label": "写真15 画像",
+        "name": "photo_15_image",
+        "type": "image",
+        "instructions": "",
+        "required": 0,
+        "conditional_logic": 0,
+        "wrapper": {
+          "width": "40",
+          "class": "",
+          "id": ""
+        },
+        "return_format": "array",
+        "library": "all",
+        "min_width": "",
+        "min_height": "",
+        "min_size": "",
+        "max_width": "",
+        "max_height": "",
+        "max_size": "",
+        "mime_types": "jpg,jpeg,png,webp"
+      },
+      {
+        "key": "field_shop_photo_15_categories",
+        "label": "写真15 カテゴリ",
+        "name": "photo_15_categories",
+        "type": "checkbox",
+        "instructions": "写真に該当するスイーツカテゴリを選択（複数可）",
+        "required": 0,
+        "conditional_logic": 0,
+        "wrapper": {
+          "width": "60",
+          "class": "",
+          "id": ""
+        },
+        "choices": {
+          "cake": "ケーキ",
+          "crepe": "クレープ",
+          "ice": "アイス",
+          "pudding": "プリン",
+          "parfait": "パフェ",
+          "gelato": "ジェラート",
+          "cookie": "クッキー",
+          "wagashi": "和菓子",
+          "local": "地元食材スイーツ",
+          "kakigori": "かき氷",
+          "cream_puff": "シュークリーム",
+          "pancake": "パンケーキ"
+        },
+        "default_value": [],
+        "return_format": "value",
+        "allow_custom": 0,
+        "layout": "vertical",
+        "toggle": 0,
+        "save_custom": 0
+      },
+      {
+        "key": "field_shop_photo_16_image",
+        "label": "写真16 画像",
+        "name": "photo_16_image",
+        "type": "image",
+        "instructions": "",
+        "required": 0,
+        "conditional_logic": 0,
+        "wrapper": {
+          "width": "40",
+          "class": "",
+          "id": ""
+        },
+        "return_format": "array",
+        "library": "all",
+        "min_width": "",
+        "min_height": "",
+        "min_size": "",
+        "max_width": "",
+        "max_height": "",
+        "max_size": "",
+        "mime_types": "jpg,jpeg,png,webp"
+      },
+      {
+        "key": "field_shop_photo_16_categories",
+        "label": "写真16 カテゴリ",
+        "name": "photo_16_categories",
+        "type": "checkbox",
+        "instructions": "写真に該当するスイーツカテゴリを選択（複数可）",
+        "required": 0,
+        "conditional_logic": 0,
+        "wrapper": {
+          "width": "60",
+          "class": "",
+          "id": ""
+        },
+        "choices": {
+          "cake": "ケーキ",
+          "crepe": "クレープ",
+          "ice": "アイス",
+          "pudding": "プリン",
+          "parfait": "パフェ",
+          "gelato": "ジェラート",
+          "cookie": "クッキー",
+          "wagashi": "和菓子",
+          "local": "地元食材スイーツ",
+          "kakigori": "かき氷",
+          "cream_puff": "シュークリーム",
+          "pancake": "パンケーキ"
+        },
+        "default_value": [],
+        "return_format": "value",
+        "allow_custom": 0,
+        "layout": "vertical",
+        "toggle": 0,
+        "save_custom": 0
+      },
+      {
+        "key": "field_shop_photo_17_image",
+        "label": "写真17 画像",
+        "name": "photo_17_image",
+        "type": "image",
+        "instructions": "",
+        "required": 0,
+        "conditional_logic": 0,
+        "wrapper": {
+          "width": "40",
+          "class": "",
+          "id": ""
+        },
+        "return_format": "array",
+        "library": "all",
+        "min_width": "",
+        "min_height": "",
+        "min_size": "",
+        "max_width": "",
+        "max_height": "",
+        "max_size": "",
+        "mime_types": "jpg,jpeg,png,webp"
+      },
+      {
+        "key": "field_shop_photo_17_categories",
+        "label": "写真17 カテゴリ",
+        "name": "photo_17_categories",
+        "type": "checkbox",
+        "instructions": "写真に該当するスイーツカテゴリを選択（複数可）",
+        "required": 0,
+        "conditional_logic": 0,
+        "wrapper": {
+          "width": "60",
+          "class": "",
+          "id": ""
+        },
+        "choices": {
+          "cake": "ケーキ",
+          "crepe": "クレープ",
+          "ice": "アイス",
+          "pudding": "プリン",
+          "parfait": "パフェ",
+          "gelato": "ジェラート",
+          "cookie": "クッキー",
+          "wagashi": "和菓子",
+          "local": "地元食材スイーツ",
+          "kakigori": "かき氷",
+          "cream_puff": "シュークリーム",
+          "pancake": "パンケーキ"
+        },
+        "default_value": [],
+        "return_format": "value",
+        "allow_custom": 0,
+        "layout": "vertical",
+        "toggle": 0,
+        "save_custom": 0
+      },
+      {
+        "key": "field_shop_photo_18_image",
+        "label": "写真18 画像",
+        "name": "photo_18_image",
+        "type": "image",
+        "instructions": "",
+        "required": 0,
+        "conditional_logic": 0,
+        "wrapper": {
+          "width": "40",
+          "class": "",
+          "id": ""
+        },
+        "return_format": "array",
+        "library": "all",
+        "min_width": "",
+        "min_height": "",
+        "min_size": "",
+        "max_width": "",
+        "max_height": "",
+        "max_size": "",
+        "mime_types": "jpg,jpeg,png,webp"
+      },
+      {
+        "key": "field_shop_photo_18_categories",
+        "label": "写真18 カテゴリ",
+        "name": "photo_18_categories",
+        "type": "checkbox",
+        "instructions": "写真に該当するスイーツカテゴリを選択（複数可）",
+        "required": 0,
+        "conditional_logic": 0,
+        "wrapper": {
+          "width": "60",
+          "class": "",
+          "id": ""
+        },
+        "choices": {
+          "cake": "ケーキ",
+          "crepe": "クレープ",
+          "ice": "アイス",
+          "pudding": "プリン",
+          "parfait": "パフェ",
+          "gelato": "ジェラート",
+          "cookie": "クッキー",
+          "wagashi": "和菓子",
+          "local": "地元食材スイーツ",
+          "kakigori": "かき氷",
+          "cream_puff": "シュークリーム",
+          "pancake": "パンケーキ"
+        },
+        "default_value": [],
+        "return_format": "value",
+        "allow_custom": 0,
+        "layout": "vertical",
+        "toggle": 0,
+        "save_custom": 0
+      },
+      {
+        "key": "field_shop_photo_19_image",
+        "label": "写真19 画像",
+        "name": "photo_19_image",
+        "type": "image",
+        "instructions": "",
+        "required": 0,
+        "conditional_logic": 0,
+        "wrapper": {
+          "width": "40",
+          "class": "",
+          "id": ""
+        },
+        "return_format": "array",
+        "library": "all",
+        "min_width": "",
+        "min_height": "",
+        "min_size": "",
+        "max_width": "",
+        "max_height": "",
+        "max_size": "",
+        "mime_types": "jpg,jpeg,png,webp"
+      },
+      {
+        "key": "field_shop_photo_19_categories",
+        "label": "写真19 カテゴリ",
+        "name": "photo_19_categories",
+        "type": "checkbox",
+        "instructions": "写真に該当するスイーツカテゴリを選択（複数可）",
+        "required": 0,
+        "conditional_logic": 0,
+        "wrapper": {
+          "width": "60",
+          "class": "",
+          "id": ""
+        },
+        "choices": {
+          "cake": "ケーキ",
+          "crepe": "クレープ",
+          "ice": "アイス",
+          "pudding": "プリン",
+          "parfait": "パフェ",
+          "gelato": "ジェラート",
+          "cookie": "クッキー",
+          "wagashi": "和菓子",
+          "local": "地元食材スイーツ",
+          "kakigori": "かき氷",
+          "cream_puff": "シュークリーム",
+          "pancake": "パンケーキ"
+        },
+        "default_value": [],
+        "return_format": "value",
+        "allow_custom": 0,
+        "layout": "vertical",
+        "toggle": 0,
+        "save_custom": 0
+      },
+      {
+        "key": "field_shop_photo_20_image",
+        "label": "写真20 画像",
+        "name": "photo_20_image",
+        "type": "image",
+        "instructions": "",
+        "required": 0,
+        "conditional_logic": 0,
+        "wrapper": {
+          "width": "40",
+          "class": "",
+          "id": ""
+        },
+        "return_format": "array",
+        "library": "all",
+        "min_width": "",
+        "min_height": "",
+        "min_size": "",
+        "max_width": "",
+        "max_height": "",
+        "max_size": "",
+        "mime_types": "jpg,jpeg,png,webp"
+      },
+      {
+        "key": "field_shop_photo_20_categories",
+        "label": "写真20 カテゴリ",
+        "name": "photo_20_categories",
+        "type": "checkbox",
+        "instructions": "写真に該当するスイーツカテゴリを選択（複数可）",
+        "required": 0,
+        "conditional_logic": 0,
+        "wrapper": {
+          "width": "60",
+          "class": "",
+          "id": ""
+        },
+        "choices": {
+          "cake": "ケーキ",
+          "crepe": "クレープ",
+          "ice": "アイス",
+          "pudding": "プリン",
+          "parfait": "パフェ",
+          "gelato": "ジェラート",
+          "cookie": "クッキー",
+          "wagashi": "和菓子",
+          "local": "地元食材スイーツ",
+          "kakigori": "かき氷",
+          "cream_puff": "シュークリーム",
+          "pancake": "パンケーキ"
+        },
+        "default_value": [],
+        "return_format": "value",
+        "allow_custom": 0,
+        "layout": "vertical",
+        "toggle": 0,
+        "save_custom": 0
       },
       {
         "key": "field_shop_tab_popular",
@@ -374,49 +1546,44 @@
         "instructions": "",
         "required": 0,
         "conditional_logic": 0,
-        "wrapper": { "width": "", "class": "", "id": "" },
+        "wrapper": {
+          "width": "",
+          "class": "",
+          "id": ""
+        },
         "placement": "top",
         "endpoint": 0
       },
       {
-        "key": "field_shop_popular_1_name",
-        "label": "人気メニュー 1 商品名",
-        "name": "popular_1_name",
-        "type": "text",
-        "instructions": "看板メニューを最大3件まで登録できます",
-        "required": 0,
-        "conditional_logic": 0,
-        "wrapper": { "width": "35", "class": "", "id": "" },
-        "default_value": "",
-        "maxlength": "",
-        "placeholder": "",
-        "prepend": "",
-        "append": ""
-      },
-      {
-        "key": "field_shop_popular_1_price",
-        "label": "人気メニュー 1 価格",
-        "name": "popular_1_price",
-        "type": "text",
+        "key": "field_shop_popular_sweets_heading",
+        "label": "スイーツ人気メニュー（見出し）",
+        "name": "",
+        "type": "message",
         "instructions": "",
         "required": 0,
         "conditional_logic": 0,
-        "wrapper": { "width": "20", "class": "", "id": "" },
-        "default_value": "",
-        "maxlength": "",
-        "placeholder": "¥800",
-        "prepend": "",
-        "append": ""
+        "wrapper": {
+          "width": "",
+          "class": "",
+          "id": ""
+        },
+        "message": "スイーツ人気メニュー",
+        "new_lines": "wpautop",
+        "esc_html": 0
       },
       {
-        "key": "field_shop_popular_1_image",
-        "label": "人気メニュー 1 写真",
-        "name": "popular_1_image",
+        "key": "field_shop_popular_sweets_1_image",
+        "label": "スイーツ①写真",
+        "name": "popular_sweets_1_image",
         "type": "image",
         "instructions": "",
         "required": 0,
         "conditional_logic": 0,
-        "wrapper": { "width": "45", "class": "", "id": "" },
+        "wrapper": {
+          "width": "40",
+          "class": "",
+          "id": ""
+        },
         "return_format": "array",
         "library": "all",
         "min_width": "",
@@ -428,14 +1595,18 @@
         "mime_types": "jpg,jpeg,png,webp"
       },
       {
-        "key": "field_shop_popular_2_name",
-        "label": "人気メニュー 2 商品名",
-        "name": "popular_2_name",
+        "key": "field_shop_popular_sweets_1_name",
+        "label": "スイーツ①商品名",
+        "name": "popular_sweets_1_name",
         "type": "text",
         "instructions": "",
         "required": 0,
         "conditional_logic": 0,
-        "wrapper": { "width": "35", "class": "", "id": "" },
+        "wrapper": {
+          "width": "30",
+          "class": "",
+          "id": ""
+        },
         "default_value": "",
         "maxlength": "",
         "placeholder": "",
@@ -443,29 +1614,37 @@
         "append": ""
       },
       {
-        "key": "field_shop_popular_2_price",
-        "label": "人気メニュー 2 価格",
-        "name": "popular_2_price",
+        "key": "field_shop_popular_sweets_1_price",
+        "label": "スイーツ①価格",
+        "name": "popular_sweets_1_price",
         "type": "text",
         "instructions": "",
         "required": 0,
         "conditional_logic": 0,
-        "wrapper": { "width": "20", "class": "", "id": "" },
+        "wrapper": {
+          "width": "30",
+          "class": "",
+          "id": ""
+        },
         "default_value": "",
         "maxlength": "",
-        "placeholder": "¥800",
+        "placeholder": "¥900",
         "prepend": "",
         "append": ""
       },
       {
-        "key": "field_shop_popular_2_image",
-        "label": "人気メニュー 2 写真",
-        "name": "popular_2_image",
+        "key": "field_shop_popular_sweets_2_image",
+        "label": "スイーツ②写真",
+        "name": "popular_sweets_2_image",
         "type": "image",
         "instructions": "",
         "required": 0,
         "conditional_logic": 0,
-        "wrapper": { "width": "45", "class": "", "id": "" },
+        "wrapper": {
+          "width": "40",
+          "class": "",
+          "id": ""
+        },
         "return_format": "array",
         "library": "all",
         "min_width": "",
@@ -477,14 +1656,18 @@
         "mime_types": "jpg,jpeg,png,webp"
       },
       {
-        "key": "field_shop_popular_3_name",
-        "label": "人気メニュー 3 商品名",
-        "name": "popular_3_name",
+        "key": "field_shop_popular_sweets_2_name",
+        "label": "スイーツ②商品名",
+        "name": "popular_sweets_2_name",
         "type": "text",
         "instructions": "",
         "required": 0,
         "conditional_logic": 0,
-        "wrapper": { "width": "35", "class": "", "id": "" },
+        "wrapper": {
+          "width": "30",
+          "class": "",
+          "id": ""
+        },
         "default_value": "",
         "maxlength": "",
         "placeholder": "",
@@ -492,29 +1675,37 @@
         "append": ""
       },
       {
-        "key": "field_shop_popular_3_price",
-        "label": "人気メニュー 3 価格",
-        "name": "popular_3_price",
+        "key": "field_shop_popular_sweets_2_price",
+        "label": "スイーツ②価格",
+        "name": "popular_sweets_2_price",
         "type": "text",
         "instructions": "",
         "required": 0,
         "conditional_logic": 0,
-        "wrapper": { "width": "20", "class": "", "id": "" },
+        "wrapper": {
+          "width": "30",
+          "class": "",
+          "id": ""
+        },
         "default_value": "",
         "maxlength": "",
-        "placeholder": "¥800",
+        "placeholder": "¥900",
         "prepend": "",
         "append": ""
       },
       {
-        "key": "field_shop_popular_3_image",
-        "label": "人気メニュー 3 写真",
-        "name": "popular_3_image",
+        "key": "field_shop_popular_sweets_3_image",
+        "label": "スイーツ③写真",
+        "name": "popular_sweets_3_image",
         "type": "image",
         "instructions": "",
         "required": 0,
         "conditional_logic": 0,
-        "wrapper": { "width": "45", "class": "", "id": "" },
+        "wrapper": {
+          "width": "40",
+          "class": "",
+          "id": ""
+        },
         "return_format": "array",
         "library": "all",
         "min_width": "",
@@ -524,6 +1715,244 @@
         "max_height": "",
         "max_size": "",
         "mime_types": "jpg,jpeg,png,webp"
+      },
+      {
+        "key": "field_shop_popular_sweets_3_name",
+        "label": "スイーツ③商品名",
+        "name": "popular_sweets_3_name",
+        "type": "text",
+        "instructions": "",
+        "required": 0,
+        "conditional_logic": 0,
+        "wrapper": {
+          "width": "30",
+          "class": "",
+          "id": ""
+        },
+        "default_value": "",
+        "maxlength": "",
+        "placeholder": "",
+        "prepend": "",
+        "append": ""
+      },
+      {
+        "key": "field_shop_popular_sweets_3_price",
+        "label": "スイーツ③価格",
+        "name": "popular_sweets_3_price",
+        "type": "text",
+        "instructions": "",
+        "required": 0,
+        "conditional_logic": 0,
+        "wrapper": {
+          "width": "30",
+          "class": "",
+          "id": ""
+        },
+        "default_value": "",
+        "maxlength": "",
+        "placeholder": "¥900",
+        "prepend": "",
+        "append": ""
+      },
+      {
+        "key": "field_shop_popular_food_heading",
+        "label": "食事人気メニュー（任意）（見出し）",
+        "name": "",
+        "type": "message",
+        "instructions": "",
+        "required": 0,
+        "conditional_logic": 0,
+        "wrapper": {
+          "width": "",
+          "class": "",
+          "id": ""
+        },
+        "message": "食事人気メニュー（任意）",
+        "new_lines": "wpautop",
+        "esc_html": 0
+      },
+      {
+        "key": "field_shop_popular_food_1_image",
+        "label": "食事①写真",
+        "name": "popular_food_1_image",
+        "type": "image",
+        "instructions": "",
+        "required": 0,
+        "conditional_logic": 0,
+        "wrapper": {
+          "width": "40",
+          "class": "",
+          "id": ""
+        },
+        "return_format": "array",
+        "library": "all",
+        "min_width": "",
+        "min_height": "",
+        "min_size": "",
+        "max_width": "",
+        "max_height": "",
+        "max_size": "",
+        "mime_types": "jpg,jpeg,png,webp"
+      },
+      {
+        "key": "field_shop_popular_food_1_name",
+        "label": "食事①商品名",
+        "name": "popular_food_1_name",
+        "type": "text",
+        "instructions": "",
+        "required": 0,
+        "conditional_logic": 0,
+        "wrapper": {
+          "width": "30",
+          "class": "",
+          "id": ""
+        },
+        "default_value": "",
+        "maxlength": "",
+        "placeholder": "",
+        "prepend": "",
+        "append": ""
+      },
+      {
+        "key": "field_shop_popular_food_1_price",
+        "label": "食事①価格",
+        "name": "popular_food_1_price",
+        "type": "text",
+        "instructions": "",
+        "required": 0,
+        "conditional_logic": 0,
+        "wrapper": {
+          "width": "30",
+          "class": "",
+          "id": ""
+        },
+        "default_value": "",
+        "maxlength": "",
+        "placeholder": "¥1,200",
+        "prepend": "",
+        "append": ""
+      },
+      {
+        "key": "field_shop_popular_food_2_image",
+        "label": "食事②写真",
+        "name": "popular_food_2_image",
+        "type": "image",
+        "instructions": "",
+        "required": 0,
+        "conditional_logic": 0,
+        "wrapper": {
+          "width": "40",
+          "class": "",
+          "id": ""
+        },
+        "return_format": "array",
+        "library": "all",
+        "min_width": "",
+        "min_height": "",
+        "min_size": "",
+        "max_width": "",
+        "max_height": "",
+        "max_size": "",
+        "mime_types": "jpg,jpeg,png,webp"
+      },
+      {
+        "key": "field_shop_popular_food_2_name",
+        "label": "食事②商品名",
+        "name": "popular_food_2_name",
+        "type": "text",
+        "instructions": "",
+        "required": 0,
+        "conditional_logic": 0,
+        "wrapper": {
+          "width": "30",
+          "class": "",
+          "id": ""
+        },
+        "default_value": "",
+        "maxlength": "",
+        "placeholder": "",
+        "prepend": "",
+        "append": ""
+      },
+      {
+        "key": "field_shop_popular_food_2_price",
+        "label": "食事②価格",
+        "name": "popular_food_2_price",
+        "type": "text",
+        "instructions": "",
+        "required": 0,
+        "conditional_logic": 0,
+        "wrapper": {
+          "width": "30",
+          "class": "",
+          "id": ""
+        },
+        "default_value": "",
+        "maxlength": "",
+        "placeholder": "¥1,200",
+        "prepend": "",
+        "append": ""
+      },
+      {
+        "key": "field_shop_popular_food_3_image",
+        "label": "食事③写真",
+        "name": "popular_food_3_image",
+        "type": "image",
+        "instructions": "",
+        "required": 0,
+        "conditional_logic": 0,
+        "wrapper": {
+          "width": "40",
+          "class": "",
+          "id": ""
+        },
+        "return_format": "array",
+        "library": "all",
+        "min_width": "",
+        "min_height": "",
+        "min_size": "",
+        "max_width": "",
+        "max_height": "",
+        "max_size": "",
+        "mime_types": "jpg,jpeg,png,webp"
+      },
+      {
+        "key": "field_shop_popular_food_3_name",
+        "label": "食事③商品名",
+        "name": "popular_food_3_name",
+        "type": "text",
+        "instructions": "",
+        "required": 0,
+        "conditional_logic": 0,
+        "wrapper": {
+          "width": "30",
+          "class": "",
+          "id": ""
+        },
+        "default_value": "",
+        "maxlength": "",
+        "placeholder": "",
+        "prepend": "",
+        "append": ""
+      },
+      {
+        "key": "field_shop_popular_food_3_price",
+        "label": "食事③価格",
+        "name": "popular_food_3_price",
+        "type": "text",
+        "instructions": "",
+        "required": 0,
+        "conditional_logic": 0,
+        "wrapper": {
+          "width": "30",
+          "class": "",
+          "id": ""
+        },
+        "default_value": "",
+        "maxlength": "",
+        "placeholder": "¥1,200",
+        "prepend": "",
+        "append": ""
       },
       {
         "key": "field_shop_tab_menu",
@@ -533,7 +1962,11 @@
         "instructions": "",
         "required": 0,
         "conditional_logic": 0,
-        "wrapper": { "width": "", "class": "", "id": "" },
+        "wrapper": {
+          "width": "",
+          "class": "",
+          "id": ""
+        },
         "placement": "top",
         "endpoint": 0
       },
@@ -542,10 +1975,14 @@
         "label": "スイーツメニュー",
         "name": "menu_sweets",
         "type": "textarea",
-        "instructions": "1行に1商品を入力してください。例：いちごパフェ | ¥900 | 季節限定",
+        "instructions": "HTMLで入力できます。例：<p>いちごパフェ ¥900</p>",
         "required": 0,
         "conditional_logic": 0,
-        "wrapper": { "width": "", "class": "", "id": "" },
+        "wrapper": {
+          "width": "",
+          "class": "",
+          "id": ""
+        },
         "default_value": "",
         "maxlength": "",
         "placeholder": "商品名 | 価格 | 備考",
@@ -557,10 +1994,14 @@
         "label": "ドリンクメニュー",
         "name": "menu_drinks",
         "type": "textarea",
-        "instructions": "1行に1商品を入力してください。例：ホットコーヒー | ¥500 |",
+        "instructions": "HTMLで入力できます。例：<p>ホットコーヒー ¥500</p>",
         "required": 0,
         "conditional_logic": 0,
-        "wrapper": { "width": "", "class": "", "id": "" },
+        "wrapper": {
+          "width": "",
+          "class": "",
+          "id": ""
+        },
         "default_value": "",
         "maxlength": "",
         "placeholder": "商品名 | 価格 | 備考",
@@ -572,10 +2013,14 @@
         "label": "お食事メニュー",
         "name": "menu_food",
         "type": "textarea",
-        "instructions": "1行に1商品を入力してください。例：キーマカレー | ¥1,200 | 数量限定",
+        "instructions": "HTMLで入力できます。例：<p>ランチセット ¥1,200</p>",
         "required": 0,
         "conditional_logic": 0,
-        "wrapper": { "width": "", "class": "", "id": "" },
+        "wrapper": {
+          "width": "",
+          "class": "",
+          "id": ""
+        },
         "default_value": "",
         "maxlength": "",
         "placeholder": "商品名 | 価格 | 備考",
@@ -590,7 +2035,11 @@
         "instructions": "",
         "required": 0,
         "conditional_logic": 0,
-        "wrapper": { "width": "", "class": "", "id": "" },
+        "wrapper": {
+          "width": "",
+          "class": "",
+          "id": ""
+        },
         "placement": "top",
         "endpoint": 0
       },
@@ -602,7 +2051,11 @@
         "instructions": "実際の口コミを参考に、お店の評判をまとめてください",
         "required": 0,
         "conditional_logic": 0,
-        "wrapper": { "width": "", "class": "", "id": "" },
+        "wrapper": {
+          "width": "",
+          "class": "",
+          "id": ""
+        },
         "default_value": "",
         "maxlength": "",
         "placeholder": "",
@@ -617,7 +2070,11 @@
         "instructions": "",
         "required": 0,
         "conditional_logic": 0,
-        "wrapper": { "width": "", "class": "", "id": "" },
+        "wrapper": {
+          "width": "",
+          "class": "",
+          "id": ""
+        },
         "placement": "top",
         "endpoint": 0
       },
@@ -629,7 +2086,11 @@
         "instructions": "",
         "required": 0,
         "conditional_logic": 0,
-        "wrapper": { "width": "50", "class": "", "id": "" },
+        "wrapper": {
+          "width": "50",
+          "class": "",
+          "id": ""
+        },
         "default_value": "",
         "placeholder": "https://maps.google.com/..."
       },
@@ -641,7 +2102,11 @@
         "instructions": "",
         "required": 0,
         "conditional_logic": 0,
-        "wrapper": { "width": "50", "class": "", "id": "" },
+        "wrapper": {
+          "width": "50",
+          "class": "",
+          "id": ""
+        },
         "default_value": "",
         "placeholder": "https://tabelog.com/..."
       },
@@ -653,7 +2118,11 @@
         "instructions": "",
         "required": 0,
         "conditional_logic": 0,
-        "wrapper": { "width": "33", "class": "", "id": "" },
+        "wrapper": {
+          "width": "33",
+          "class": "",
+          "id": ""
+        },
         "default_value": "",
         "placeholder": "https://instagram.com/..."
       },
@@ -665,7 +2134,11 @@
         "instructions": "",
         "required": 0,
         "conditional_logic": 0,
-        "wrapper": { "width": "33", "class": "", "id": "" },
+        "wrapper": {
+          "width": "33",
+          "class": "",
+          "id": ""
+        },
         "default_value": "",
         "placeholder": "https://x.com/..."
       },
@@ -677,7 +2150,11 @@
         "instructions": "",
         "required": 0,
         "conditional_logic": 0,
-        "wrapper": { "width": "33", "class": "", "id": "" },
+        "wrapper": {
+          "width": "33",
+          "class": "",
+          "id": ""
+        },
         "default_value": "",
         "placeholder": "https://..."
       },
@@ -689,7 +2166,11 @@
         "instructions": "",
         "required": 0,
         "conditional_logic": 0,
-        "wrapper": { "width": "", "class": "", "id": "" },
+        "wrapper": {
+          "width": "",
+          "class": "",
+          "id": ""
+        },
         "placement": "top",
         "endpoint": 0
       },
@@ -701,14 +2182,20 @@
         "instructions": "",
         "required": 0,
         "conditional_logic": 0,
-        "wrapper": { "width": "", "class": "", "id": "" },
+        "wrapper": {
+          "width": "",
+          "class": "",
+          "id": ""
+        },
         "choices": {
           "cash": "現金",
           "credit_card": "クレジットカード",
           "e_money": "電子マネー",
           "qr_payment": "QRコード決済"
         },
-        "default_value": ["cash"],
+        "default_value": [
+          "cash"
+        ],
         "return_format": "value",
         "allow_custom": 0,
         "layout": "horizontal",
@@ -723,7 +2210,11 @@
         "instructions": "",
         "required": 0,
         "conditional_logic": 0,
-        "wrapper": { "width": "", "class": "", "id": "" },
+        "wrapper": {
+          "width": "",
+          "class": "",
+          "id": ""
+        },
         "placement": "top",
         "endpoint": 0
       },
@@ -735,14 +2226,25 @@
         "instructions": "この店舗の近くにあるおすすめの観光スポットを選択してください",
         "required": 0,
         "conditional_logic": 0,
-        "wrapper": { "width": "", "class": "", "id": "" },
-        "post_type": ["spot"],
+        "wrapper": {
+          "width": "",
+          "class": "",
+          "id": ""
+        },
+        "post_type": [
+          "spot"
+        ],
         "taxonomy": [],
-        "filters": ["search", "taxonomy"],
+        "filters": [
+          "search",
+          "taxonomy"
+        ],
         "return_format": "object",
         "min": "",
         "max": "",
-        "elements": ["featured_image"]
+        "elements": [
+          "featured_image"
+        ]
       }
     ],
     "location": [
@@ -776,7 +2278,11 @@
         "instructions": "",
         "required": 1,
         "conditional_logic": 0,
-        "wrapper": { "width": "", "class": "", "id": "" },
+        "wrapper": {
+          "width": "",
+          "class": "",
+          "id": ""
+        },
         "default_value": "",
         "maxlength": "",
         "placeholder": "",
@@ -791,7 +2297,11 @@
         "instructions": "例：新潟県妙高市関山○○番地",
         "required": 1,
         "conditional_logic": 0,
-        "wrapper": { "width": "", "class": "", "id": "" },
+        "wrapper": {
+          "width": "",
+          "class": "",
+          "id": ""
+        },
         "default_value": "",
         "maxlength": "",
         "placeholder": "",
@@ -806,7 +2316,11 @@
         "instructions": "近くの店舗との距離計算に使用します",
         "required": 1,
         "conditional_logic": 0,
-        "wrapper": { "width": "", "class": "", "id": "" },
+        "wrapper": {
+          "width": "",
+          "class": "",
+          "id": ""
+        },
         "center_lat": "36.8965",
         "center_lng": "138.1928",
         "zoom": 14,
@@ -820,7 +2334,11 @@
         "instructions": "",
         "required": 0,
         "conditional_logic": 0,
-        "wrapper": { "width": "50", "class": "", "id": "" },
+        "wrapper": {
+          "width": "50",
+          "class": "",
+          "id": ""
+        },
         "default_value": "",
         "placeholder": "https://..."
       },
@@ -832,7 +2350,11 @@
         "instructions": "",
         "required": 0,
         "conditional_logic": 0,
-        "wrapper": { "width": "50", "class": "", "id": "" },
+        "wrapper": {
+          "width": "50",
+          "class": "",
+          "id": ""
+        },
         "default_value": "",
         "placeholder": "https://maps.google.com/..."
       }
