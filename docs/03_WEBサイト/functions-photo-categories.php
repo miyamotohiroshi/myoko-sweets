@@ -29,3 +29,6 @@ for ($i = 1; $i <= 20; $i++) {
     $field_name = sprintf('photo_%02d_categories', $i);
     add_filter("acf/load_field/name={$field_name}", 'myoko_load_sweets_category_choices');
 }
+
+// メインスイーツ写真カテゴリのチェックボックスをsweets_categoryと動的同期
+add_filter('acf/load_field/name=image_main_categories', 'myoko_load_sweets_category_choices');

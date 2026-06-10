@@ -20,6 +20,25 @@
         "endpoint": 0
       },
       {
+        "key": "field_shop_label",
+        "label": "ひとこと紹介",
+        "name": "shop_label",
+        "type": "text",
+        "instructions": "例：街のお菓子屋さん／老舗ケーキ屋／駅前カフェ",
+        "required": 0,
+        "conditional_logic": 0,
+        "wrapper": {
+          "width": "",
+          "class": "",
+          "id": ""
+        },
+        "default_value": "",
+        "maxlength": 30,
+        "placeholder": "例：街のお菓子屋さん",
+        "prepend": "",
+        "append": ""
+      },
+      {
         "key": "field_shop_catchcopy",
         "label": "キャッチコピー",
         "name": "catchcopy",
@@ -361,7 +380,7 @@
         "required": 0,
         "conditional_logic": 0,
         "wrapper": {
-          "width": "33",
+          "width": "50",
           "class": "",
           "id": ""
         },
@@ -384,7 +403,7 @@
         "required": 0,
         "conditional_logic": 0,
         "wrapper": {
-          "width": "33",
+          "width": "50",
           "class": "",
           "id": ""
         },
@@ -397,6 +416,40 @@
         "max_height": "",
         "max_size": "",
         "mime_types": "jpg,jpeg,png,webp"
+      },
+      {
+        "key": "field_image_main_categories",
+        "label": "メインスイーツ写真 カテゴリ",
+        "name": "image_main_categories",
+        "type": "checkbox",
+        "instructions": "このメイン写真に該当するスイーツカテゴリをすべて選択してください",
+        "required": 0,
+        "conditional_logic": 0,
+        "wrapper": {
+          "width": "",
+          "class": "",
+          "id": ""
+        },
+        "choices": {
+          "cake": "ケーキ",
+          "crepe": "クレープ",
+          "ice": "アイス",
+          "pudding": "プリン",
+          "parfait": "パフェ",
+          "gelato": "ジェラート",
+          "cookie": "クッキー",
+          "wagashi": "和菓子",
+          "local": "地元食材スイーツ",
+          "kakigori": "かき氷",
+          "cream_puff": "シュークリーム",
+          "pancake": "パンケーキ"
+        },
+        "default_value": [],
+        "layout": "horizontal",
+        "toggle": 0,
+        "return_format": "value",
+        "allow_custom": 0,
+        "save_custom": 0
       },
       {
         "key": "field_shop_photo_01_image",
@@ -2325,6 +2378,29 @@
         "center_lng": "138.1928",
         "zoom": 14,
         "height": ""
+      },
+      {
+        "key": "field_spot_image_main",
+        "label": "写真",
+        "name": "image_main",
+        "type": "image",
+        "instructions": "スポットの代表写真（推奨サイズ：1200×800px）",
+        "required": 0,
+        "conditional_logic": 0,
+        "wrapper": {
+          "width": "",
+          "class": "",
+          "id": ""
+        },
+        "return_format": "array",
+        "library": "all",
+        "min_width": "",
+        "min_height": "",
+        "min_size": "",
+        "max_width": "",
+        "max_height": "",
+        "max_size": "",
+        "mime_types": "jpg,jpeg,png,webp"
       },
       {
         "key": "field_spot_website_url",

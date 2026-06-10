@@ -8,7 +8,7 @@
 | 2 | サーバー契約 | 🟢 完了 | | Xserver を利用中 |
 | 3 | WordPress インストール | 🟢 完了 | | cms.myoko-sweets.com で稼働中。Google Maps・REST API 動作確認済み |
 | 4 | テーマ選定・購入 | 🟢 完了 | | ヘッドレスCMS用子テーマ（myoko-sweets）を作成・有効化 |
-| 5 | 基本ページ作成 | 🔴 未着手 | | トップ・エリア紹介・お問い合わせ |
+| 5 | 基本ページ作成 | 🟡 進行中 | | トップ・エリア紹介・お問い合わせ |
 | 6 | 店舗カテゴリ設計 | 🟢 完了 | | CPT UI・ACF・タクソノミー（40ターム）登録完了。ACF無料版対応済み |
 | 7 | Google Analytics 設置 | 🔴 未着手 | | GA4 |
 | 8 | Google Search Console 設置 | 🔴 未着手 | | |
