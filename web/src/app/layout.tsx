@@ -2,6 +2,7 @@ import type { Metadata } from 'next'
 import './globals.css'
 import { SITE_INFO } from '@/config/site'
 import Header from '@/components/layout/Header'
+import Footer from '@/components/layout/Footer'
 
 export const metadata: Metadata = {
   title: {
@@ -27,6 +28,7 @@ export default function RootLayout({
       <body className="bg-white text-brand-brownMain font-sans">
         <Header />
         {children}
+        <Footer />
       </body>
     </html>
   )
