@@ -1,6 +1,7 @@
 import type { Metadata } from 'next'
 import './globals.css'
 import { SITE_INFO } from '@/config/site'
+import Header from '@/components/layout/Header'
 
 export const metadata: Metadata = {
   title: {
@@ -24,6 +25,7 @@ export default function RootLayout({
   return (
     <html lang="ja">
       <body className="bg-white text-brand-brownMain font-sans">
+        <Header />
         {children}
       </body>
     </html>

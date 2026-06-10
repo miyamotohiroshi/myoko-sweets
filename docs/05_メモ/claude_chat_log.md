@@ -11,6 +11,25 @@ Claude Code
 ## 作業日時
 2026年06月10日
 
+## 今回完了したタスク（指示書②：ヘッダー実装）
+- `logo.svg`・`logo-footer.svg` を `web/public/logo/` に配置
+- `Header.tsx` 新規作成（透過→白背景切り替え・ドロワー・言語切替仮実装）
+- `layout.tsx` に `<Header />` 追加
+- `page.tsx` に仮MV＋スクロール確認コンテンツ追加
+- TypeScriptエラー0件・HTTP 200確認済み
+
+## 次のステップ提案
+1. 指示書③：フッター実装
+2. 指示書④：TOPページ本実装
+
+---
+
+## 作成者
+Claude Code
+
+## 作業日時
+2026年06月10日
+
 ## 今回完了したタスク
 - 指示書①：共通レイアウト・グローバルCSS（Tailwind版）を実装
   - `globals.css` をブランドカラー・Zen Maru Gothicフォント対応に更新

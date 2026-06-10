@@ -7,24 +7,27 @@ Claude Code
 2026年06月10日
 
 ## 今回完了したタスク
-- 指示書①：共通レイアウト・グローバルCSS（Tailwind版）を実装
-  - `globals.css` をブランドカラー・Zen Maru Gothicフォント対応に更新
-  - `tailwind.config.ts` を新規作成（ブランドカラー・フォント・コンテンツ幅等）
-  - `components/ui/index.ts` を新規作成（共通Tailwindクラス定数）
-  - `layout.tsx` を更新（Geist削除・SITE_INFO連携・OGP設定）
-  - `page.tsx` を仮ページに更新
+- 指示書②：ヘッダーコンポーネント実装
+  - `logo.svg`（カラー版）・`logo-footer.svg`（白単色版）を `web/public/logo/` に配置
+  - `web/src/components/layout/Header.tsx` を新規作成
+    - TOPページ：MV上で背景透過、スクロール後に白背景＋blur切り替え
+    - ドロワーメニュー（仮実装）
+    - 言語切替ボタン（仮実装）
+    - ハンバーガーボタン（丸囲み）
+  - `layout.tsx` に `<Header />` を追加
+  - `page.tsx` に仮MV（`h-hero`）＋スクロール確認用コンテンツを追加
 - TypeScriptエラー0件確認済み
-- `http://localhost:3000` で正常表示確認済み
+- `http://localhost:3000` でヘッダー・ロゴ・固定表示を確認済み
 
 ## 作成・変更したファイル
 
 | ファイルパス | 変更内容 |
 |---|---|
-| web/src/app/globals.css | Zen Maru Gothic・ブランドカラー・ベーススタイルに全面更新 |
-| web/tailwind.config.ts | 新規作成（ブランドカラー・フォント・maxWidth・height・spacing） |
-| web/src/components/ui/index.ts | 新規作成（共通Tailwindクラス定数・SweetsIconの再エクスポート） |
-| web/src/app/layout.tsx | Geist削除・SITE_INFO連携・OGP設定・lang="ja"に更新 |
-| web/src/app/page.tsx | 仮ページ「MYOKOスイーツ — 実装中」に更新 |
+| web/public/logo/logo.svg | ヘッダー用カラーロゴを新規配置 |
+| web/public/logo/logo-footer.svg | フッター用白単色ロゴを新規配置 |
+| web/src/components/layout/Header.tsx | ヘッダーコンポーネント新規作成 |
+| web/src/app/layout.tsx | `<Header />` を追加 |
+| web/src/app/page.tsx | 仮MV（h-hero）＋スクロール確認用コンテンツに更新 |
 
 ## タスク管理の更新内容
 
@@ -33,13 +36,13 @@ Claude Code
 | 02_WEBサイト.md | 基本ページ作成 | 🟡 進行中 | 🟡 進行中（継続） |
 
 ## Claude Chatへの申し送り事項
-- `node_modules/.bin/next` と `.bin/tsc` のシンボリックリンクが壊れているため、`npm run dev` は内部的に `node node_modules/next/dist/bin/next dev` で動作している。`npm run dev` コマンド自体は正常に動く
-- Google Fonts の `@import url(...)` は `@import "tailwindcss"` より前に書く必要がある（PostCSS制約）
+- `npm run dev` は `web/` ディレクトリで `node node_modules/next/dist/bin/next dev` で起動する（`.bin/next` のシンボリックリンクが壊れているが `npm run dev` 経由では問題なし）
+- PCナビは `md:flex`（768px以上）で表示。SP幅ではハンバーガー＋ドロワーのみ
 
 ## 次のステップ提案
-1. 指示書②：グローバルヘッダー（Header コンポーネント）実装
-2. 指示書③：グローバルフッター（Footer コンポーネント）実装
-3. 指示書④：TOPページ実装
+1. 指示書③：フッターコンポーネント実装
+2. 指示書④：TOPページ本実装（ヒーローセクション・店舗一覧等）
 
 ## 気になった点・懸念点
-- `node_modules/.bin/` のシンボリックリンクが壊れている。`npm install` しても修復されない。ただし `npm run` 経由では正常動作するため実用上の問題はなし
+- ヘッダーの透過→白背景切り替えはスクロール量 470px（`h-hero`）を基準にしている。MV高さを変更する場合はこの値も合わせて変更が必要
+- `h-[470px]` → `h-hero` の修正はIDEの警告を受けて対応済み
