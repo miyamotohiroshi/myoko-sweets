@@ -1,21 +1,30 @@
-export default function HomePage() {
-  return (
-    <main>
-      {/* 仮MV（470px・スクロール確認用） */}
-      <div
-        className="w-full h-hero"
-        style={{ background: 'linear-gradient(180deg, #EEF4F7 0%, #F5F0E8 100%)' }}
-      />
+import type { Shop } from '@/types'
+import { getAllShops } from '@/lib/wordpress'
+import HeroSection       from '@/components/top/HeroSection'
+import AboutSection      from '@/components/top/AboutSection'
+import ShopsSection      from '@/components/top/ShopsSection'
+import FeatureSection    from '@/components/top/FeatureSection'
+import EnjoyTripSection  from '@/components/top/EnjoyTripSection'
+import NewsSection       from '@/components/top/NewsSection'
+import SnsSection        from '@/components/top/SnsSection'
 
-      {/* 仮コンテンツ（スクロール確認用） */}
-      <div className="py-20 flex flex-col items-center gap-4">
-        {Array.from({ length: 10 }).map((_, i) => (
-          <div
-            key={i}
-            className="w-full max-w-content mx-auto px-5 h-16 bg-brand-ivory rounded-lg"
-          />
-        ))}
-      </div>
+export default async function HomePage() {
+  let shops: Shop[] = []
+  try {
+    shops = await getAllShops()
+  } catch {
+    // WordPress API 未接続時はカード非表示
+  }
+
+  return (
+    <main className="overflow-x-clip">
+      <HeroSection />
+      <AboutSection />
+      <ShopsSection shops={shops} />
+      <FeatureSection />
+      <EnjoyTripSection />
+      <NewsSection />
+      <SnsSection />
     </main>
   )
 }

@@ -96,6 +96,7 @@ export type PopularItem = {
 // ============================================
 export type ShopACF = {
   // 基本情報
+  shop_label?: string  // ひとこと紹介（例：街のお菓子屋さん）
   catchcopy: string
   shop_description: string
   address: string
@@ -103,7 +104,7 @@ export type ShopACF = {
   tel: string
   access: string
   access_from_myoko_ic: string
-  access_from_nojiriko_ic: string
+  access_from_shinanomachi_ic?: string
   access_from_nojiriko: string
 
   // 営業情報

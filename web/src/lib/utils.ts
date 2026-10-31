@@ -44,3 +44,12 @@ export function sanitizeHtml(html: string): string {
     .replace(/<script\b[^<]*(?:(?!<\/script>)<[^<]*)*<\/script>/gi, '')
     .replace(/on\w+="[^"]*"/gi, '')
 }
+
+// HTMLタグを除去してプレーンテキストにする（カード表示用）
+export function stripTags(html: string): string {
+  return html
+    .replace(/<[^>]*>/g, '')
+    .replace(/&nbsp;/g, ' ')
+    .replace(/&amp;/g, '&')
+    .trim()
+}

@@ -61,7 +61,7 @@ function MountainLine() {
 export default function Footer() {
   return (
     <footer style={{ backgroundColor: '#5C4A2A' }}>
-      <div className="w-full max-w-[1440px] mx-auto px-4 md:px-10 py-10 md:py-16">
+      <div className="w-full max-w-[1160px] mx-auto px-5 md:px-10 py-10 md:py-16">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-12">
           <div className="flex flex-col gap-6">
             <Link href="/" aria-label="myoko sweets TOP">
@@ -143,11 +143,11 @@ export default function Footer() {
       </div>
 
       <div
-        className="w-full max-w-[1440px] mx-auto px-4 md:px-10"
+        className="w-full max-w-[1160px] mx-auto px-5 md:px-10"
         style={{ borderTop: '0.5px solid rgba(234,226,210,0.2)' }}
       />
 
-      <div className="w-full max-w-[1440px] mx-auto px-4 md:px-10 py-6 flex items-start md:items-center justify-between flex-col md:flex-row gap-4">
+      <div className="w-full max-w-[1160px] mx-auto px-5 md:px-10 py-6 flex items-start md:items-center justify-between flex-col md:flex-row gap-4">
         <p
           className="text-xs tracking-wider"
           style={{ color: '#EAE2D2', opacity: 0.6 }}

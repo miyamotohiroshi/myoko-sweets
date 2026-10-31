@@ -41,12 +41,12 @@ export default function Header() {
       <header
         className={`
           fixed top-0 left-0 right-0 z-50
-          h-[90px] md:h-[64px]
+          h-[84px] md:h-[90px]
           transition-all duration-300
           ${headerBg}
         `}
       >
-        <div className="w-full max-w-[1440px] mx-auto px-10 md:px-4 h-full flex items-center justify-between">
+        <div className="w-full max-w-[1080px] mx-auto px-6 md:px-10 h-full flex items-center justify-between">
 
           {/* ロゴ */}
           <Link href="/" className="flex items-center gap-2 shrink-0">
@@ -56,12 +56,12 @@ export default function Header() {
               width={160}
               height={40}
               priority
-              className="h-9 w-auto md:h-7"
+              className="h-7 w-auto"
             />
           </Link>
 
           {/* PCナビ（md以上で表示） */}
-          <nav className="hidden md:flex items-center gap-8">
+          <nav className="hidden md:flex items-center gap-[30px]">
             {NAV_LINKS.map(link => {
               const isActive = pathname === link.href ||
                 (link.href !== '/' && pathname.startsWith(link.href))
@@ -70,12 +70,9 @@ export default function Header() {
                   key={link.href}
                   href={link.href}
                   className={`
-                    relative text-sm tracking-wider pb-1
-                    transition-colors duration-200
-                    ${isActive
-                      ? 'text-brand-brownMain font-medium'
-                      : 'text-brand-brownSub hover:text-brand-brownMain'
-                    }
+                    relative px-0.5 pt-1 pb-1.5 text-[16px] font-bold leading-[27.75px] tracking-[0.32px]
+                    text-brand-brown-main transition-opacity duration-200
+                    ${isActive ? '' : 'hover:opacity-70'}
                   `}
                 >
                   {link.label}
@@ -91,24 +88,22 @@ export default function Header() {
           </nav>
 
           {/* 右側：言語切替＋ハンバーガー */}
-          <div className="flex items-center gap-3">
+          <div className="flex items-center gap-3.5">
 
             {/* 言語切替（仮実装） */}
-            <button className="flex items-center gap-1 text-sm text-brand-brownSub hover:text-brand-brownMain transition-colors duration-200">
+            <button className="flex items-center gap-1 text-[14px] font-bold leading-[25.9px] tracking-[0.32px] text-brand-brown-sub hover:opacity-70 transition-opacity duration-200">
               <span>JP</span>
-              <svg width="10" height="6" viewBox="0 0 10 6" fill="none">
-                <path d="M1 1L5 5L9 1" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round"/>
-              </svg>
+              <Image src="/images/top/icons/chev-down.svg" alt="" width={14} height={14} />
             </button>
 
             {/* ハンバーガーボタン */}
             <button
               onClick={() => setDrawerOpen(true)}
-              className="w-10 h-10 md:w-8 md:h-8 rounded-full border border-brand-beige flex items-center justify-center hover:bg-brand-ivory transition-colors duration-200"
+              className="size-[46px] rounded-full bg-white border border-brand-beige flex items-center justify-center hover:bg-brand-ivory transition-colors duration-200"
               aria-label="メニューを開く"
             >
-              <svg width="16" height="12" viewBox="0 0 16 12" fill="none">
-                <path d="M0 1H16M0 6H16M0 11H16" stroke="#5C4A2A" strokeWidth="1.5" strokeLinecap="round"/>
+              <svg width="18" height="14" viewBox="0 0 18 14" fill="none">
+                <path d="M1 1H17M1 7H17M1 13H17" stroke="#5C4A2A" strokeWidth="2" strokeLinecap="round"/>
               </svg>
             </button>
 
@@ -125,7 +120,7 @@ export default function Header() {
             onClick={() => setDrawerOpen(false)}
           />
 
-          <div className="relative ml-auto w-[280px] md:w-full h-full bg-white flex flex-col">
+          <div className="relative ml-auto w-[280px] max-w-full h-full bg-white flex flex-col">
 
             <div className="flex items-center justify-between px-6 py-5 border-b border-brand-beige">
               <Image
@@ -152,7 +147,7 @@ export default function Header() {
                   key={link.href}
                   href={link.href}
                   onClick={() => setDrawerOpen(false)}
-                  className="text-base text-brand-brownMain tracking-wider hover:text-brand-brownSub transition-colors duration-200"
+                  className="text-base font-bold text-brand-brown-main tracking-wider hover:text-brand-brown-sub transition-colors duration-200"
                 >
                   {link.label}
                 </Link>
@@ -161,9 +156,9 @@ export default function Header() {
 
             <div className="mt-auto px-6 pb-8 border-t border-brand-beige pt-6">
               <div className="flex gap-4">
-                <button className="text-sm text-brand-brownMain font-medium">JP</button>
+                <button className="text-sm text-brand-brown-main font-bold">JP</button>
                 <span className="text-brand-beige">|</span>
-                <button className="text-sm text-brand-brownSub hover:text-brand-brownMain transition-colors duration-200">EN</button>
+                <button className="text-sm text-brand-brown-sub hover:text-brand-brown-main transition-colors duration-200">EN</button>
               </div>
             </div>
 
