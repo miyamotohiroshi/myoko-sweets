@@ -14,17 +14,33 @@ const NAV_LINKS = [
 export default function Header() {
   const pathname = usePathname()
   const isTop = pathname === '/'
+  // 店舗詳細ページの SP は、下スクロールでヘッダーを隠し、上スクロールで上から出す
+  const autoHide = pathname.startsWith('/shop/')
 
   const [scrolled, setScrolled] = useState(false)
+  const [hidden, setHidden] = useState(false)
   const [drawerOpen, setDrawerOpen] = useState(false)
 
   useEffect(() => {
+    let lastY = window.scrollY
     const handleScroll = () => {
-      setScrolled(window.scrollY > 470)
+      const y = window.scrollY
+      setScrolled(y > 470)
+      if (y <= 64) setHidden(false)
+      else if (y > lastY + 4) setHidden(true)
+      else if (y < lastY - 4) setHidden(false)
+      lastY = y
     }
     window.addEventListener('scroll', handleScroll, { passive: true })
     return () => window.removeEventListener('scroll', handleScroll)
   }, [])
+
+  const headerHidden = autoHide && hidden && !drawerOpen
+
+  // ページ内ナビ（固定表示）がヘッダーの出し入れに合わせて位置を変えられるよう、html に状態を出す
+  useEffect(() => {
+    document.documentElement.toggleAttribute('data-header-hidden', headerHidden)
+  }, [headerHidden])
 
   useEffect(() => {
     document.body.style.overflow = drawerOpen ? 'hidden' : ''
@@ -32,6 +48,7 @@ export default function Header() {
   }, [drawerOpen])
 
   const headerBg = (() => {
+    if (drawerOpen) return 'bg-white border-b border-brand-beige/50'
     if (isTop && !scrolled) return 'bg-transparent'
     return 'bg-white/80 backdrop-blur-md border-b border-brand-beige/50'
   })()
@@ -40,9 +57,10 @@ export default function Header() {
     <>
       <header
         className={`
-          fixed top-0 left-0 right-0 z-50
-          h-[84px] md:h-[90px]
+          fixed top-0 left-0 right-0 ${drawerOpen ? 'z-[110]' : 'z-50'}
+          h-16 md:h-[72px]
           transition-all duration-300
+          ${headerHidden ? 'max-md:-translate-y-full' : ''}
           ${headerBg}
         `}
       >
@@ -56,7 +74,7 @@ export default function Header() {
               width={160}
               height={40}
               priority
-              className="h-7 w-auto"
+              className="h-8 md:h-9 w-auto"
             />
           </Link>
 
@@ -96,75 +114,69 @@ export default function Header() {
               <Image src="/images/top/icons/chev-down.svg" alt="" width={14} height={14} />
             </button>
 
-            {/* ハンバーガーボタン */}
+            {/* ハンバーガーボタン（開くと 2 本線が ✗ に変わる） */}
             <button
-              onClick={() => setDrawerOpen(true)}
-              className="size-[46px] rounded-full bg-white border border-brand-beige flex items-center justify-center hover:bg-brand-ivory transition-colors duration-200"
-              aria-label="メニューを開く"
+              type="button"
+              onClick={() => setDrawerOpen(v => !v)}
+              aria-expanded={drawerOpen}
+              aria-controls="site-drawer"
+              aria-label={drawerOpen ? 'メニューを閉じる' : 'メニューを開く'}
+              className="group flex items-center gap-2.5 h-10 pl-2 text-brand-brown-main"
             >
-              <svg width="18" height="14" viewBox="0 0 18 14" fill="none">
-                <path d="M1 1H17M1 7H17M1 13H17" stroke="#5C4A2A" strokeWidth="2" strokeLinecap="round"/>
-              </svg>
+              <span className="hidden md:block w-[44px] text-right font-klee font-semibold text-[13px] leading-none tracking-[1.5px]">
+                {drawerOpen ? 'CLOSE' : 'MENU'}
+              </span>
+              <span className="relative block w-[26px] h-[9px]">
+                <span
+                  className={`absolute right-0 h-[2px] w-full rounded-full bg-current transition-all duration-300 ease-out ${drawerOpen ? 'top-[3.5px] rotate-45' : 'top-0'}`}
+                />
+                <span
+                  className={`absolute right-0 h-[2px] rounded-full bg-current transition-all duration-300 ease-out ${drawerOpen ? 'bottom-[3.5px] w-full -rotate-45' : 'bottom-0 w-[58%] group-hover:w-full'}`}
+                />
+              </span>
             </button>
 
           </div>
         </div>
       </header>
 
-      {/* ドロワーメニュー */}
-      {drawerOpen && (
-        <div className="fixed inset-0 z-[100] flex">
+      {/* ドロワーメニュー（ヘッダーの下から右側にスライド） */}
+      <div
+        id="site-drawer"
+        inert={!drawerOpen}
+        className={`fixed inset-0 top-16 md:top-[72px] z-[100] flex transition-opacity duration-300 ${drawerOpen ? 'opacity-100' : 'opacity-0 pointer-events-none'}`}
+      >
+        <div
+          className="absolute inset-0 bg-brand-brown-main/30 backdrop-blur-[2px]"
+          onClick={() => setDrawerOpen(false)}
+        />
 
-          <div
-            className="absolute inset-0 bg-black/40"
-            onClick={() => setDrawerOpen(false)}
-          />
-
-          <div className="relative ml-auto w-[280px] max-w-full h-full bg-white flex flex-col">
-
-            <div className="flex items-center justify-between px-6 py-5 border-b border-brand-beige">
-              <Image
-                src="/logo/logo.svg"
-                alt="myoko sweets"
-                width={120}
-                height={30}
-                className="h-7 w-auto"
-              />
-              <button
+        <div
+          className={`relative ml-auto w-[300px] max-w-full h-full bg-white flex flex-col transition-transform duration-300 ease-out ${drawerOpen ? 'translate-x-0' : 'translate-x-full'}`}
+        >
+          <nav className="flex flex-col px-8 pt-8">
+            {NAV_LINKS.map(link => (
+              <Link
+                key={link.href}
+                href={link.href}
                 onClick={() => setDrawerOpen(false)}
-                className="w-8 h-8 rounded-full border border-brand-beige flex items-center justify-center hover:bg-brand-ivory transition-colors duration-200"
-                aria-label="メニューを閉じる"
+                className="group flex items-center justify-between py-4 border-b border-dashed border-brand-line text-[16px] font-bold tracking-[0.32px] text-brand-brown-main"
               >
-                <svg width="12" height="12" viewBox="0 0 12 12" fill="none">
-                  <path d="M1 1L11 11M11 1L1 11" stroke="#5C4A2A" strokeWidth="1.5" strokeLinecap="round"/>
-                </svg>
-              </button>
+                {link.label}
+                <Image src="/images/top/icons/arrow-brown.svg" alt="" width={16} height={16} className="transition-transform group-hover:translate-x-1" />
+              </Link>
+            ))}
+          </nav>
+
+          <div className="mt-auto px-8 pb-10 pt-6">
+            <div className="flex gap-4 text-sm">
+              <button className="font-bold text-brand-brown-main">JP</button>
+              <span className="text-brand-beige">|</span>
+              <button className="text-brand-brown-sub hover:text-brand-brown-main transition-colors duration-200">EN</button>
             </div>
-
-            <nav className="flex flex-col px-6 py-8 gap-6">
-              {NAV_LINKS.map(link => (
-                <Link
-                  key={link.href}
-                  href={link.href}
-                  onClick={() => setDrawerOpen(false)}
-                  className="text-base font-bold text-brand-brown-main tracking-wider hover:text-brand-brown-sub transition-colors duration-200"
-                >
-                  {link.label}
-                </Link>
-              ))}
-            </nav>
-
-            <div className="mt-auto px-6 pb-8 border-t border-brand-beige pt-6">
-              <div className="flex gap-4">
-                <button className="text-sm text-brand-brown-main font-bold">JP</button>
-                <span className="text-brand-beige">|</span>
-                <button className="text-sm text-brand-brown-sub hover:text-brand-brown-main transition-colors duration-200">EN</button>
-              </div>
-            </div>
-
           </div>
         </div>
-      )}
+      </div>
     </>
   )
 }

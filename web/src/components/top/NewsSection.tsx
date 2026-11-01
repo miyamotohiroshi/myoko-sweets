@@ -1,14 +1,28 @@
 import Link from 'next/link'
 import SectionHeading, { AllLink } from './SectionHeading'
+import { getNewsList } from '@/lib/wordpress'
+import { stripTags, formatDotDate } from '@/lib/utils'
 
-// お知らせ（WordPress 側のお知らせ投稿ができるまでは静的データ）
-const NEWS = [
-  { date: '2026.1.1', title: 'webサイトをOPENしました！', href: '/news' },
+// WordPress にお知らせがまだない（または取得できない）ときの表示
+const FALLBACK_NEWS = [
+  { date: '2026.1.1', title: 'webサイトをOPENしました！', href: '/#news' },
 ]
 
-export default function NewsSection() {
+async function loadNews() {
+  try {
+    const posts = await getNewsList(3)
+    if (posts.length === 0) return FALLBACK_NEWS
+    return posts.map(p => ({ date: formatDotDate(p.date), title: stripTags(p.title.rendered), href: `/news/${p.slug}` }))
+  } catch {
+    return FALLBACK_NEWS
+  }
+}
+
+export default async function NewsSection() {
+  const NEWS = await loadNews()
+
   return (
-    <section className="pt-12 md:pt-16 pb-14 md:pb-[76px]">
+    <section id="news" className="scroll-mt-20 pt-12 md:pt-16 pb-14 md:pb-[76px]">
       <div className="max-w-[996px] mx-auto px-5 flex flex-col md:flex-row md:items-center gap-4 md:gap-0">
         <div className="flex items-end justify-between md:w-[333px] shrink-0">
           <SectionHeading en="News" ja="お知らせ" />

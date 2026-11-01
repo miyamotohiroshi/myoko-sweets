@@ -8,13 +8,14 @@ import {
   DRINK_ICON_MAP,
 } from '@/lib/terms'
 import { stripTags } from '@/lib/utils'
+import ShopPhotos from './ShopPhotos'
 
 const ICON = '/images/top/icons'
 
 // ============================================================
 // データ整形
 // ============================================================
-function getPhotos(acf: ShopACF): WPImage[] {
+export function getPhotos(acf: ShopACF): WPImage[] {
   const photos: WPImage[] = []
   for (let i = 1; i <= 20; i++) {
     const img = acf[`photo_${String(i).padStart(2, '0')}_image` as keyof ShopACF] as WPImage | null
@@ -23,17 +24,40 @@ function getPhotos(acf: ShopACF): WPImage[] {
   return photos
 }
 
-function getAccessLines(acf: ShopACF): { main: string | null; sub: string[] } {
+// メイン → サブ → photo_01〜20 の順に並べた全写真（重複は除く）
+export function getGallery(acf: ShopACF): WPImage[] {
+  const all = [acf.image_main, acf.image_sub, ...getPhotos(acf)].filter((img): img is WPImage => Boolean(img?.url))
+  return all.filter((img, i) => all.findIndex(x => x.ID === img.ID) === i)
+}
+
+export type AccessLine = { from: string; time: string }
+
+export function getAccessLines(acf: ShopACF): { main: string | null; sub: AccessLine[] } {
   const sub = [
-    acf.access_from_myoko_ic && `妙高高原ICより${acf.access_from_myoko_ic}`,
-    acf.access_from_shinanomachi_ic && `信濃町ICより${acf.access_from_shinanomachi_ic}`,
-    acf.access_from_nojiriko && `野尻湖畔より${acf.access_from_nojiriko}`,
-  ].filter((v): v is string => Boolean(v))
+    acf.access_from_myoko_ic        && { from: '妙高高原IC', time: acf.access_from_myoko_ic },
+    acf.access_from_shinanomachi_ic && { from: '信濃町IC',   time: acf.access_from_shinanomachi_ic },
+    acf.access_from_nojiriko        && { from: '野尻湖畔',   time: acf.access_from_nojiriko },
+  ].filter((v): v is AccessLine => Boolean(v))
   const main = acf.access ? stripTags(acf.access) : null
   return { main, sub }
 }
 
-function toCardData(shop: Shop) {
+/** 「妙高高原ICより車で 約4分」：所要時間だけ太字＋マーカーで目立たせる */
+export function AccessTime({ from, time }: AccessLine) {
+  const [, before = time, minutes = ''] = time.match(/^(.*?)(約?\s*\d+\s*分.*)$/) ?? []
+  return (
+    <span className="block">
+      {from}より{before}
+      {minutes && (
+        <strong className="ml-1 font-bold text-[1.1em] bg-[linear-gradient(transparent_62%,rgba(218,223,129,0.75)_62%)] px-0.5">
+          {minutes}
+        </strong>
+      )}
+    </span>
+  )
+}
+
+export function toCardData(shop: Shop) {
   const { acf } = shop
   return {
     name:       stripTags(shop.title.rendered),
@@ -49,6 +73,7 @@ function toCardData(shop: Shop) {
     mainImg:    acf.image_main,
     subImg:     acf.image_sub,
     photos:     getPhotos(acf),
+    gallery:    getGallery(acf),
     mapUrl:     acf.google_map_url,
     href:       `/shop/${shop.slug}`,
   }
@@ -59,7 +84,7 @@ type CardData = ReturnType<typeof toCardData>
 // ============================================================
 // パーツ
 // ============================================================
-function Icon({ name, size = 24, label }: { name: string; size?: number; label?: string }) {
+export function Icon({ name, size = 24, label }: { name: string; size?: number; label?: string }) {
   return (
     <Image
       src={`${ICON}/${name}.svg`}
@@ -72,15 +97,7 @@ function Icon({ name, size = 24, label }: { name: string; size?: number; label?:
   )
 }
 
-function PhotoBox({ img, alt, className, sizes }: { img: WPImage | null; alt: string; className: string; sizes: string }) {
-  return (
-    <div className={`relative overflow-hidden bg-[#E5E5E5] ${className}`}>
-      {img && <Image src={img.url} alt={img.alt || alt} fill sizes={sizes} className="object-cover" />}
-    </div>
-  )
-}
-
-function ShopLabel({ label }: { label: string }) {
+export function ShopLabel({ label }: { label: string }) {
   if (!label) return null
   return (
     <p className="flex items-center gap-1.5 text-[13px] font-bold leading-6 tracking-[0.32px] text-brand-brown-sub">
@@ -90,7 +107,7 @@ function ShopLabel({ label }: { label: string }) {
   )
 }
 
-function AreaBadge({ area }: { area: string }) {
+export function AreaBadge({ area }: { area: string }) {
   if (!area) return null
   return (
     <span className="shrink-0 bg-white border border-[#E6E6E6] rounded-[2px] px-[13px] pt-[3px] pb-1 text-[12px] font-bold leading-[22px] tracking-[0.32px] text-brand-brown-main">
@@ -99,7 +116,7 @@ function AreaBadge({ area }: { area: string }) {
   )
 }
 
-function Tags({ categories, drinks }: Pick<CardData, 'categories' | 'drinks'>) {
+export function Tags({ categories, drinks }: Pick<CardData, 'categories' | 'drinks'>) {
   if (!categories.length && !drinks.length) return null
   return (
     <div className="flex flex-wrap items-center gap-3">
@@ -127,7 +144,7 @@ const FEATURE_ONLY_ICONS: { id: number; icon: string; label: string }[] = [
   { id: 33, icon: 'wifi',  label: 'Wi-Fiあり' },
 ]
 
-function Features({ features }: { features: number[] }) {
+export function Features({ features }: { features: number[] }) {
   const texts = FEATURE_TEXT_ICONS.filter(f => features.includes(f.id))
   const icons = FEATURE_ONLY_ICONS.filter(f => features.includes(f.id))
   if (!texts.length && !icons.length) return null
@@ -148,6 +165,17 @@ function Features({ features }: { features: number[] }) {
         </span>
       )}
     </div>
+  )
+}
+
+export function InfoRow({ label, children }: { label: string; children: React.ReactNode }) {
+  return (
+    <>
+      <dt className="mt-[1px] self-start rounded-[3px] bg-brand-gray py-0.5 text-center text-[11px] font-bold leading-[1.7] tracking-[0.5px] text-brand-brown-sub">
+        {label}
+      </dt>
+      <dd>{children}</dd>
+    </>
   )
 }
 
@@ -183,30 +211,20 @@ function Buttons({ mapUrl, href, className = '' }: Pick<CardData, 'mapUrl' | 'hr
 export default function ShopCard({ shop }: { shop: Shop }) {
   const d = toCardData(shop)
 
-  const hoursRow = (d.hours || d.holiday) && (
-    <>
-      {/* PC：1行 */}
-      <p className="hidden md:flex flex-wrap items-center gap-x-3 py-0.5 text-[14px] leading-[25.9px] tracking-[0.32px]">
-        {d.hours && <span><span className="mr-3">営業</span>{d.hours}</span>}
-        {d.hours && d.holiday && <span className="text-brand-beige">｜</span>}
-        {d.holiday && <span><span className="mr-3">定休日</span>{d.holiday}</span>}
-      </p>
-      {/* SP：表形式 */}
-      <dl className="md:hidden grid grid-cols-[72px_1fr] gap-y-1 py-2 text-[13px] leading-[1.8]">
-        {d.hours && <><dt>営業</dt><dd>{d.hours}</dd></>}
-        {d.holiday && <><dt>定休日</dt><dd>{d.holiday}</dd></>}
-      </dl>
-    </>
-  )
+  const hasAccess = Boolean(d.access.main || d.access.sub.length > 0)
 
-  const accessRow = (d.access.main || d.access.sub.length > 0) && (
-    <div className="flex gap-4 border-t border-dashed border-brand-line py-3 text-[14px] leading-[1.8] tracking-[0.32px]">
-      <span className="shrink-0 w-[72px] md:w-auto text-[13px] md:text-[14px]">アクセス</span>
-      <div className="flex flex-col">
-        {d.access.main && <span>{d.access.main}</span>}
-        {d.access.sub.map(line => <span key={line} className="text-[12px]">{line}</span>)}
-      </div>
-    </div>
+  // 営業・定休日・アクセス：見出しを同じ幅のチップにして、値の頭をそろえる
+  const infoList = (d.hours || d.holiday || hasAccess) && (
+    <dl className="grid grid-cols-[56px_1fr] gap-x-3 gap-y-2.5 text-[13px] md:text-[14px] leading-[1.7] tracking-[0.32px]">
+      {d.hours && <InfoRow label="営業">{d.hours}</InfoRow>}
+      {d.holiday && <InfoRow label="定休日">{d.holiday}</InfoRow>}
+      {hasAccess && (
+        <InfoRow label="アクセス">
+          {d.access.main && <span className="block">{d.access.main}</span>}
+          {d.access.sub.map(line => <AccessTime key={line.from} {...line} />)}
+        </InfoRow>
+      )}
+    </dl>
   )
 
   return (
@@ -214,23 +232,7 @@ export default function ShopCard({ shop }: { shop: Shop }) {
 
       {/* ---- 写真 ---- */}
       <div className="order-2 md:order-1 flex flex-col gap-3 md:gap-5 md:w-[570px] shrink-0 -mx-5 md:mx-0">
-        <div className="grid grid-cols-2 gap-[2px]">
-          <PhotoBox img={d.mainImg} alt={d.name} sizes="(max-width: 767px) 50vw, 284px" className="aspect-[195/155] md:aspect-[284/264] md:rounded-l-[14px]" />
-          <PhotoBox img={d.subImg ?? d.photos[0] ?? null} alt={d.name} sizes="(max-width: 767px) 50vw, 284px" className="aspect-[195/155] md:aspect-[284/264] md:rounded-r-[14px]" />
-        </div>
-        {d.photos.length > 0 && (
-          <div className="flex gap-[10px] md:gap-[13px] overflow-x-auto md:overflow-hidden px-5 md:px-0 [scrollbar-width:none]">
-            {d.photos.slice(0, 8).map(p => (
-              <PhotoBox
-                key={p.ID}
-                img={p}
-                alt={d.name}
-                sizes="113px"
-                className="size-[80px] md:size-[113px] shrink-0 rounded-[8.6px] border border-black/5"
-              />
-            ))}
-          </div>
-        )}
+        <ShopPhotos images={d.gallery} thumbs={d.photos.slice(0, 8)} name={d.name} />
       </div>
 
       {/* ---- テキスト ---- */}
@@ -247,11 +249,10 @@ export default function ShopCard({ shop }: { shop: Shop }) {
         {/* PC のみここに説明・詳細（SP は写真の下に表示） */}
         <div className="hidden md:flex flex-col">
           {d.text && <p className="py-4 text-[16px] font-medium leading-[1.8]">{d.text}</p>}
-          <div className="py-3">
+          <div className="pb-2">
             <Features features={d.features} />
-            {hoursRow}
           </div>
-          {accessRow}
+          {infoList && <div className="border-t border-dashed border-brand-line pt-4">{infoList}</div>}
           <Buttons mapUrl={d.mapUrl} href={d.href} className="pt-5 mt-auto" />
         </div>
       </div>
@@ -259,38 +260,14 @@ export default function ShopCard({ shop }: { shop: Shop }) {
       {/* ---- SP：説明・詳細ボックス ---- */}
       <div className="order-3 md:hidden flex flex-col">
         {d.text && <p className="pb-4 text-[14px] font-medium leading-[1.9]">{d.text}</p>}
-        <div className="border border-[#E6E6E6] rounded-[4px] px-4 py-3">
-          <div className="border-b border-dashed border-brand-line pb-2">
+        <div className="bg-white border border-[#E6E6E6] rounded-[4px] px-4 py-3">
+          <div className="border-b border-dashed border-brand-line pb-2 mb-3">
             <Features features={d.features} />
           </div>
-          {hoursRow}
-          {accessRow}
+          {infoList}
         </div>
         <Buttons mapUrl={d.mapUrl} href={d.href} className="pt-6" />
       </div>
     </article>
-  )
-}
-
-// ============================================================
-// グリッド表示カード
-// ============================================================
-export function ShopGridCard({ shop }: { shop: Shop }) {
-  const d = toCardData(shop)
-  return (
-    <Link href={d.href} className="group flex flex-col gap-2 text-brand-brown-main">
-      <PhotoBox
-        img={d.mainImg}
-        alt={d.name}
-        sizes="(max-width: 767px) 50vw, 320px"
-        className="aspect-[4/3] rounded-[14px] border border-brand-beige"
-      />
-      <ShopLabel label={d.label} />
-      <div className="flex items-start justify-between gap-2">
-        <h3 className="text-[16px] md:text-[18px] font-bold leading-[1.5] group-hover:opacity-80">{d.name}</h3>
-        <AreaBadge area={d.area} />
-      </div>
-      <Tags categories={d.categories} drinks={[]} />
-    </Link>
   )
 }

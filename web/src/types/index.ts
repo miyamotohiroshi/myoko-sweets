@@ -43,6 +43,7 @@ export type Feature =
 
 export type SeasonType =
   | 'all_year'
+  | 'year_round'
   | 'winter_only'
   | 'green_only'
   | 'limited'
@@ -52,6 +53,7 @@ export type PaymentMethod =
   | 'credit'
   | 'ic'
   | 'qr'
+  | 'qr_payment'
 
 // ============================================
 // 画像
@@ -188,6 +190,7 @@ export type ShopACF = {
 
   // 口コミ
   review_summary: string
+  x_post_urls?: string  // ピックアップする X の投稿URL（1行に1件）
 
   // 外部リンク
   google_map_url: string
@@ -200,7 +203,7 @@ export type ShopACF = {
   payment_methods: PaymentMethod[]
 
   // 近くの施設（手動ピックアップ）
-  featured_spots: number[]  // スポットの投稿ID
+  featured_spots: (number | { ID: number })[]  // スポットの投稿ID（REST では投稿オブジェクトで返る）
 }
 
 // ============================================
@@ -265,6 +268,11 @@ export type WPPost = {
   date: string
   modified: string
   acf?: Record<string, unknown>
+  categories?: number[]
+  _embedded?: {
+    'wp:featuredmedia'?: { source_url: string; alt_text?: string; media_details?: { width: number; height: number } }[]
+    'wp:term'?: { id: number; name: string; slug: string; taxonomy: string }[][]
+  }
 }
 
 // ============================================

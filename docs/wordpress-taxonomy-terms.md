@@ -105,7 +105,21 @@ WordPress管理画面 → 各タクソノミー名（左メニューに表示さ
 
 ---
 
+## ⑦ feature_category（特集カテゴリ）
+
+対象：特集記事 → 特集カテゴリ
+
+| 名前 | スラッグ |
+|---|---|
+| スイーツ | sweets |
+| カフェ | cafe |
+| 観光 | sightseeing |
+| グルメ | gourmet |
+| コラム | column |
+
+---
+
 ## 注意
 
 - スラッグはアルファベット・アンダースコアのみで入力してください
-- 階層型タクソノミー（shop_type・area・spot_category）は親子関係は不要です（フラット構造で登録）
+- 階層型タクソノミー（shop_type・area・spot_category・feature_category）は親子関係は不要です（フラット構造で登録）

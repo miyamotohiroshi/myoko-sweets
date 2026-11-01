@@ -15,6 +15,22 @@ export const SWEETS_CATEGORY_MAP: Record<number, string> = {
   17: 'パンケーキ',
 }
 
+// スイーツカテゴリ term ID → アイコン（public/images/sweets/{slug}.svg）
+export const SWEETS_ICON_MAP: Record<number, string> = {
+  6:  'cake',
+  7:  'crepe',
+  8:  'ice',
+  9:  'pudding',
+  10: 'parfait',
+  11: 'gelato',
+  12: 'cookie',
+  13: 'wagashi',
+  14: 'local',
+  15: 'cream_puff',
+  16: 'kakigori',
+  17: 'pancake',
+}
+
 export const SHOP_TYPE_MAP: Record<number, string> = {
   2: 'スイーツ店',
   3: 'カフェ',
@@ -28,6 +44,17 @@ export const DRINK_ICON_MAP: Record<number, 'coffee' | 'tea' | 'beer'> = {
   19: 'tea',
   20: 'tea',
   21: 'beer',
+}
+
+// 観光スポットのカテゴリ（spot_category）
+export const SPOT_CATEGORY_MAP: Record<number, string> = {
+  35: '神社・寺',
+  36: '温泉',
+  37: '自然・景勝地',
+  38: 'スキー場',
+  39: '体験・アクティビティ',
+  40: 'ショッピング',
+  41: 'その他',
 }
 
 export const AREA_MAP: Record<number, string> = {

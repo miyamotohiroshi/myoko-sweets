@@ -3,7 +3,8 @@
 import { useState, useMemo } from 'react'
 import Image from 'next/image'
 import type { Shop } from '@/types'
-import ShopCard, { ShopGridCard } from './ShopCard'
+import ShopCard from './ShopCard'
+import SweetsPanels from './SweetsPanels'
 import SectionHeading from './SectionHeading'
 import {
   SWEETS_CATEGORY_MAP,
@@ -50,13 +51,17 @@ function filterShops(shops: Shop[], sweets: string, type: string, area: string):
 // ============================================================
 // メインコンポーネント
 // ============================================================
-export default function ShopsSection({ shops }: { shops: Shop[] }) {
+// initialSweets：店舗詳細ページの「スイーツでお店を探す」から ?sweets=ケーキ で来たときの初期絞り込み
+export default function ShopsSection({ shops, initialSweets }: { shops: Shop[]; initialSweets?: string }) {
+  const validSweets = initialSweets && SWEETS_ID_BY_NAME[initialSweets] ? initialSweets : null
   const [activeTab,    setActiveTab]    = useState<TabId>('sweets')
-  const [sweetsFilter, setSweetsFilter] = useState(ALL)
+  const [sweetsFilter, setSweetsFilter] = useState(validSweets ?? ALL)
   const [typeFilter,   setTypeFilter]   = useState(ALL)
   const [areaFilter,   setAreaFilter]   = useState(ALL)
-  const [showAllSweets, setShowAllSweets] = useState(false)
+  const [showAllSweets, setShowAllSweets] = useState(validSweets ? SWEETS_MORE.includes(validSweets) : false)
   const [view, setView] = useState<ViewMode>('list')
+  // パネル表示の並び順（パネル表示に切り替えるたびにシャッフル）
+  const [panelSeed, setPanelSeed] = useState(1)
   const [page, setPage] = useState(1)
 
   const filteredShops = useMemo(
@@ -66,6 +71,11 @@ export default function ShopsSection({ shops }: { shops: Shop[] }) {
   const totalPages = Math.max(1, Math.ceil(filteredShops.length / PER_PAGE))
   const currentPage = Math.min(page, totalPages)
   const pageShops = filteredShops.slice((currentPage - 1) * PER_PAGE, currentPage * PER_PAGE)
+
+  const changeView = (mode: ViewMode) => {
+    if (mode === 'grid' && view !== 'grid') setPanelSeed(Math.floor(Math.random() * 1_000_000) + 1)
+    setView(mode)
+  }
 
   // フィルター変更時は1ページ目に戻す
   const withReset = (setter: (v: string) => void) => (v: string) => { setter(v); setPage(1) }
@@ -128,15 +138,15 @@ export default function ShopsSection({ shops }: { shops: Shop[] }) {
       {/* ==================== Store ==================== */}
       {activeTab === 'sweets' ? (
         <section id="store" className="relative scroll-mt-16 pt-12 md:pt-20 pb-16 md:pb-[70px]">
-          {/* 左側の淡い背景（Figma: bg-store-section） */}
-          <div aria-hidden="true" className="absolute left-0 top-[100px] md:top-[80px] w-[28%] md:w-[37.4%] h-[min(1275px,80%)] bg-brand-store-bg" />
+          {/* 左側の淡い背景（Figma: bg-store-section）。上端は Store 見出しの上下中央に合わせる */}
+          <div aria-hidden="true" className="absolute left-0 top-[70px] md:top-[102px] w-[28%] md:w-[37.4%] h-[min(1275px,80%)] bg-brand-store-bg" />
 
           <div className="relative max-w-[1040px] mx-auto px-5">
             <div className="flex items-end justify-between">
               <SectionHeading en="Store" ja="お店一覧" />
               <div className="flex gap-3 md:gap-4">
-                <ViewButton mode="list" icon="list" label="リスト表示" view={view} onClick={setView} />
-                <ViewButton mode="grid" icon="grid" label="グリッド表示" view={view} onClick={setView} />
+                <ViewButton mode="list" icon="list" label="リスト表示" view={view} onClick={changeView} />
+                <ViewButton mode="grid" icon="grid" label="人気のスイーツをパネルで表示" view={view} onClick={changeView} />
               </div>
             </div>
 
@@ -148,14 +158,13 @@ export default function ShopsSection({ shops }: { shops: Shop[] }) {
                   {pageShops.map(shop => <ShopCard key={shop.id} shop={shop} />)}
                 </div>
               ) : (
-                <div className="grid grid-cols-2 md:grid-cols-3 gap-x-4 md:gap-x-[26px] gap-y-10">
-                  {pageShops.map(shop => <ShopGridCard key={shop.id} shop={shop} />)}
-                </div>
+                // パネル表示：絞り込んだ全店舗の「人気のスイーツ」を写真で並べる（ページ送りなし）
+                <SweetsPanels shops={filteredShops} seed={panelSeed} />
               )}
             </div>
 
             <div className="mt-16 md:mt-[100px] h-px bg-brand-beige/70" />
-            <Pagination current={currentPage} total={totalPages} onChange={setPage} />
+            {view === 'list' && <Pagination current={currentPage} total={totalPages} onChange={setPage} />}
           </div>
         </section>
       ) : (

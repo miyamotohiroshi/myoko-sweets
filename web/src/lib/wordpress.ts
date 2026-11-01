@@ -220,6 +220,60 @@ export async function getTermBySlug(
 }
 
 // ============================================
+// お知らせ（WordPress 標準の「投稿」を NEWS として使う）
+// ============================================
+
+// WordPress を入れたときに自動で作られるサンプル投稿は一覧に出さない
+const SAMPLE_POST_SLUGS = ['hello-world']
+
+// 一覧（新しい順）
+export async function getNewsList(perPage = 20): Promise<WPPost[]> {
+  const res = await fetch(
+    `${WP_API_URL}/wp/v2/posts?per_page=${perPage}&_embed`,
+    { next: { revalidate: 3600 } }
+  )
+  if (!res.ok) throw new Error('お知らせの取得に失敗しました')
+  const posts: WPPost[] = await res.json()
+  return posts.filter(p => !SAMPLE_POST_SLUGS.includes(p.slug))
+}
+
+// スラッグで1件取得
+export async function getNewsBySlug(slug: string): Promise<WPPost | null> {
+  const res = await fetch(
+    `${WP_API_URL}/wp/v2/posts?slug=${encodeURIComponent(slug)}&_embed`,
+    { next: { revalidate: 3600 } }
+  )
+  if (!res.ok) throw new Error('お知らせの取得に失敗しました')
+  const data = await res.json()
+  return data[0] ?? null
+}
+
+// ============================================
+// 特集記事（カスタム投稿タイプ feature）
+// ============================================
+
+// 一覧（新しい順）
+export async function getFeatureList(perPage = 20): Promise<WPPost[]> {
+  const res = await fetch(
+    `${WP_API_URL}/wp/v2/feature?per_page=${perPage}&_embed`,
+    { next: { revalidate: 3600 } }
+  )
+  if (!res.ok) throw new Error('特集記事の取得に失敗しました')
+  return res.json()
+}
+
+// スラッグで1件取得
+export async function getFeatureBySlug(slug: string): Promise<WPPost | null> {
+  const res = await fetch(
+    `${WP_API_URL}/wp/v2/feature?slug=${encodeURIComponent(slug)}&_embed`,
+    { next: { revalidate: 3600 } }
+  )
+  if (!res.ok) throw new Error('特集記事の取得に失敗しました')
+  const data = await res.json()
+  return data[0] ?? null
+}
+
+// ============================================
 // ブログ記事
 // ============================================
 export async function getPosts(page = 1, perPage = 10): Promise<WPPost[]> {
