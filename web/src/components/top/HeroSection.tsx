@@ -1,9 +1,16 @@
 import Image from 'next/image'
+import HeroFade from './HeroFade'
 
 // 1440px 基準の座標を % に変換（PC は画面幅に合わせて比率維持）
 const pcX = (px: number) => `${(px / 1440) * 100}%`
 
 type Deco = { src: string; w: number; h: number; style: React.CSSProperties; opacity?: number }
+
+// 左の画像（妙高山の景色 → 野尻湖のSUP をフェードで切り替え）
+const LEFT_SLIDES = [
+  { src: '/images/top/hero-left.png',   alt: '妙高山の景色' },
+  { src: '/images/top/hero-left-2.png', alt: '野尻湖でSUPを楽しむ様子' },
+]
 
 // Figma（Section - HERO）のデコレーション配置
 const PC_DECOS: Deco[] = [
@@ -78,7 +85,7 @@ export default function HeroSection() {
       {/* ===== PC（md 以上）：1440px 基準 ===== */}
       <div className="absolute inset-y-0 left-1/2 -translate-x-1/2 w-full max-w-[1440px] hidden md:block">
         <div className="absolute z-10" style={{ left: pcX(261), top: 88, width: pcX(254) }}>
-          <Image src="/images/top/hero-left.png" alt="妙高山の景色" width={254} height={234} priority className="w-full h-auto" />
+          <HeroFade slides={LEFT_SLIDES} width={254} height={234} priority />
         </div>
         <div className="absolute z-10" style={{ left: pcX(574), top: 88, width: pcX(350) }}>
           <Image src="/images/top/hero-center.png" alt="いちごのショートケーキ" width={350} height={336} priority className="w-full h-auto" />
@@ -104,7 +111,7 @@ export default function HeroSection() {
           <Image src="/images/top/hero-right.png" alt="プリン" width={278} height={233} priority className="w-full h-auto" />
         </div>
         <div className="absolute z-10" style={{ left: 236, top: 260, width: 176 }}>
-          <Image src="/images/top/hero-left.png" alt="妙高山の景色" width={254} height={234} priority className="w-full h-auto" />
+          <HeroFade slides={LEFT_SLIDES} width={254} height={234} priority />
         </div>
 
         <Decos items={SP_DECOS} />

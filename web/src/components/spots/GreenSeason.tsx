@@ -1,19 +1,7 @@
 import Image from 'next/image'
 import Link from 'next/link'
-import { GREEN_STYLES, GREEN_THEMES, TRAVEL_LINKS, SPOTS_MAP, MAIN_AREAS } from '@/lib/spotsContent'
-
-function Heading({ en, ja }: { en: string; ja: string }) {
-  return (
-    <h2 className="flex items-baseline gap-3">
-      <span className="font-klee font-semibold text-[26px] md:text-[32px] leading-none tracking-[0.5px] [-webkit-text-stroke:0.6px_currentColor]">{en}</span>
-      <span className="text-[13px] md:text-[14px] font-bold text-brand-brown-sub">{ja}</span>
-    </h2>
-  )
-}
-
-const Arrow = () => (
-  <Image src="/images/top/icons/card-arrow.svg" alt="" width={60} height={8} className="transition-transform group-hover:translate-x-1" />
-)
+import { GREEN_STYLES, GREEN_THEMES, SPOTS_MAP, MAIN_AREAS } from '@/lib/spotsContent'
+import { Heading, Arrow, Thumb, TravelSection, MapSection } from './SpotParts'
 
 /** 観光スポットページ：グリーンシーズンの中身 */
 export default function GreenSeason() {
@@ -63,74 +51,41 @@ export default function GreenSeason() {
         </ul>
       </section>
 
-      {/* ==================== 旅のお役立ち ==================== */}
-      <section>
-        <Heading en="Travel" ja="旅のお役立ち" />
-        <p className="mt-3 text-[13px] text-brand-brown-sub">妙高高原周辺を Google マップで探せます</p>
-        <ul className="mt-6 grid grid-cols-3 md:grid-cols-6 gap-4 md:gap-6 max-w-[760px]">
-          {TRAVEL_LINKS.map(item => (
-            <li key={item.label}>
-              <a
-                href={item.href}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="group mx-auto flex aspect-square w-full max-w-[110px] flex-col items-center justify-center gap-0.5 rounded-full border border-brand-line bg-white text-center transition-all hover:-translate-y-0.5 hover:border-brand-green hover:bg-brand-store-bg"
-              >
-                <span className="font-klee font-semibold text-[12px] md:text-[13px] leading-none text-brand-brown-sub">{item.en}</span>
-                <span className="text-[12px] md:text-[13px] font-bold leading-[1.5]">#{item.label}</span>
-              </a>
-            </li>
-          ))}
-        </ul>
-      </section>
+      <TravelSection />
 
-      {/* ==================== 観光マップ ==================== */}
-      <section>
-        <Heading en="Map" ja="観光マップ" />
-        <div className="mt-6 overflow-hidden rounded-[18px] border border-brand-line bg-brand-ivory">
-          <iframe
-            src={SPOTS_MAP.embed}
-            title="妙高高原・野尻湖エリアの地図"
-            loading="lazy"
-            referrerPolicy="no-referrer-when-downgrade"
-            className="block h-[320px] md:h-[440px] w-full"
-          />
-        </div>
-        <div className="mt-4 flex justify-center md:justify-end">
-          <a
-            href={SPOTS_MAP.link}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="inline-flex items-center gap-1.5 rounded-full border border-brand-brown-main bg-white px-5 h-11 text-[13px] font-bold transition-colors hover:bg-brand-ivory"
-          >
-            <Image src="/images/top/icons/google-map.svg" alt="" width={16} height={16} />
-            GoogleMap（観光地まとめ）
-            <Image src="/images/top/icons/external-link.svg" alt="" width={11} height={11} />
-          </a>
-        </div>
-      </section>
+      <MapSection
+        ja="観光マップ"
+        embed={SPOTS_MAP.embed}
+        link={SPOTS_MAP.link}
+        label="GoogleMap（観光地まとめ）"
+        title="妙高高原・野尻湖エリアの地図"
+      />
 
       {/* ==================== 主要エリア ==================== */}
       <section>
         <Heading en="Area" ja="主要エリア" />
-        <ul className="mt-6 grid gap-3 md:grid-cols-2 md:gap-4">
+        <ul className="mt-6 grid grid-cols-2 md:grid-cols-3 gap-x-3 gap-y-5 md:gap-x-6 md:gap-y-8">
           {MAIN_AREAS.map(area => (
             <li key={area.name}>
               <a
                 href={area.map}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="group flex h-full items-center gap-4 rounded-[14px] bg-white px-5 py-4 shadow-[0_4px_14px_rgba(92,74,42,0.07)] transition-all hover:-translate-y-0.5 hover:shadow-[0_8px_20px_rgba(92,74,42,0.12)]"
+                aria-label={`${area.name}を Google マップで見る`}
+                className="group flex h-full flex-col overflow-hidden rounded-[14px] bg-white shadow-[0_4px_14px_rgba(92,74,42,0.07)] transition-all hover:-translate-y-0.5 hover:shadow-[0_8px_20px_rgba(92,74,42,0.12)]"
               >
-                <div className="flex-1 flex flex-col gap-1">
-                  <span className="self-start rounded-[3px] bg-brand-gray px-2 py-0.5 text-[11px] font-bold text-brand-brown-sub">{area.access}</span>
-                  <span className="text-[16px] md:text-[17px] font-bold">{area.name}</span>
+                <div className="relative aspect-[16/10] overflow-hidden bg-brand-store-bg">
+                  <Thumb src={area.image} sizes="(max-width: 767px) 50vw, 330px" />
+                  <span className="absolute right-2 top-2 flex items-center gap-1 rounded-full bg-white/90 px-2 py-1 text-[10px] font-bold text-brand-brown-sub shadow-sm backdrop-blur-sm">
+                    <Image src="/images/top/icons/google-map.svg" alt="" width={12} height={12} />
+                    MAP
+                  </span>
+                </div>
+                <div className="flex flex-1 flex-col gap-1.5 px-3 md:px-5 pt-3 md:pt-4 pb-4 md:pb-5">
+                  <span className="self-start rounded-[3px] bg-brand-gray px-2 py-0.5 text-[10px] md:text-[11px] font-bold text-brand-brown-sub">{area.access}</span>
+                  <span className="text-[15px] md:text-[17px] font-bold leading-[1.5]">{area.name}</span>
                   <span className="text-[12px] md:text-[13px] leading-[1.7] text-brand-brown-sub">{area.text}</span>
                 </div>
-                <span className="flex shrink-0 flex-col items-center gap-1 text-[10px] font-bold text-brand-brown-sub">
-                  <Image src="/images/top/icons/google-map.svg" alt="" width={20} height={20} className="transition-transform group-hover:scale-110" />
-                  MAP
-                </span>
               </a>
             </li>
           ))}
