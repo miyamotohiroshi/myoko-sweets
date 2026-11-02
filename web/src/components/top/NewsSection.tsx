@@ -5,7 +5,7 @@ import { stripTags, formatDotDate } from '@/lib/utils'
 
 // WordPress にお知らせがまだない（または取得できない）ときの表示
 const FALLBACK_NEWS = [
-  { date: '2026.1.1', title: 'webサイトをOPENしました！', href: '/#news' },
+  { date: '2026.1.1', title: 'webサイトをOPENしました！', href: '/news' },
 ]
 
 async function loadNews() {

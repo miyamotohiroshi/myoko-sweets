@@ -220,6 +220,23 @@ export async function getTermBySlug(
 }
 
 // ============================================
+// 記事一覧のページ送り（WordPress は総ページ数をヘッダーで返す）
+// ============================================
+export type PostPage = { posts: WPPost[]; totalPages: number }
+
+async function getPostPage(restBase: string, page: number, perPage: number): Promise<PostPage> {
+  const res = await fetch(
+    `${WP_API_URL}/wp/v2/${restBase}?per_page=${perPage}&page=${page}&_embed`,
+    { next: { revalidate: 3600 } }
+  )
+  // 範囲外のページは WordPress が 400 を返すので空として扱う
+  if (res.status === 400) return { posts: [], totalPages: 0 }
+  if (!res.ok) throw new Error('記事の取得に失敗しました')
+  const posts: WPPost[] = await res.json()
+  return { posts, totalPages: Number(res.headers.get('X-WP-TotalPages') ?? 1) }
+}
+
+// ============================================
 // お知らせ（WordPress 標準の「投稿」を NEWS として使う）
 // ============================================
 
@@ -235,6 +252,12 @@ export async function getNewsList(perPage = 20): Promise<WPPost[]> {
   if (!res.ok) throw new Error('お知らせの取得に失敗しました')
   const posts: WPPost[] = await res.json()
   return posts.filter(p => !SAMPLE_POST_SLUGS.includes(p.slug))
+}
+
+// 一覧のページ送り用
+export async function getNewsPage(page = 1, perPage = 10): Promise<PostPage> {
+  const result = await getPostPage('posts', page, perPage)
+  return { ...result, posts: result.posts.filter(p => !SAMPLE_POST_SLUGS.includes(p.slug)) }
 }
 
 // スラッグで1件取得
@@ -260,6 +283,11 @@ export async function getFeatureList(perPage = 20): Promise<WPPost[]> {
   )
   if (!res.ok) throw new Error('特集記事の取得に失敗しました')
   return res.json()
+}
+
+// 一覧のページ送り用
+export async function getFeaturePage(page = 1, perPage = 12): Promise<PostPage> {
+  return getPostPage('feature', page, perPage)
 }
 
 // スラッグで1件取得

@@ -48,6 +48,9 @@ function shuffle<T>(items: T[], seed: number): T[] {
 // ============================================================
 function SweetsModal({ panel, onClose }: { panel: Panel; onClose: () => void }) {
   const d = toCardData(panel.shop)
+  // お店の写真：サブ画像（外観など）→ メイン画像の順。スイーツと同じ写真なら出さない
+  const shopImage = [d.subImg, d.mainImg].find(img => img?.url && img.url !== panel.image.url) ?? null
+  const [showShop, setShowShop] = useState(false)
 
   // Esc で閉じる・開いている間は背景をスクロールさせない
   useEffect(() => {
@@ -81,14 +84,64 @@ function SweetsModal({ panel, onClose }: { panel: Panel; onClose: () => void }) 
           </svg>
         </button>
 
-        {/* 左：スイーツ */}
-        <div className="relative aspect-square md:w-1/2 shrink-0 bg-brand-ivory">
-          <Image src={panel.image.url} alt={panel.name || d.name} fill sizes="(max-width: 767px) 100vw, 440px" className="object-cover" />
-          <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/60 via-black/25 to-transparent px-5 pb-4 pt-12 text-white">
-            <p className="text-[11px] font-bold tracking-[1px] opacity-80">人気のスイーツ</p>
-            <p className="mt-0.5 text-[18px] md:text-[20px] font-bold leading-[1.5]">{panel.name}</p>
-            {panel.price && <p className="text-[14px] font-bold opacity-90">{panel.price}</p>}
+        {/* 左：スイーツ（右下の丸い写真を押すとお店の写真と入れ替わる） */}
+        <div className="relative aspect-square md:w-1/2 shrink-0 overflow-hidden bg-brand-ivory">
+          <Image
+            src={panel.image.url}
+            alt={panel.name || d.name}
+            fill
+            sizes="(max-width: 767px) 100vw, 440px"
+            className={`object-cover transition-opacity duration-500 ${showShop ? 'opacity-0' : 'opacity-100'}`}
+          />
+          {shopImage && (
+            <Image
+              src={shopImage.url}
+              alt={`${d.name}のお店`}
+              fill
+              sizes="(max-width: 767px) 100vw, 440px"
+              className={`object-cover transition-opacity duration-500 ${showShop ? 'opacity-100' : 'opacity-0'}`}
+            />
+          )}
+
+          <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/60 via-black/25 to-transparent pl-5 pr-24 pb-4 pt-12 text-white">
+            {showShop ? (
+              <>
+                <p className="text-[11px] font-bold tracking-[1px] opacity-80">お店</p>
+                <p className="mt-0.5 text-[18px] md:text-[20px] font-bold leading-[1.5]">{d.name}</p>
+                {d.area && <p className="text-[14px] font-bold opacity-90">{d.area}</p>}
+              </>
+            ) : (
+              <>
+                <p className="text-[11px] font-bold tracking-[1px] opacity-80">人気のスイーツ</p>
+                <p className="mt-0.5 text-[18px] md:text-[20px] font-bold leading-[1.5]">{panel.name}</p>
+                {panel.price && <p className="text-[14px] font-bold opacity-90">{panel.price}</p>}
+              </>
+            )}
           </div>
+
+          {/* 入れ替え用の丸い写真（今は出ていない方を表示） */}
+          {shopImage && (
+            <button
+              type="button"
+              onClick={() => setShowShop(v => !v)}
+              aria-label={showShop ? 'スイーツの写真を見る' : 'お店の写真を見る'}
+              className="group absolute bottom-4 right-4 z-10 flex flex-col items-center gap-1"
+            >
+              <span className="relative block size-[52px] md:size-14 overflow-hidden rounded-full border-2 border-white shadow-[0_4px_12px_rgba(0,0,0,0.3)] transition-transform duration-300 group-hover:scale-110">
+                <Image
+                  key={showShop ? 'sweets' : 'shop'}
+                  src={showShop ? panel.image.url : shopImage.url}
+                  alt=""
+                  fill
+                  sizes="56px"
+                  className="object-cover animate-fade-in"
+                />
+              </span>
+              <span className="text-[10px] font-bold tracking-[0.5px] text-white [text-shadow:0_1px_3px_rgba(0,0,0,0.5)]">
+                {showShop ? 'スイーツ' : 'お店'}
+              </span>
+            </button>
+          )}
         </div>
 
         {/* 右：お店の情報 */}
@@ -163,7 +216,7 @@ export default function SweetsPanels({ shops, seed }: { shops: Shop[]; seed: num
         ))}
       </ul>
 
-      {active && <SweetsModal panel={active} onClose={close} />}
+      {active && <SweetsModal key={active.key} panel={active} onClose={close} />}
     </>
   )
 }

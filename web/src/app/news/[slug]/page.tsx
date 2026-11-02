@@ -8,6 +8,7 @@ import { SITE_INFO } from '@/config/site'
 import { stripTags, sanitizeHtml, formatDotDate } from '@/lib/utils'
 import { Breadcrumb } from '@/components/shop/ShopParts'
 import ArticleSidebar from '@/components/article/ArticleSidebar'
+import PageBand from '@/components/article/PageBand'
 import ShareButtons from '@/components/article/ShareButtons'
 import { getTermNames, getEyecatch } from '@/lib/article'
 
@@ -94,12 +95,7 @@ export default async function NewsDetailPage({ params }: Props) {
     <main className="overflow-x-clip pt-16 md:pt-[72px] text-brand-brown-main">
 
       {/* ==================== ページ見出し ==================== */}
-      <div className="border-b border-brand-line bg-brand-store-bg">
-        <div className="max-w-[1080px] mx-auto px-5 md:px-10 py-6 md:py-8 flex items-end gap-3">
-          <p className="font-klee font-semibold text-[30px] md:text-[36px] leading-none tracking-[0.5px] [-webkit-text-stroke:0.6px_currentColor]">News</p>
-          <p className="text-[13px] md:text-[14px] font-bold text-brand-brown-sub">お知らせ</p>
-        </div>
-      </div>
+      <PageBand en="News" ja="お知らせ" />
 
       <div className="max-w-[1080px] mx-auto px-5 md:px-10 pt-8 md:pt-12 pb-16 md:pb-24 md:grid md:grid-cols-[1fr_300px] md:gap-12 lg:gap-16">
 
@@ -143,7 +139,7 @@ export default async function NewsDetailPage({ params }: Props) {
 
           <div className="mt-10 flex justify-center">
             <Link
-              href="/#news"
+              href="/news"
               className="relative flex items-center justify-center h-12 w-[220px] rounded-full border border-brand-beige bg-white text-[14px] font-bold tracking-[0.32px] transition-colors hover:bg-brand-ivory"
             >
               お知らせ一覧へ
@@ -164,7 +160,7 @@ export default async function NewsDetailPage({ params }: Props) {
           <Breadcrumb
             items={[
               { label: 'TOP', href: '/' },
-              { label: 'お知らせ', href: '/#news' },
+              { label: 'お知らせ', href: '/news' },
               { label: title },
             ]}
           />
