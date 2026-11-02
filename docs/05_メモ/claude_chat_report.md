@@ -7,42 +7,40 @@ Claude Code
 2026年11月02日
 
 ## 今回完了したタスク
-- WordPress は CMS（データの入力・保存）としてだけ使い、表示はすべて Next.js（React）で行う方針を整理。記事詳細（/news/[slug]・/feature/[slug]）はすでに Next.js 側で WordPress の REST API から取得して表示している
-- 記事一覧ページを Next.js に追加
-  - お知らせ一覧 /news：日付・カテゴリ・タイトルの行リスト、10件ずつのページ送り（?page=2）、PC は右サイドバー
-  - 特集・コラム一覧 /feature：1ページ目は最新記事を大きく、残りは2列のカード（アイキャッチ・カテゴリ・日付・タイトル・抜粋）、12件ずつのページ送り、PC は右サイドバー
-  - 記事がないときは「まだありません」を表示
-- 詳細ページの「一覧へ」ボタン・パンくず、TOP の「ALL」が一覧ページへつながるように変更
-- 共通部品を追加：ページ上部の見出し帯（PageBand）、ページ送り（ListPagination）
-- 人気スイーツのモーダルに、右下の丸い写真でスイーツとお店の写真を入れ替える機能を追加（案B）
-- サンプルデータを一時的に入れて PC・SP の表示とページ送りを確認（確認後に削除済み）
+- お知らせのダミー記事「webサイトをOPENしました！」を WordPress に登録・公開（公開日 2026/1/1、スラッグ site-open）
+- 観光スポットページ /spots を新規作成（グリーンシーズン）
+  - TOP の中央タブ（スイーツ／観光スポット／モデルプラン）を共通部品 CategoryTabs にし、見た目はタブのまま、それぞれ独立したページへのリンクに変更。スイーツ → TOP のお店一覧、観光スポット → /spots、モデルプランは「近日公開」（押せない）
+  - /spots の構成：タブ → ヒーロー（Enjoy TRIP）→ グリーンシーズン｜ウィンターシーズンの切り替え → 中身 → パンくず
+  - グリーンシーズンの中身：楽しみ方で選ぶ（Calm／Active の大カード）、テーマで選ぶ（日帰り温泉・足湯／映える写真スポット／お土産店情報）、旅のお役立ち（#ランチ・#宿ホテル・#ツアー・#レンタカー・#バス・#タクシーの丸ボタン）、観光マップ（Google マップ埋め込み＋観光地まとめボタン）、主要エリア（10エリア：最寄りIC・名前・ひとこと・MAP）
+  - ウィンターシーズンは「準備中」の表示。?season=winter で直接開ける
+- 表示内容は web/src/lib/spotsContent.ts にまとめた
 
 ## 作成・変更したファイル
 | ファイルパス | 変更内容 |
 |---|---|
-| web/src/app/news/page.tsx | お知らせ一覧（新規） |
-| web/src/app/feature/page.tsx | 特集・コラム一覧（新規） |
-| web/src/components/article/PageBand.tsx | 見出し帯（新規・共通） |
-| web/src/components/article/ListPagination.tsx | ページ送り（新規・共通） |
-| web/src/lib/wordpress.ts | getNewsPage・getFeaturePage（総ページ数つき）を追加 |
-| web/src/app/news/[slug]/page.tsx | 見出し帯を共通部品に、一覧へのリンクを /news に |
-| web/src/app/feature/[slug]/page.tsx | 見出し帯を共通部品に、一覧へのリンクを /feature に |
-| web/src/components/top/NewsSection.tsx | 仮のお知らせのリンクを /news に |
-| web/src/components/top/SweetsPanels.tsx | モーダルの写真入れ替え |
+| web/src/app/spots/page.tsx | 観光スポットページ（新規） |
+| web/src/components/spots/SeasonSwitch.tsx | シーズン切り替え（新規） |
+| web/src/components/spots/GreenSeason.tsx | グリーンシーズンの中身（新規） |
+| web/src/components/top/CategoryTabs.tsx | TOP・観光スポット共通のリンク型タブ（新規） |
+| web/src/lib/spotsContent.ts | 観光スポットページの表示内容（新規） |
+| web/src/components/top/ShopsSection.tsx | タブを CategoryTabs に置き換え、id="shops" を追加 |
 
 ## タスク管理の更新内容
 | ファイル | タスク名 | 変更前 | 変更後 |
 |---|---|---|---|
-| 03_WEBサイト/サイト構成.md | お知らせ一覧 | （記載なし） | 🟡 進行中 |
-| 03_WEBサイト/サイト構成.md | 特集・コラム一覧 | （記載なし） | 🟡 進行中 |
+| 03_WEBサイト/サイト構成.md | 観光スポット（グリーンシーズン） | （記載なし） | 🟡 進行中 |
+| 03_WEBサイト/サイト構成.md | 観光スポット（ウィンターシーズン） | （記載なし） | 🔴 未着手（デザイン共有待ち） |
 
 ## Claude Chatへの申し送り事項
-- WordPress 側で用意するのは記事の中身（タイトル・本文・アイキャッチ・抜粋・カテゴリ）だけでよい。テーマやテンプレートは不要
-- サイト構成.md の「SEO記事一覧 /blog/」は、今回の「特集・コラム一覧 /feature/」と役割が重なるので、整理したい
+- 「楽しみ方で選ぶ」「テーマで選ぶ」のリンク先は、記事ができるまで特集・コラム一覧（/feature）にしている。記事ができたら spotsContent.ts の href を差し替える
+- 「旅のお役立ち」の丸ボタンは、今は Google マップで「妙高高原 ○○」を検索する形
+- 観光マップは Google マップの埋め込み（妙高高原中心）。手描きのイラストマップや Google マイマップができたら差し替える
+- 主要エリアの説明文は仮の一文。ワイヤーの括弧書き（ロープウェイ、ナイトプール等）は読み取りが不確かなため入れていない
+- 写真は TOP の Enjoy TRIP の写真を流用している
 
 ## 次のステップ提案
-- WordPress にお知らせ・特集記事を実際に入れて表示を確認する
-- 特集一覧にカテゴリでの絞り込みを付ける（特集カテゴリを WordPress に追加した後）
+- ウィンターシーズンのデザインを共有してもらい実装する
+- 観光スポットの記事（ゆったり編・アクティブ編など）を特集記事として作る
 
 ## 気になった点・懸念点
 - 未コミット

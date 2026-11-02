@@ -5,6 +5,7 @@ import Image from 'next/image'
 import type { Shop } from '@/types'
 import ShopCard from './ShopCard'
 import SweetsPanels from './SweetsPanels'
+import CategoryTabs from './CategoryTabs'
 import SectionHeading from './SectionHeading'
 import {
   SWEETS_CATEGORY_MAP,
@@ -15,13 +16,6 @@ import {
 // ============================================================
 // 定数
 // ============================================================
-const TABS = [
-  { id: 'sweets', label: 'スイーツ',     sub: 'sweets' },
-  { id: 'spots',  label: '観光スポット', sub: 'spot' },
-  { id: 'plans',  label: 'モデルプラン', sub: 'plan' },
-] as const
-
-type TabId = (typeof TABS)[number]['id']
 type ViewMode = 'list' | 'grid'
 
 // スイーツ名 → term ID
@@ -54,7 +48,6 @@ function filterShops(shops: Shop[], sweets: string, type: string, area: string):
 // initialSweets：店舗詳細ページの「スイーツでお店を探す」から ?sweets=ケーキ で来たときの初期絞り込み
 export default function ShopsSection({ shops, initialSweets }: { shops: Shop[]; initialSweets?: string }) {
   const validSweets = initialSweets && SWEETS_ID_BY_NAME[initialSweets] ? initialSweets : null
-  const [activeTab,    setActiveTab]    = useState<TabId>('sweets')
   const [sweetsFilter, setSweetsFilter] = useState(validSweets ?? ALL)
   const [typeFilter,   setTypeFilter]   = useState(ALL)
   const [areaFilter,   setAreaFilter]   = useState(ALL)
@@ -83,95 +76,53 @@ export default function ShopsSection({ shops, initialSweets }: { shops: Shop[]; 
   return (
     <>
       {/* ==================== タブ + フィルター ==================== */}
-      <section className="max-w-[1080px] mx-auto px-5 md:px-10">
-        <div className="flex">
-          {TABS.map(tab => {
-            const isActive = activeTab === tab.id
-            return (
-              <button
-                key={tab.id}
-                type="button"
-                onClick={() => setActiveTab(tab.id)}
-                aria-pressed={isActive}
-                className={[
-                  'relative flex-1 min-h-[58px] md:min-h-[70px] pt-2.5 md:pt-[11px] rounded-t-[14px] border-2 transition-colors',
-                  isActive
-                    ? 'bg-white border-brand-beige border-b-transparent'
-                    : 'border-transparent border-b-brand-beige',
-                ].join(' ')}
-              >
-                <span className={[
-                  'block font-bold text-[14px] md:text-[18px] leading-[31.45px] tracking-[0.32px]',
-                  isActive ? 'text-brand-brown-main' : 'text-brand-brown-sub',
-                ].join(' ')}>
-                  {tab.label}
-                </span>
-                <span
-                  aria-hidden="true"
-                  className={[
-                    'block -rotate-4 -mt-2 font-klee font-semibold text-[12px] md:text-[17px] leading-[24px] md:leading-[31.45px] tracking-[0.68px] text-brand-green transition-opacity',
-                    isActive ? 'opacity-100' : 'opacity-0',
-                  ].join(' ')}
-                >
-                  {tab.sub}
-                </span>
-              </button>
-            )
-          })}
-        </div>
+      <section id="shops" className="scroll-mt-20 max-w-[1080px] mx-auto px-5 md:px-10">
+        <CategoryTabs active="sweets" />
 
-        {activeTab === 'sweets' && (
-          <div className="pt-4 md:pt-[26px]">
-            <FilterRow
-              label="スイーツ"
-              items={showAllSweets ? [...SWEETS_MAIN, ...SWEETS_MORE] : SWEETS_MAIN}
-              active={sweetsFilter}
-              onSelect={withReset(setSweetsFilter)}
-              more={{ open: showAllSweets, toggle: () => setShowAllSweets(v => !v) }}
-            />
-            <FilterRow label="タイプ" items={TYPE_OPTIONS} active={typeFilter} onSelect={withReset(setTypeFilter)} />
-            <FilterRow label="エリア" items={AREA_OPTIONS} active={areaFilter} onSelect={withReset(setAreaFilter)} last />
-          </div>
-        )}
+        <div className="pt-4 md:pt-[26px]">
+          <FilterRow
+            label="スイーツ"
+            items={showAllSweets ? [...SWEETS_MAIN, ...SWEETS_MORE] : SWEETS_MAIN}
+            active={sweetsFilter}
+            onSelect={withReset(setSweetsFilter)}
+            more={{ open: showAllSweets, toggle: () => setShowAllSweets(v => !v) }}
+          />
+          <FilterRow label="タイプ" items={TYPE_OPTIONS} active={typeFilter} onSelect={withReset(setTypeFilter)} />
+          <FilterRow label="エリア" items={AREA_OPTIONS} active={areaFilter} onSelect={withReset(setAreaFilter)} last />
+        </div>
       </section>
 
       {/* ==================== Store ==================== */}
-      {activeTab === 'sweets' ? (
-        <section id="store" className="relative scroll-mt-16 pt-12 md:pt-20 pb-16 md:pb-[70px]">
-          {/* 左側の淡い背景（Figma: bg-store-section）。上端は Store 見出しの上下中央に合わせる */}
-          <div aria-hidden="true" className="absolute left-0 top-[70px] md:top-[102px] w-[28%] md:w-[37.4%] h-[min(1275px,80%)] bg-brand-store-bg" />
+      <section id="store" className="relative scroll-mt-16 pt-12 md:pt-20 pb-16 md:pb-[70px]">
+        {/* 左側の淡い背景（Figma: bg-store-section）。上端は Store 見出しの上下中央に合わせる */}
+        <div aria-hidden="true" className="absolute left-0 top-[70px] md:top-[102px] w-[28%] md:w-[37.4%] h-[min(1275px,80%)] bg-brand-store-bg" />
 
-          <div className="relative max-w-[1040px] mx-auto px-5">
-            <div className="flex items-end justify-between">
-              <SectionHeading en="Store" ja="お店一覧" />
-              <div className="flex gap-3 md:gap-4">
-                <ViewButton mode="list" icon="list" label="リスト表示" view={view} onClick={changeView} />
-                <ViewButton mode="grid" icon="grid" label="人気のスイーツをパネルで表示" view={view} onClick={changeView} />
-              </div>
+        <div className="relative max-w-[1040px] mx-auto px-5">
+          <div className="flex items-end justify-between">
+            <SectionHeading en="Store" ja="お店一覧" />
+            <div className="flex gap-3 md:gap-4">
+              <ViewButton mode="list" icon="list" label="リスト表示" view={view} onClick={changeView} />
+              <ViewButton mode="grid" icon="grid" label="人気のスイーツをパネルで表示" view={view} onClick={changeView} />
             </div>
-
-            <div className="mt-10 md:mt-[60px]">
-              {pageShops.length === 0 ? (
-                <p className="py-20 text-center text-sm text-brand-brown-sub">条件に合うお店が見つかりませんでした</p>
-              ) : view === 'list' ? (
-                <div className="flex flex-col gap-16 md:gap-[100px]">
-                  {pageShops.map(shop => <ShopCard key={shop.id} shop={shop} />)}
-                </div>
-              ) : (
-                // パネル表示：絞り込んだ全店舗の「人気のスイーツ」を写真で並べる（ページ送りなし）
-                <SweetsPanels shops={filteredShops} seed={panelSeed} />
-              )}
-            </div>
-
-            <div className="mt-16 md:mt-[100px] h-px bg-brand-beige/70" />
-            {view === 'list' && <Pagination current={currentPage} total={totalPages} onChange={setPage} />}
           </div>
-        </section>
-      ) : (
-        <section className="max-w-[1080px] mx-auto px-5 md:px-10 py-20 text-center text-sm text-brand-brown-sub">
-          近日公開予定です
-        </section>
-      )}
+
+          <div className="mt-10 md:mt-[60px]">
+            {pageShops.length === 0 ? (
+              <p className="py-20 text-center text-sm text-brand-brown-sub">条件に合うお店が見つかりませんでした</p>
+            ) : view === 'list' ? (
+              <div className="flex flex-col gap-16 md:gap-[100px]">
+                {pageShops.map(shop => <ShopCard key={shop.id} shop={shop} />)}
+              </div>
+            ) : (
+              // パネル表示：絞り込んだ全店舗の「人気のスイーツ」を写真で並べる（ページ送りなし）
+              <SweetsPanels shops={filteredShops} seed={panelSeed} />
+            )}
+          </div>
+
+          <div className="mt-16 md:mt-[100px] h-px bg-brand-beige/70" />
+          {view === 'list' && <Pagination current={currentPage} total={totalPages} onChange={setPage} />}
+        </div>
+      </section>
     </>
   )
 }
