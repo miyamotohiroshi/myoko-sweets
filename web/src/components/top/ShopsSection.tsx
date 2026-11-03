@@ -28,7 +28,7 @@ const TYPE_OPTIONS = Object.keys(TYPE_FILTER_MAP)
 const AREA_OPTIONS = Object.keys(AREA_FILTER_MAP)
 
 const ALL = 'すべて'
-const PER_PAGE = 5
+const PER_PAGE = 10
 
 // ============================================================
 // フィルタリング
@@ -90,12 +90,24 @@ export default function ShopsSection({ shops, initialSweets }: { shops: Shop[]; 
           <FilterRow label="タイプ" items={TYPE_OPTIONS} active={typeFilter} onSelect={withReset(setTypeFilter)} />
           <FilterRow label="エリア" items={AREA_OPTIONS} active={areaFilter} onSelect={withReset(setAreaFilter)} last />
         </div>
+
+        {/* 絞り込み結果の件数 */}
+        <p aria-live="polite" className="pt-8 md:pt-12 text-center text-[13px] md:text-[14px] font-medium tracking-[0.32px] text-brand-brown-sub">
+          {/* リスト表示では表示中の範囲も出す（パネル表示はページ送りなし） */}
+          {view === 'list' && pageShops.length > 0 && (
+            <>
+              {(currentPage - 1) * PER_PAGE + 1}～{(currentPage - 1) * PER_PAGE + pageShops.length} 件を表示
+              <span aria-hidden="true" className="mx-2 text-brand-beige">／</span>
+            </>
+          )}
+          全<span className="mx-1 text-[16px] md:text-[18px] font-bold text-brand-brown-main">{filteredShops.length}</span>件
+        </p>
       </section>
 
       {/* ==================== Store ==================== */}
-      <section id="store" className="relative scroll-mt-16 pt-12 md:pt-20 pb-16 md:pb-[70px]">
+      <section id="store" className="relative scroll-mt-16 pt-6 md:pt-10 pb-16 md:pb-[70px]">
         {/* 左側の淡い背景（Figma: bg-store-section）。上端は Store 見出しの上下中央に合わせる */}
-        <div aria-hidden="true" className="absolute left-0 top-[70px] md:top-[102px] w-[28%] md:w-[37.4%] h-[min(1275px,80%)] bg-brand-store-bg" />
+        <div aria-hidden="true" className="absolute left-0 top-[46px] md:top-[62px] w-[28%] md:w-[37.4%] h-[min(1275px,80%)] bg-brand-store-bg" />
 
         <div className="relative max-w-[1040px] mx-auto px-5">
           <div className="flex items-end justify-between">
