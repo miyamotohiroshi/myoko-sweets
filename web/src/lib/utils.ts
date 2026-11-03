@@ -40,6 +40,7 @@ export function formatSeason(season: string): string {
     year_round: '通年営業',
     winter_only: '冬季のみ',
     green_only: 'グリーンシーズンのみ',
+    green_season: 'グリーンシーズンのみ',
     limited: '期間限定',
   }
   return map[season] ?? season
@@ -72,6 +73,31 @@ export function parseMenuHtml(html: string): { name: string; price: string }[] {
     items.push({ name, price: price === '-' ? '' : price })
   }
   return items
+}
+
+// メニュー欄を項目に分解する。
+// 新しい書き方：1行に1品「商品名 | 価格 | 時期・備考」（例：いちごパフェ | 900 | 12月〜3月）
+// 以前の HTML 形式（<li><span class="menu-title">…）もそのまま読める
+export type MenuItem = { name: string; price: string; note: string }
+
+export function parseMenu(text: string | undefined): MenuItem[] {
+  if (!text?.trim()) return []
+  if (/<li[\s>]/i.test(text)) return parseMenuHtml(text).map(item => ({ ...item, note: '' }))
+  return text
+    .split('\n')
+    .map(line => stripTags(line).trim())
+    .filter(Boolean)
+    .map(line => {
+      const [name = '', price = '', note = ''] = line.split(/\s*[|｜]\s*/)
+      return { name, price: formatPrice(price), note }
+    })
+    .filter(item => item.name && item.name !== 'なし')
+}
+
+// 「900」「900円」→「¥900」。それ以外（「時価」など）はそのまま
+function formatPrice(price: string): string {
+  const digits = price.replace(/[¥￥,，円\s]/g, '')
+  return /^\d+$/.test(digits) ? `¥${Number(digits).toLocaleString('ja-JP')}` : price
 }
 
 // <li> のリストをテキスト配列にする（口コミサマリー用）

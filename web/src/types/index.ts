@@ -46,6 +46,7 @@ export type SeasonType =
   | 'year_round'
   | 'winter_only'
   | 'green_only'
+  | 'green_season'
   | 'limited'
 
 export type PaymentMethod =
@@ -184,7 +185,8 @@ export type ShopACF = {
   popular_food_3_price: string
 
   // メニュー（HTML）
-  menu_sweets: string
+  menu_sweets: string           // 定番スイーツ
+  menu_sweets_limited?: string  // 季節限定・月替りスイーツ（1行1品「商品名 | 価格 | 時期」）
   menu_drinks: string
   menu_food: string
 

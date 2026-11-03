@@ -2025,10 +2025,10 @@
       },
       {
         "key": "field_shop_menu_sweets",
-        "label": "スイーツメニュー",
+        "label": "定番スイーツメニュー",
         "name": "menu_sweets",
         "type": "textarea",
-        "instructions": "HTMLで入力できます。例：<p>いちごパフェ ¥900</p>",
+        "instructions": "年中あるスイーツ。1行に1品、「商品名 | 価格」の形で入力します。例：シュークリーム | 500（以前の HTML 形式のままでも表示されます）",
         "required": 0,
         "conditional_logic": 0,
         "wrapper": {
@@ -2038,8 +2038,27 @@
         },
         "default_value": "",
         "maxlength": "",
-        "placeholder": "商品名 | 価格 | 備考",
+        "placeholder": "シュークリーム | 500",
         "rows": 6,
+        "new_lines": ""
+      },
+      {
+        "key": "field_shop_menu_sweets_limited",
+        "label": "季節限定・月替りスイーツメニュー",
+        "name": "menu_sweets_limited",
+        "type": "textarea",
+        "instructions": "季節限定や月替りのスイーツ。1行に1品、「商品名 | 価格 | 時期」の形で入力します。例：いちごパフェ | 900 | 12月〜3月 ／ 月替りタルト | 650 | 月替り",
+        "required": 0,
+        "conditional_logic": 0,
+        "wrapper": {
+          "width": "",
+          "class": "",
+          "id": ""
+        },
+        "default_value": "",
+        "maxlength": "",
+        "placeholder": "いちごパフェ | 900 | 12月〜3月",
+        "rows": 4,
         "new_lines": ""
       },
       {
@@ -2047,7 +2066,7 @@
         "label": "ドリンクメニュー",
         "name": "menu_drinks",
         "type": "textarea",
-        "instructions": "HTMLで入力できます。例：<p>ホットコーヒー ¥500</p>",
+        "instructions": "1行に1品、「商品名 | 価格」の形で入力します。例：ホットコーヒー | 500（以前の HTML 形式のままでも表示されます）",
         "required": 0,
         "conditional_logic": 0,
         "wrapper": {
@@ -2057,7 +2076,7 @@
         },
         "default_value": "",
         "maxlength": "",
-        "placeholder": "商品名 | 価格 | 備考",
+        "placeholder": "ホットコーヒー | 500",
         "rows": 6,
         "new_lines": ""
       },
@@ -2066,7 +2085,7 @@
         "label": "お食事メニュー",
         "name": "menu_food",
         "type": "textarea",
-        "instructions": "HTMLで入力できます。例：<p>ランチセット ¥1,200</p>",
+        "instructions": "1行に1品、「商品名 | 価格」の形で入力します。例：ランチセット | 1200（以前の HTML 形式のままでも表示されます）",
         "required": 0,
         "conditional_logic": 0,
         "wrapper": {
@@ -2076,7 +2095,7 @@
         },
         "default_value": "",
         "maxlength": "",
-        "placeholder": "商品名 | 価格 | 備考",
+        "placeholder": "ランチセット | 1200",
         "rows": 6,
         "new_lines": ""
       },

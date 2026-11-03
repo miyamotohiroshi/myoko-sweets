@@ -9,7 +9,7 @@ import { SWEETS_CATEGORY_MAP, SWEETS_ICON_MAP, FEATURES_MAP } from '@/lib/terms'
 import {
   stripTags,
   sanitizeHtml,
-  parseMenuHtml,
+  parseMenu,
   parseListHtml,
   formatSeason,
   PAYMENT_LABELS,
@@ -106,10 +106,10 @@ export default async function ShopDetailPage({ params }: Props) {
   const categories  = (shop.sweets_category ?? []).map(id => SWEETS_CATEGORY_MAP[id]).filter(Boolean)
   const description = acf.shop_description ? sanitizeHtml(acf.shop_description) : ''
   const menuGroups  = [
-    { label: 'スイーツ', items: parseMenuHtml(acf.menu_sweets) },
-    { label: 'ドリンク', items: parseMenuHtml(acf.menu_drinks) },
-    { label: '食事・他', items: parseMenuHtml(acf.menu_food) },
-  ].filter(g => g.items.length > 0)
+    { label: 'スイーツ', items: parseMenu(acf.menu_sweets), limited: parseMenu(acf.menu_sweets_limited) },
+    { label: 'ドリンク', items: parseMenu(acf.menu_drinks) },
+    { label: '食事・他', items: parseMenu(acf.menu_food) },
+  ].filter(g => g.items.length > 0 || (g.limited?.length ?? 0) > 0)
   const popularSweets = getPopular(acf, 'sweets')
   const popularFood   = getPopular(acf, 'food')
   const reviews       = parseListHtml(acf.review_summary ?? '')
