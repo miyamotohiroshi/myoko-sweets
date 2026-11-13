@@ -1,6 +1,6 @@
 import type { Metadata } from 'next'
 import './globals.css'
-import { SITE_INFO } from '@/config/site'
+import { SITE_INFO, SITE_OPEN } from '@/config/site'
 import Header from '@/components/layout/Header'
 import Footer from '@/components/layout/Footer'
 
@@ -10,6 +10,8 @@ export const metadata: Metadata = {
     template: `%s | ${SITE_INFO.name}`,
   },
   description: SITE_INFO.description,
+  // 公開前は検索エンジンに載せない（src/config/site.ts の SITE_OPEN で切り替え）
+  robots: SITE_OPEN ? undefined : { index: false, follow: false },
   openGraph: {
     type: 'website',
     locale: 'ja_JP',

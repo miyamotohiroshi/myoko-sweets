@@ -17,6 +17,9 @@ export const URBAN_CONFIG: SiteConfig = {
 // 現在使用する設定
 export const SITE_CONFIG = MYOKO_CONFIG
 
+// 正式公開したら true にする。false の間は全ページに noindex を付けて検索に載せない
+export const SITE_OPEN = false
+
 // サイト基本情報
 export const SITE_INFO = {
   name: 'MYOKOスイーツ',

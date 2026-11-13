@@ -16,7 +16,7 @@
 | 10 | SEO記事 10本公開 | 🔴 未着手 | | AdSense審査の前提 |
 | 11 | SEO記事 月4〜6本ペース維持 | 🔴 未着手 | | 継続タスク |
 | 12 | 掲載店舗の情報収集（妙高高原・野尻湖） | 🟡 進行中 | | 33店をExcel・Figma（MYOKOスイーツ「お店情報」ページ）に整理。Web裏取り済み。参考写真を22店分収集（公式サイト・観光局・公式Instagram）しFigmaに配置。その後共有された5店をExcelに追加（Figmaは未反映）。38店すべてWordPressに登録済み（実写真73枚・仮画像を配置）。お店一覧の並び順用に優先度（0〜50）を追加し、A=40・B=30・C=20で初期設定。残りは電話確認17店・店内写真の撮影・掲載許可 |
-| 13 | サイトを Vercel から Xserver へ移行 | 🟡 進行中 | | Next.js を静的書き出し（HTML）に変更し、Xserver の myoko-sweets.com/public_html/ に SSH でアップロードし、表示確認済み（WordPress は同じフォルダ内の cms.myoko-sweets.com/ にあるので触らない）。お名前.com の A レコードを Xserver に切り替え済み（2026-11-13）。www の A レコードを追加し、SSL を設定し、https で公開（2026-11-14）。http・www は https://myoko-sweets.com に 301 転送。残りは Vercel からドメインを外す・今後の更新方法の決定 |
+| 13 | サイトを Vercel から Xserver へ移行 | 🟡 進行中 | | Next.js を静的書き出し（HTML）に変更し、Xserver の myoko-sweets.com/public_html/ に SSH でアップロードし、表示確認済み（WordPress は同じフォルダ内の cms.myoko-sweets.com/ にあるので触らない）。お名前.com の A レコードを Xserver に切り替え済み（2026-11-13）。www の A レコードを追加し、SSL を設定し、https で公開（2026-11-14）。http・www は https://myoko-sweets.com に 301 転送。公開前のためベーシック認証と noindex を設定（2026-11-14）。残りは Vercel からドメインを外す・今後の更新方法の決定 |
 | 14 | 観光スポットの登録 | 🟡 進行中 | | 14か所を WordPress に登録（妙高観光局・各施設の公式サイトで裏取り、写真25枚は公式サイトのもの）。店舗ページの「近くの施設」に写真付きで表示。全38店に位置情報を登録し、36店でスポットが表示される（カフェらんぷ屋・水穂珈琲店は3km以内にスポットなし）。残りは写真の使用許可の確認 |
 
 ## SEOキーワード候補メモ

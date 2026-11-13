@@ -1,9 +1,12 @@
 # Xserver（Apache）用の設定。ビルドで out/ にコピーされる
 # ※ public_html の中に WordPress（cms.myoko-sweets.com/）もあるので、この設定はそちらにもかかる
 
-# Xserver のサーバーキャッシュ設定（最初から入っていたもの）
-SetEnvIf Request_URI ".*" Ngx_Cache_NoCacheMode=off
-SetEnvIf Request_URI ".*" Ngx_Cache_AllCacheMode
+# Xserver のサーバーキャッシュ
+# ベーシック認証の間はキャッシュを止める（キャッシュされたページは認証なしで返されてしまうため）
+# 正式公開して認証を外したら、最初から入っていた次の2行に戻す
+#   SetEnvIf Request_URI ".*" Ngx_Cache_NoCacheMode=off
+#   SetEnvIf Request_URI ".*" Ngx_Cache_AllCacheMode
+SetEnvIf Request_URI ".*" Ngx_Cache_NoCacheMode
 
 # http と www 付きのアクセスは https://myoko-sweets.com にまとめる
 # （cms.myoko-sweets.com には効かないようにホスト名で絞る）
@@ -12,6 +15,17 @@ RewriteCond %{HTTPS} !on [OR]
 RewriteCond %{HTTP_HOST} ^www\. [NC]
 RewriteCond %{HTTP_HOST} ^(www\.)?myoko-sweets\.com$ [NC]
 RewriteRule ^(.*)$ https://myoko-sweets.com/$1 [R=301,L]
+
+# 公開前のベーシック認証と noindex（cms.myoko-sweets.com には効かないようにホスト名で絞る）
+# www は上の転送で https://myoko-sweets.com に移ってから認証する（二重に聞かない）
+# 正式公開するときはこのブロックを消す
+<If "%{HTTP_HOST} =~ /^myoko-sweets\.com$/i">
+  AuthType Basic
+  AuthName "MYOKO Sweets"
+  AuthUserFile /home/fatedesign/myoko-sweets.com/htpasswd/.htpasswd
+  Require valid-user
+  Header set X-Robots-Tag "noindex, nofollow"
+</If>
 
 # 存在しないページは Next.js が書き出した 404 ページを表示
 ErrorDocument 404 /404.html
