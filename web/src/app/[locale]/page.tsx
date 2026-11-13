@@ -1,5 +1,11 @@
 import { Locale } from '@/types'
 
+export const dynamicParams = false
+
+export function generateStaticParams(): { locale: Locale }[] {
+  return [{ locale: 'ja' }, { locale: 'en' }]
+}
+
 type Props = {
   params: Promise<{ locale: Locale }>
 }

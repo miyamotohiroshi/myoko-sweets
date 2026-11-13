@@ -8,10 +8,10 @@ function pageList(current: number, total: number): (number | '…')[] {
   return sorted.flatMap((p, i) => (i > 0 && p - sorted[i - 1] > 1 ? ['…' as const, p] : [p]))
 }
 
-/** 記事一覧のページ送り（?page=2 のリンク） */
+/** 記事一覧のページ送り（/news/page/2/ のリンク。静的書き出しのためパスで分ける） */
 export default function ListPagination({ basePath, current, total }: { basePath: string; current: number; total: number }) {
   if (total <= 1) return null
-  const href = (p: number) => (p === 1 ? basePath : `${basePath}?page=${p}`)
+  const href = (p: number) => (p === 1 ? basePath : `${basePath}/page/${p}`)
   const arrow = 'grid size-10 place-items-center rounded-full border border-brand-line bg-white transition-colors hover:bg-brand-ivory'
 
   return (

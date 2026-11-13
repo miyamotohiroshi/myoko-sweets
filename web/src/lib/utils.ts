@@ -127,3 +127,10 @@ export function buildToc(html: string): { html: string; toc: { id: string; text:
   })
   return { html: withIds, toc }
 }
+
+// 静的書き出しでは generateStaticParams が空だとビルドが止まるため、
+// 記事がまだ1件もないときは仮ページを1つだけ作る（ビルド後に postbuild で削除）
+export const EMPTY_PARAM = '_'
+export function orPlaceholder<K extends string>(params: Record<K, string>[], key: K): Record<K, string>[] {
+  return params.length > 0 ? params : [{ [key]: EMPTY_PARAM } as Record<K, string>]
+}

@@ -1,7 +1,7 @@
 import Image from 'next/image'
 import Link from 'next/link'
 import type { Spot, WPImage } from '@/types'
-import { stripTags } from '@/lib/utils'
+import { stripTags, sanitizeHtml } from '@/lib/utils'
 import { SPOT_CATEGORY_MAP } from '@/lib/terms'
 
 const ICON = '/images/top/icons'
@@ -112,7 +112,8 @@ export function SpotAccordion({ spots }: { spots: Spot[] }) {
       {spots.map(spot => {
         const name = stripTags(spot.title.rendered)
         const tags = (spot.spot_category ?? []).map(id => SPOT_CATEGORY_MAP[id]).filter(Boolean)
-        const desc = stripTags(spot.acf?.spot_description ?? '').split('\n').map(s => s.trim()).filter(Boolean)
+        // 説明は WordPress で HTML（写真・見出し・リスト入り）として書いているので、記事と同じスタイルで表示
+        const desc = sanitizeHtml(spot.acf?.spot_description ?? '')
         return (
           <li key={spot.id} className="border-b border-brand-line">
             <details className="group">
@@ -133,7 +134,7 @@ export function SpotAccordion({ spots }: { spots: Spot[] }) {
                 <Image src={`${ICON}/chev-down.svg`} alt="" width={14} height={14} className="shrink-0 transition-transform group-open:rotate-180" />
               </summary>
               <div className="mb-5 pl-[76px] md:pl-[88px] flex flex-col gap-3 text-[14px] leading-[1.8]">
-                {desc.map(line => <p key={line}>{line}</p>)}
+                {desc && <div className="article-body text-[14px] md:text-[14px] leading-[1.9] [&_h4]:mt-5" dangerouslySetInnerHTML={{ __html: desc }} />}
                 {spot.acf?.address && <p className="text-brand-brown-sub">{spot.acf.address}</p>}
                 <div className="flex flex-col gap-1.5">
                   {spot.acf?.website_url && (

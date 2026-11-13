@@ -10,13 +10,7 @@ import EnjoyTripSection  from '@/components/top/EnjoyTripSection'
 import NewsSection       from '@/components/top/NewsSection'
 import SnsSection        from '@/components/top/SnsSection'
 
-export default async function HomePage({
-  searchParams,
-}: {
-  searchParams: Promise<{ sweets?: string | string[] }>
-}) {
-  const { sweets } = await searchParams
-
+export default async function HomePage() {
   let shops: Shop[] = []
   try {
     shops = await getAllShops()
@@ -37,7 +31,7 @@ export default async function HomePage({
     <main className="overflow-x-clip">
       <HeroSection />
       <AboutSection />
-      <ShopsSection shops={shops} initialSweets={typeof sweets === 'string' ? sweets : undefined} />
+      <ShopsSection shops={shops} />
       <FeatureSection items={features} />
       <EnjoyTripSection />
       <NewsSection />

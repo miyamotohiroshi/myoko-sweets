@@ -3,7 +3,7 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { notFound } from 'next/navigation'
 import type { Shop, ShopACF, Spot, WPImage } from '@/types'
-import { getShopBySlug, getNearbySpots } from '@/lib/wordpress'
+import { getAllShops, getShopBySlug, getNearbySpots } from '@/lib/wordpress'
 import { SITE_INFO } from '@/config/site'
 import { SWEETS_CATEGORY_MAP, SWEETS_ICON_MAP, FEATURES_MAP } from '@/lib/terms'
 import {
@@ -31,6 +31,14 @@ import {
 
 type Props = { params: Promise<{ slug: string }> }
 
+// 静的書き出しのため、ビルド時に WordPress にあるお店のページだけを作る
+export const dynamicParams = false
+
+export async function generateStaticParams() {
+  const items = await getAllShops().catch(() => [])
+  return items.map(item => ({ slug: item.slug }))
+}
+
 // ============================================================
 // データ取得・整形
 // ============================================================
@@ -44,7 +52,9 @@ async function loadShop(slug: string): Promise<Shop | null> {
 
 async function loadSpots(acf: ShopACF): Promise<Spot[]> {
   if (!acf.location) return []
-  const featuredIds = (acf.featured_spots ?? []).map(s => (typeof s === 'number' ? s : s.ID))
+  // 未選択のとき WordPress は空文字を返すので、配列のときだけ使う
+  const featured = Array.isArray(acf.featured_spots) ? acf.featured_spots : []
+  const featuredIds = featured.map(s => (typeof s === 'number' ? s : s.ID))
   try {
     return await getNearbySpots(acf.location, featuredIds)
   } catch {

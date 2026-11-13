@@ -1,0 +1,9 @@
+# Xserver（Apache）用の設定。ビルドで out/ にコピーされる
+# ※ public_html の中に WordPress（cms.myoko-sweets.com/）もあるので、この設定はそちらにもかかる
+
+# Xserver のサーバーキャッシュ設定（最初から入っていたもの）
+SetEnvIf Request_URI ".*" Ngx_Cache_NoCacheMode=off
+SetEnvIf Request_URI ".*" Ngx_Cache_AllCacheMode
+
+# 存在しないページは Next.js が書き出した 404 ページを表示
+ErrorDocument 404 /404.html

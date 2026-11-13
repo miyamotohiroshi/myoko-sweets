@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import Image from 'next/image'
 
 export type Season = 'green' | 'winter'
@@ -17,12 +17,16 @@ const HERO_IMAGES: Record<Season, { src: string; alt: string; position: string }
 }
 
 /** グリーンシーズン／ウィンターシーズンの切り替え。中身はシーズンごとに別デザインで渡す */
-export default function SeasonSwitch({ initial, green, winter }: {
-  initial: Season
+export default function SeasonSwitch({ green, winter }: {
   green: React.ReactNode
   winter: React.ReactNode
 }) {
-  const [season, setSeason] = useState<Season>(initial)
+  const [season, setSeason] = useState<Season>('green')
+
+  // 共有された URL（?season=winter）で開いたときはウィンターを表示（静的書き出しのためブラウザで読む）
+  useEffect(() => {
+    if (new URLSearchParams(window.location.search).get('season') === 'winter') setSeason('winter')
+  }, [])
 
   const select = (id: Season) => {
     setSeason(id)
@@ -43,7 +47,7 @@ export default function SeasonSwitch({ initial, green, winter }: {
             src={HERO_IMAGES[s.id].src}
             alt={HERO_IMAGES[s.id].alt}
             fill
-            priority={s.id === initial}
+            priority={s.id === 'green'}
             sizes="100vw"
             className={`object-cover ${HERO_IMAGES[s.id].position} transition-opacity duration-700 ${season === s.id ? 'opacity-100' : 'opacity-0'}`}
           />

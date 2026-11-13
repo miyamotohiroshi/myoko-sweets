@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useMemo } from 'react'
+import { useState, useMemo, useEffect } from 'react'
 import Image from 'next/image'
 import type { Shop } from '@/types'
 import ShopCard from './ShopCard'
@@ -45,17 +45,24 @@ function filterShops(shops: Shop[], sweets: string, type: string, area: string):
 // ============================================================
 // メインコンポーネント
 // ============================================================
-// initialSweets：店舗詳細ページの「スイーツでお店を探す」から ?sweets=ケーキ で来たときの初期絞り込み
-export default function ShopsSection({ shops, initialSweets }: { shops: Shop[]; initialSweets?: string }) {
-  const validSweets = initialSweets && SWEETS_ID_BY_NAME[initialSweets] ? initialSweets : null
-  const [sweetsFilter, setSweetsFilter] = useState(validSweets ?? ALL)
+export default function ShopsSection({ shops }: { shops: Shop[] }) {
+  const [sweetsFilter, setSweetsFilter] = useState(ALL)
   const [typeFilter,   setTypeFilter]   = useState(ALL)
   const [areaFilter,   setAreaFilter]   = useState(ALL)
-  const [showAllSweets, setShowAllSweets] = useState(validSweets ? SWEETS_MORE.includes(validSweets) : false)
+  const [showAllSweets, setShowAllSweets] = useState(false)
   const [view, setView] = useState<ViewMode>('list')
   // パネル表示の並び順（パネル表示に切り替えるたびにシャッフル）
   const [panelSeed, setPanelSeed] = useState(1)
   const [page, setPage] = useState(1)
+
+  // 店舗詳細ページの「スイーツでお店を探す」から ?sweets=ケーキ で来たときの初期絞り込み
+  // （静的書き出しのため、URL はブラウザで読む）
+  useEffect(() => {
+    const sweets = new URLSearchParams(window.location.search).get('sweets')
+    if (!sweets || !SWEETS_ID_BY_NAME[sweets]) return
+    setSweetsFilter(sweets)
+    if (SWEETS_MORE.includes(sweets)) setShowAllSweets(true)
+  }, [])
 
   const filteredShops = useMemo(
     () => filterShops(shops, sweetsFilter, typeFilter, areaFilter),

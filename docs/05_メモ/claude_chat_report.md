@@ -7,24 +7,63 @@ Claude Code
 2026年11月13日
 
 ## 今回完了したタスク
-- お店一覧の並び順を「登録が新しい順」から「優先度が高い順」に変更
-  - WordPress の店舗情報（基本情報タブの先頭）に数値項目「優先度」（priority、0〜50、初期値30）を追加
-  - 38店に Excel の優先度から初期値を入力：A=40（19店）／B=30（15店）／C=20（4店）
-  - サイトは優先度の大きい順に表示。同じ優先度の中は登録が新しい順
+- サイトを Xserver で公開できるよう、Next.js を「静的書き出し」に変更（React・Next.js はそのまま）
+  - `npm run build` で全ページが HTML として web/out/ に書き出される（51ページ。お店38件・お知らせ1件を含む）
+  - お店・お知らせ・特集の詳細ページは、ビルド時に WordPress にある記事だけを作る
+  - お知らせ・特集の2ページ目以降の URL を `?page=2` から `/news/page/2/` に変更
+  - TOP の `?sweets=ケーキ`、観光スポットの `?season=winter` は、ブラウザ側で読む形に変更
+  - 画像は自動縮小が使えないため、元の画像をそのまま表示（WordPress の画像は最大290KBで問題なし）
+  - 存在しない URL は 404 ページを表示する .htaccess を追加
+- 書き出したサイトをローカルで確認：TOP の絞り込み、お店の詳細への移動、観光スポットのウィンター表示、404 が動作
+- 確認前に、Vercel の料金プランが Hobby（無料）であることをユーザーと確認
+- 書き出したサイトを SSH（rsync）で Xserver の ~/myoko-sweets.com/public_html/ にアップロード
+  - 最初からあった index.html・default_page.png・.htaccess は ~/backup/myoko-sweets_public_html_20261113/ に退避し、default_page.png は削除
+  - .htaccess には Xserver のサーバーキャッシュ設定（最初からあった2行）を残した
+  - DNS を変える前に Xserver へ直接アクセスして、全ページ・CSS・JS・404 の表示を確認。WordPress も正常
+- ユーザーがお名前.com の A レコードを Xserver（85.131.213.174）に変更。主要な DNS で切り替わりを確認（http は Xserver から表示、https は SSL が OFF のためまだ不可）
+- WordPress の観光スポットを14か所登録（投稿ID 438〜451、すべて公開）
+  - いもり池／苗名滝／笹ヶ峰高原／燕温泉 黄金の湯・河原の湯／赤倉温泉 足湯公園／妙高高原スカイケーブル／関川の関所 道の歴史館／道の駅あらい／鮫ヶ尾城跡／野尻湖／野尻湖遊覧船・琵琶島（宇賀神社）／野尻湖ナウマンゾウ博物館／黒姫童話館／一茶記念館
+  - 内容は妙高観光局と各施設の公式サイトで確認（2026-11-13時点）。紹介文・おすすめ・基本情報（時期・料金・駐車場・アクセス・問い合わせ）を HTML で作成
+  - 写真25枚（メディアID 413〜437）は妙高観光局・各施設の公式サイトの写真。説明文の中に写真と出典を入れた（11か所）
+  - 座標・エリア・カテゴリ・公式サイト・Google マップのリンクも登録。SSH の WP-CLI で登録
+- 全38店に位置情報（座標）を登録（もちやは既存）。住所から国土地理院の検索で27店、番地まで出なかった店は Google マップ（8店）・OpenStreetMap（1店）で確認。くるっとまい亭は地図に載っていないため、番地から いもり池付近として推定
+  - これで36店の「近くの施設」に観光スポットが出る（カフェらんぷ屋・水穂珈琲店は3km以内にスポットがないため非表示）
+  - 野尻の湖畔の数店（野尻257〜261番地）は、国土地理院の検索で同じ地点になっている（数十m単位の誤差）
+- 位置情報が入ったことで、「おすすめスポット（手動）」が未選択の店で表示エラーになる不具合が見つかったので修正
+- 店舗ページの「近くの施設」で、スポットの説明を記事と同じスタイル（写真・見出し・リスト）で表示するよう変更
+- WordPress 管理画面の店舗一覧に「優先度」の列を追加（タイトルの右。列名クリックで並べ替え可）
+  - 子テーマ myoko-sweets の functions.php の末尾に追記（サーバー上で直接編集。元のファイルは ~/backup/functions.php.20261113 に退避）
+  - 子テーマはリポジトリに入っていないので、変更はサーバー上にしかない
 
 ## 作成・変更したファイル
 | ファイルパス | 変更内容 |
 |---|---|
-| web/src/lib/wordpress.ts | 店舗一覧の取得結果を優先度順に並べる処理（sortByPriority）を追加 |
-| web/src/types/index.ts | 店舗の項目に priority を追加 |
-| docs/01_タスク管理/02_WEBサイト.md | 店舗情報収集タスクの備考に優先度のことを追記 |
-| docs/wordpress-acf-import.json | 優先度の項目を追加 |
-| WordPress（cms.myoko-sweets.com） | ACF「店舗情報」に優先度の項目を追加し、38店に値を入力 |
+| web/next.config.ts | 静的書き出し・末尾スラッシュ・画像の自動縮小オフ |
+| web/package.json | ビルド後に仮ページ（記事0件用）を削除する postbuild を追加 |
+| web/public/.htaccess | 404 ページの設定と Xserver のキャッシュ設定（新規） |
+| web/src/app/page.tsx・spots/page.tsx | URL の条件をサーバーで読まない形に変更 |
+| web/src/app/news・feature | 一覧の中身を NewsListView・FeatureListView に分け、/page/2/ 用のページを追加。詳細ページに generateStaticParams を追加 |
+| web/src/app/shop/[slug]/page.tsx・[locale]/page.tsx | generateStaticParams を追加 |
+| web/src/components/top/ShopsSection.tsx・spots/SeasonSwitch.tsx | URL の条件をブラウザで読む |
+| web/src/components/article/ListPagination.tsx | ページ送りのリンクを /page/2/ 形式に |
+| web/src/lib/utils.ts | 記事0件のときの仮ページ用の関数 |
+| web/src/components/shop/ShopParts.tsx | 観光スポットの説明を HTML（写真入り）で表示 |
+| web/src/app/shop/[slug]/page.tsx | おすすめスポットが未選択（空文字）のときのエラーを修正 |
+| docs/01_タスク管理/02_WEBサイト.md | タスク13「Vercel から Xserver へ移行」を追加 |
+| WordPress 子テーマ functions.php（サーバー上） | 店舗一覧に優先度の列を追加 |
 
 ## Claude Chatへの申し送り事項
-- 優先度は WordPress の各店舗の編集画面で 0〜50 の数字を変えるだけで並びが変わる（数字が大きいほど上）
-- 新しく登録したお店は初期値30（B と同じ扱い）
+- 静的書き出しなので、WordPress の内容を変えたら「ビルドしてアップロード」しないとサイトに反映されない
+- 注意：public_html の中に WordPress（cms.myoko-sweets.com/）がある。アップロードで古いファイルを消す設定（rsync の --delete など）を使うときは、必ずこのフォルダと .user.ini を除外する
+- DNS はお名前.com で管理。myoko-sweets.com の A レコードを 216.198.79.1（Vercel）から 85.131.213.174（Xserver）に変えれば切り替わる。cms と MX は変えない
+- 今後の更新方法（手作業か、GitHub から自動か）は未決定
+- 公開の切り替えは、Xserver 側の表示確認がすんでから myoko-sweets.com の DNS を Vercel から Xserver に向け直す
+- 予定しているお店向けプレビューの仕組みは、静的書き出しに合わせて作り方を考える必要がある
 
 ## 気になった点・懸念点
-- 起動中の開発サーバーが前の店舗データを覚えているため、ローカルの画面はまだ古い並び。開発サーバーを再起動すると反映される（本番は1時間ごとに取り直す）
-- SP.png の移動（02_ワイヤー → 03_WEBサイト直下）は未コミットのまま
+- 観光スポットの写真は公式サイトのもの。掲載前に妙高観光局・各施設へ使用許可の確認が必要
+- 野尻湖遊覧船は11月15日、河原の湯は11月8日で今季終了など、季節で変わる情報が多い。毎年見直しが必要
+- 既存の「妙高温泉 関川共同浴場 大湯」の説明文は「〇〇」などの仮の文のまま
+- 変更はまだコミットしていない。main に push すると Vercel の今のサイトも静的書き出し版に変わる（表示は同じだが、WordPress の更新は再ビルドまで反映されなくなる）
+- TOP の背景画像 hero-bg.png が 734KB と大きい。これまでは Next.js が自動で縮小していたので、軽い形式に変換したほうがよい
+- 「Bakery&#038;Table AKAKURA」のように店名の「&」が崩れて表示される不具合が前からある

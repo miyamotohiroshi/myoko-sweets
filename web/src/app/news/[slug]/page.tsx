@@ -5,7 +5,7 @@ import { notFound } from 'next/navigation'
 import type { WPPost } from '@/types'
 import { getNewsBySlug, getNewsList } from '@/lib/wordpress'
 import { SITE_INFO } from '@/config/site'
-import { stripTags, sanitizeHtml, formatDotDate } from '@/lib/utils'
+import { stripTags, sanitizeHtml, formatDotDate, orPlaceholder } from '@/lib/utils'
 import { Breadcrumb } from '@/components/shop/ShopParts'
 import ArticleSidebar from '@/components/article/ArticleSidebar'
 import PageBand from '@/components/article/PageBand'
@@ -13,6 +13,15 @@ import ShareButtons from '@/components/article/ShareButtons'
 import { getTermNames, getEyecatch } from '@/lib/article'
 
 type Props = { params: Promise<{ slug: string }> }
+
+// 静的書き出しのため、ビルド時に WordPress にあるお知らせのページだけを作る
+export const dynamicParams = false
+
+export async function generateStaticParams() {
+  const items = await getNewsList(100).catch(() => [])
+  // 日本語スラッグは WordPress がエンコード済みで返すので元に戻す
+  return orPlaceholder(items.map(item => ({ slug: decodeURIComponent(item.slug) })), 'slug')
+}
 
 // ============================================================
 // データ取得

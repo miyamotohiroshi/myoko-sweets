@@ -5,6 +5,7 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
+    "postbuild": "find out -type d -name _ -prune -exec rm -rf {} +",
     "start": "next start",
     "lint": "eslint"
   },
