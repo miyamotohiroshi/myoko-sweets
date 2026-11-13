@@ -99,6 +99,7 @@ export type PopularItem = {
 // ============================================
 export type ShopACF = {
   // 基本情報
+  priority?: string | number | null  // 優先度（0〜50。大きいほどお店一覧の上に表示）
   shop_label?: string  // ひとこと紹介（例：街のお菓子屋さん）
   catchcopy: string
   shop_description: string

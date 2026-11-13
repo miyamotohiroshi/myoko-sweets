@@ -6,14 +6,20 @@ const WP_API_URL = process.env.NEXT_PUBLIC_WORDPRESS_API_URL
 // 店舗情報
 // ============================================
 
-// 全店舗を取得
+// 全店舗を取得（優先度が高い順。同じ優先度は登録が新しい順）
 export async function getAllShops(): Promise<Shop[]> {
   const res = await fetch(
     `${WP_API_URL}/wp/v2/shop?per_page=100&_embed`,
     { next: { revalidate: 3600 } }
   )
   if (!res.ok) throw new Error('店舗情報の取得に失敗しました')
-  return res.json()
+  return sortByPriority(await res.json())
+}
+
+// 優先度（ACF priority、0〜50）の高い順に並べる。未入力は0扱い
+export function sortByPriority(shops: Shop[]): Shop[] {
+  // sort は安定ソートなので、同じ優先度はWPの並び（登録が新しい順）のまま
+  return [...shops].sort((a, b) => (Number(b.acf?.priority) || 0) - (Number(a.acf?.priority) || 0))
 }
 
 // スラッグで1件取得
@@ -36,7 +42,7 @@ export async function getShopsByArea(areaSlug: string): Promise<Shop[]> {
     { next: { revalidate: 3600 } }
   )
   if (!res.ok) throw new Error('店舗情報の取得に失敗しました')
-  return res.json()
+  return sortByPriority(await res.json())
 }
 
 // ============================================

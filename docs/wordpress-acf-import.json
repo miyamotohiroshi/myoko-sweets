@@ -20,6 +20,18 @@
         "endpoint": 0
       },
       {
+        "key": "field_shop_priority",
+        "label": "優先度",
+        "name": "priority",
+        "type": "number",
+        "instructions": "0〜50で入力。数字が大きいお店ほど、お店一覧の上に表示されます（目安：A=40 / B=30 / C=20）",
+        "required": 0,
+        "default_value": 30,
+        "min": 0,
+        "max": 50,
+        "step": 1
+      },
+      {
         "key": "field_shop_label",
         "label": "ひとこと紹介",
         "name": "shop_label",
