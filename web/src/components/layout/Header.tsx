@@ -14,7 +14,7 @@ const NAV_LINKS = [
 export default function Header() {
   const pathname = usePathname()
   const isTop = pathname === '/'
-  // 店舗詳細ページの SP は、下スクロールでヘッダーを隠し、上スクロールで上から出す
+  // 店舗詳細ページは、下スクロールでヘッダーを隠し、上スクロールで上から出す
   const autoHide = pathname.startsWith('/shop/')
 
   const [scrolled, setScrolled] = useState(false)
@@ -60,7 +60,7 @@ export default function Header() {
           fixed top-0 left-0 right-0 ${drawerOpen ? 'z-[110]' : 'z-50'}
           h-16 md:h-[72px]
           transition-all duration-300
-          ${headerHidden ? 'max-md:-translate-y-full' : ''}
+          ${headerHidden ? '-translate-y-full' : ''}
           ${headerBg}
         `}
       >

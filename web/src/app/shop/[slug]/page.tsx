@@ -152,10 +152,10 @@ export default async function ShopDetailPage({ params }: Props) {
   return (
     <main className="overflow-x-clip pt-16 md:pt-[72px] text-brand-brown-main">
       {/* ==================== ページ内リンク（横いっぱい・スクロールで上部固定） ==================== */}
-      {/* SP はヘッダーが隠れている間（html[data-header-hidden]）は画面の一番上に付く */}
+      {/* ヘッダーが隠れている間（html[data-header-hidden]）は画面の一番上に付く */}
       <nav
         aria-label="ページ内リンク"
-        className="sticky z-40 top-16 md:top-[72px] max-md:[html[data-header-hidden]_&]:top-0 transition-[top] duration-300 bg-brand-store-bg/95 backdrop-blur-sm border-b border-brand-line"
+        className="sticky z-40 top-16 md:top-[72px] [html[data-header-hidden]_&]:top-0 transition-[top] duration-300 bg-brand-store-bg/95 backdrop-blur-sm border-b border-brand-line"
       >
         <ul className="max-w-[1080px] mx-auto md:px-10 flex">
           {anchors.map(a => (
@@ -192,8 +192,8 @@ export default async function ShopDetailPage({ params }: Props) {
         </header>
       </div>
 
-      {/* ==================== 写真 ==================== */}
-      <div className="max-w-[1080px] mx-auto md:px-10 pt-5 md:pt-6">
+      {/* ==================== 写真（PC は画面幅いっぱい） ==================== */}
+      <div className="pt-5 md:pt-6">
         <ShopGallery photos={gallery} name={d.name} />
       </div>
 
@@ -335,7 +335,7 @@ export default async function ShopDetailPage({ params }: Props) {
 
         {/* ==================== PC サイドバー（営業・アクセス） ==================== */}
         <aside className="hidden md:block">
-          <div className="sticky top-[168px] flex flex-col gap-6">
+          <div className="sticky top-[168px] [html[data-header-hidden]_&]:top-[96px] transition-[top] duration-300 flex flex-col gap-6">
             <div className="rounded-[14px] border border-brand-line bg-brand-store-bg p-6">
               <h2 className="flex items-baseline gap-2 font-klee font-semibold text-[22px] leading-none"><span className="[-webkit-text-stroke:0.5px_currentColor]">OPEN</span><span className="font-sans text-[13px] font-bold text-brand-brown-sub">営業</span></h2>
               <div className="mt-4">{hoursBlock}</div>

@@ -5,5 +5,13 @@
 SetEnvIf Request_URI ".*" Ngx_Cache_NoCacheMode=off
 SetEnvIf Request_URI ".*" Ngx_Cache_AllCacheMode
 
+# http と www 付きのアクセスは https://myoko-sweets.com にまとめる
+# （cms.myoko-sweets.com には効かないようにホスト名で絞る）
+RewriteEngine On
+RewriteCond %{HTTPS} !on [OR]
+RewriteCond %{HTTP_HOST} ^www\. [NC]
+RewriteCond %{HTTP_HOST} ^(www\.)?myoko-sweets\.com$ [NC]
+RewriteRule ^(.*)$ https://myoko-sweets.com/$1 [R=301,L]
+
 # 存在しないページは Next.js が書き出した 404 ページを表示
 ErrorDocument 404 /404.html

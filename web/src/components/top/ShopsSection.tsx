@@ -29,15 +29,46 @@ const AREA_OPTIONS = Object.keys(AREA_FILTER_MAP)
 
 const ALL = 'すべて'
 const PER_PAGE = 10
+const AREA_NAME_BY_ID = Object.fromEntries(Object.entries(AREA_FILTER_MAP).map(([name, id]) => [id, name]))
+
+// ============================================================
+// キーワード検索
+// ============================================================
+// 全角・半角、大文字・小文字、カタカナ・ひらがなの違いを無視して比べる
+function normalize(text: string): string {
+  return text
+    .normalize('NFKC')
+    .toLowerCase()
+    .replace(/[\u30a1-\u30f6]/g, c => String.fromCharCode(c.charCodeAt(0) - 0x60))
+}
+
+// 店名・ACF の文字項目（説明・メニュー・住所など）・スイーツ種類・エリアをまとめた検索用テキスト
+function searchText(shop: Shop): string {
+  const acfTexts = Object.values(shop.acf ?? {})
+    .filter((v): v is string => typeof v === 'string' && !/^https?:\/\//.test(v))
+    .map(v => v.replace(/<[^>]*>/g, ' '))
+  return normalize([
+    shop.title?.rendered ?? '',
+    ...acfTexts,
+    ...(shop.sweets_category ?? []).map(id => SWEETS_CATEGORY_MAP[id] ?? ''),
+    ...(shop.area ?? []).map(id => AREA_NAME_BY_ID[id] ?? ''),
+  ].join(' '))
+}
 
 // ============================================================
 // フィルタリング
 // ============================================================
-function filterShops(shops: Shop[], sweets: string, type: string, area: string): Shop[] {
+function filterShops(shops: Shop[], texts: Map<number, string>, sweets: string, type: string, area: string, keyword: string): Shop[] {
+  // スペース区切りの複数語は「すべて含む」で絞り込む
+  const words = normalize(keyword).split(/\s+/).filter(Boolean)
   return shops.filter(shop => {
     if (sweets !== ALL && !shop.sweets_category?.includes(SWEETS_ID_BY_NAME[sweets])) return false
     if (type !== ALL && !(TYPE_FILTER_MAP[type] ?? []).some(id => shop.features?.includes(id))) return false
     if (area !== ALL && !shop.area?.includes(AREA_FILTER_MAP[area])) return false
+    if (words.length > 0) {
+      const text = texts.get(shop.id) ?? ''
+      if (!words.every(w => text.includes(w))) return false
+    }
     return true
   })
 }
@@ -49,6 +80,7 @@ export default function ShopsSection({ shops }: { shops: Shop[] }) {
   const [sweetsFilter, setSweetsFilter] = useState(ALL)
   const [typeFilter,   setTypeFilter]   = useState(ALL)
   const [areaFilter,   setAreaFilter]   = useState(ALL)
+  const [keyword,      setKeyword]      = useState('')
   const [showAllSweets, setShowAllSweets] = useState(false)
   const [view, setView] = useState<ViewMode>('list')
   // パネル表示の並び順（パネル表示に切り替えるたびにシャッフル）
@@ -64,9 +96,10 @@ export default function ShopsSection({ shops }: { shops: Shop[] }) {
     if (SWEETS_MORE.includes(sweets)) setShowAllSweets(true)
   }, [])
 
+  const searchTexts = useMemo(() => new Map(shops.map(shop => [shop.id, searchText(shop)])), [shops])
   const filteredShops = useMemo(
-    () => filterShops(shops, sweetsFilter, typeFilter, areaFilter),
-    [shops, sweetsFilter, typeFilter, areaFilter],
+    () => filterShops(shops, searchTexts, sweetsFilter, typeFilter, areaFilter, keyword),
+    [shops, searchTexts, sweetsFilter, typeFilter, areaFilter, keyword],
   )
   const totalPages = Math.max(1, Math.ceil(filteredShops.length / PER_PAGE))
   const currentPage = Math.min(page, totalPages)
@@ -95,7 +128,8 @@ export default function ShopsSection({ shops }: { shops: Shop[] }) {
             more={{ open: showAllSweets, toggle: () => setShowAllSweets(v => !v) }}
           />
           <FilterRow label="タイプ" items={TYPE_OPTIONS} active={typeFilter} onSelect={withReset(setTypeFilter)} />
-          <FilterRow label="エリア" items={AREA_OPTIONS} active={areaFilter} onSelect={withReset(setAreaFilter)} last />
+          <FilterRow label="エリア" items={AREA_OPTIONS} active={areaFilter} onSelect={withReset(setAreaFilter)} />
+          <KeywordRow value={keyword} onChange={withReset(setKeyword)} />
         </div>
 
         {/* 絞り込み結果の件数 */}
@@ -191,7 +225,7 @@ function FilterRow({
       'flex flex-col md:flex-row md:items-center gap-2 md:gap-[18px] py-3 md:pt-[13px] md:pb-[14px]',
       last ? '' : 'border-b border-dashed border-brand-beige/70',
     ].join(' ')}>
-      <span className="md:w-16 shrink-0 text-[13px] md:text-[14px] font-bold leading-[25.9px] tracking-[0.32px] text-brand-brown-sub">
+      <span className="md:w-[76px] shrink-0 text-[13px] md:text-[14px] font-bold leading-[25.9px] tracking-[0.32px] text-brand-brown-sub">
         {label}
       </span>
       <div className="flex flex-wrap items-center gap-y-1.5">
@@ -212,6 +246,47 @@ function FilterRow({
               height={13}
               className={`transition-transform ${more.open ? 'rotate-180' : ''}`}
             />
+          </button>
+        )}
+      </div>
+    </div>
+  )
+}
+
+// ============================================================
+// キーワード入力行
+// ============================================================
+function KeywordRow({ value, onChange }: { value: string; onChange: (v: string) => void }) {
+  return (
+    <div className="flex flex-col md:flex-row md:items-center gap-2 md:gap-[18px] py-3 md:pt-[13px] md:pb-[14px]">
+      <label htmlFor="shop-keyword" className="md:w-[76px] shrink-0 text-[13px] md:text-[14px] font-bold leading-[25.9px] tracking-[0.32px] text-brand-brown-sub">
+        キーワード
+      </label>
+      <div className="relative w-full md:max-w-[420px]">
+        {/* 虫めがねアイコン */}
+        <svg aria-hidden="true" viewBox="0 0 20 20" className="absolute left-3.5 top-1/2 -translate-y-1/2 size-[18px] text-brand-brown-sub" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round">
+          <circle cx="8.5" cy="8.5" r="5.75" />
+          <path d="M13 13l4 4" />
+        </svg>
+        <input
+          id="shop-keyword"
+          type="search"
+          value={value}
+          onChange={e => onChange(e.target.value)}
+          placeholder="店名・スイーツ名・地名など"
+          enterKeyHint="search"
+          className="w-full h-11 pl-10 pr-10 rounded-[10px] border border-brand-beige bg-white text-[16px] md:text-[14px] font-medium tracking-[0.32px] text-brand-brown-main placeholder:text-brand-brown-sub/60 outline-none focus:border-brand-brown-sub [&::-webkit-search-cancel-button]:hidden"
+        />
+        {value && (
+          <button
+            type="button"
+            onClick={() => onChange('')}
+            aria-label="キーワードを消す"
+            className="absolute right-2 top-1/2 -translate-y-1/2 grid place-items-center size-7 rounded-full text-brand-brown-sub hover:bg-brand-ivory"
+          >
+            <svg aria-hidden="true" viewBox="0 0 14 14" className="size-3" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round">
+              <path d="M2 2l10 10M12 2L2 12" />
+            </svg>
           </button>
         )}
       </div>
