@@ -31,6 +31,8 @@ import {
 
 type Props = { params: Promise<{ slug: string }> }
 
+const HOURS_UNKNOWN = '営業時間・定休日はお店にご確認ください'
+
 // 静的書き出しのため、ビルド時に WordPress にあるお店のページだけを作る
 export const dynamicParams = false
 
@@ -141,7 +143,9 @@ export default async function ShopDetailPage({ params }: Props) {
     <dl className="grid grid-cols-[64px_1fr] gap-y-3 text-[14px] leading-[1.8]">
       {d.hours && <><dt className="font-bold">営業</dt><dd className="whitespace-pre-line">{d.hours}</dd></>}
       {acf.holiday && <><dt className="font-bold">定休日</dt><dd>{acf.holiday}</dd></>}
-      {acf.season && <><dt className="font-bold">シーズン</dt><dd>{formatSeason(acf.season)}{acf.operating_months_note && `（${acf.operating_months_note}）`}</dd></>}
+      {/* 営業時間・定休日がまだ確認できていない店 */}
+      {!d.hours && !acf.holiday && <><dt className="font-bold">営業</dt><dd className="text-brand-brown-sub">{HOURS_UNKNOWN}</dd></>}
+      {acf.season && <><dt className="font-bold">シーズン</dt><dd>{formatSeason(acf.season)}{acf.operating_months_note && `（${stripTags(acf.operating_months_note)}）`}</dd></>}
     </dl>
   )
 
@@ -315,12 +319,13 @@ export default async function ShopDetailPage({ params }: Props) {
               {payments.length > 0 && <><dt>支払い</dt><dd>{payments.join(' / ')}</dd></>}
               {d.hours && <><dt>営業</dt><dd className="whitespace-pre-line">{d.hours}</dd></>}
               {acf.holiday && <><dt>定休日</dt><dd>{acf.holiday}</dd></>}
+              {!d.hours && !acf.holiday && <><dt>営業</dt><dd className="text-brand-brown-sub">{HOURS_UNKNOWN}</dd></>}
               {acf.operating_months?.length > 0 && (
                 <>
                   <dt>営業月</dt>
                   <dd className="flex flex-col gap-2">
                     <MonthCalendar months={acf.operating_months} />
-                    {acf.operating_months_note && <span className="text-[13px] text-brand-brown-sub">{acf.operating_months_note}</span>}
+                    {acf.operating_months_note && <span className="text-[13px] text-brand-brown-sub">{stripTags(acf.operating_months_note)}</span>}
                   </dd>
                 </>
               )}
