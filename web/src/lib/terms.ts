@@ -3,23 +3,28 @@
 export const SWEETS_CATEGORY_MAP: Record<number, string> = {
   6:  'ケーキ',
   7:  'クレープ',
-  8:  'アイス',
+  8:  'ソフトクリーム',
   9:  'プリン',
   10: 'パフェ',
-  11: 'ジェラート',
-  12: 'クッキー',
+  11: 'ジェラート・アイス',
+  12: '焼き菓子',
   13: '和菓子',
   14: '地元食材スイーツ',
   15: 'シュークリーム',
   16: 'かき氷',
-  17: 'パンケーキ',
+  17: 'パンケーキ・ワッフル',
+  46: 'タルト・パイ',
+  47: 'ゼリー',
 }
+
+// スイーツカテゴリの表示順（絞り込み・「スイーツでお店を探す」）
+export const SWEETS_CATEGORY_ORDER: number[] = [6, 46, 12, 15, 9, 47, 17, 7, 10, 8, 11, 16, 13, 14]
 
 // スイーツカテゴリ term ID → アイコン（public/images/sweets/{slug}.svg）
 export const SWEETS_ICON_MAP: Record<number, string> = {
   6:  'cake',
   7:  'crepe',
-  8:  'ice',
+  8:  'ice',  // ソフトクリーム
   9:  'pudding',
   10: 'parfait',
   11: 'gelato',
@@ -29,6 +34,8 @@ export const SWEETS_ICON_MAP: Record<number, string> = {
   15: 'cream_puff',
   16: 'kakigori',
   17: 'pancake',
+  46: 'tart_pie',
+  47: 'jelly',
 }
 
 export const SHOP_TYPE_MAP: Record<number, string> = {
@@ -79,11 +86,15 @@ export const SWEETS_FILTER_MAP: Record<string, number> = {
   'ケーキ':       6,
   'プリン':       9,
   'クレープ':     7,
-  'アイス':       8,
+  'ソフトクリーム': 8,
+  'ジェラート・アイス': 11,
   'シュークリーム': 15,
   '和菓子':      13,
   'かき氷':      16,
-  'パンケーキ':  17,
+  'パンケーキ・ワッフル': 17,
+  'タルト・パイ': 46,
+  '焼き菓子':    12,
+  'ゼリー':      47,
 }
 
 export const TYPE_FILTER_MAP: Record<string, number[]> = {

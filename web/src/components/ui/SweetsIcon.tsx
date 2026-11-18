@@ -18,16 +18,18 @@ export const SWEETS_ICONS: Record<string, {
 }> = {
   cake:       { icon: Cake,            label: 'ケーキ',           labelEn: 'Cake' },
   crepe:      { icon: UtensilsCrossed, label: 'クレープ',         labelEn: 'Crepe' },
-  ice:        { icon: IceCream,        label: 'アイス',           labelEn: 'Ice Cream' },
+  ice:        { icon: IceCream,        label: 'ソフトクリーム',   labelEn: 'Soft Serve' },
   pudding:    { icon: Coffee,          label: 'プリン',           labelEn: 'Pudding' },
   parfait:    { icon: GlassWater,      label: 'パフェ',           labelEn: 'Parfait' },
-  gelato:     { icon: IceCream,        label: 'ジェラート',       labelEn: 'Gelato' },
-  cookie:     { icon: Cookie,          label: 'クッキー',         labelEn: 'Cookie' },
+  gelato:     { icon: IceCream,        label: 'ジェラート・アイス', labelEn: 'Gelato & Ice Cream' },
+  cookie:     { icon: Cookie,          label: '焼き菓子',         labelEn: 'Baked Sweets' },
   wagashi:    { icon: Leaf,            label: '和菓子',           labelEn: 'Wagashi' },
   local:      { icon: Leaf,            label: '地元食材スイーツ', labelEn: 'Local Sweets' },
   kakigori:   { icon: Snowflake,       label: 'かき氷',           labelEn: 'Shaved Ice' },
   cream_puff: { icon: Coffee,          label: 'シュークリーム',   labelEn: 'Cream Puff' },
-  pancake:    { icon: Cake,            label: 'パンケーキ',       labelEn: 'Pancake' },
+  pancake:    { icon: Cake,            label: 'パンケーキ・ワッフル', labelEn: 'Pancakes & Waffles' },
+  tart_pie:   { icon: Cake,            label: 'タルト・パイ',     labelEn: 'Tarts & Pies' },
+  jelly:      { icon: GlassWater,      label: 'ゼリー',           labelEn: 'Jelly' },
 }
 
 // アイコンコンポーネント

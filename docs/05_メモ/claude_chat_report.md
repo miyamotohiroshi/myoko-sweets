@@ -76,6 +76,13 @@ Claude Code
 - 写真一覧のサムネイルに WordPress の縮小版（768px）を使うようにして、表示を軽くした
 - お店情報の写真は、空のときに「お店の雰囲気写真」を使うよう変更（それも空ならメイン写真）。雰囲気写真が仮画像の店が24店あり、その店ではお店情報も仮画像になる
 - 店舗詳細ページのナビ：PC だけ、左右の両端にも縦線を追加
+- スイーツのカテゴリを見直し（14カテゴリに）
+  - 名前変更（ID はそのまま）：アイス→ソフトクリーム（スラッグ soft_cream）、ジェラート→ジェラート・アイス、クッキー→焼き菓子（yakigashi）、パンケーキ→パンケーキ・ワッフル
+  - 追加：タルト・パイ（ID 46、tart_pie）、ゼリー（ID 47、jelly）
+  - 16店のカテゴリをメニューの品名から付け直し（ソフト→ソフトクリーム、ジェラート・アイス・シャーベット・アフォガート→ジェラート・アイス、タルト・パイ、ゼリー、クッキー・マカロン・スコーン・ドーナツ等→焼き菓子、ワッフル・フレンチトースト→パンケーキ・ワッフル、豆花・パンナコッタ→プリン）。The Lake Side Cafe はコーヒーゼリーの写真があるためゼリーも追加。変更前のカテゴリは ~/backup/sweets_category_rel_20261118.json
+  - 登録数：ケーキ18、地元食材12、ジェラート・アイス11、ソフトクリーム7、タルト・パイ7、プリン7、和菓子4、クレープ4、焼き菓子4、パンケーキ・ワッフル4、シュークリーム2、かき氷1、パフェ1、ゼリー1
+  - 写真の「カテゴリ」欄（写真01〜20・メイン写真）の選択肢も同じ名前に揃え、タルト・パイとゼリーを追加
+  - サイト：表示順を定義（ケーキ→タルト・パイ→焼き菓子→…）。TOP の絞り込みで最初に見せる8つを「ケーキ・タルト・パイ・焼き菓子・プリン・ソフトクリーム・ジェラート・アイス・クレープ・和菓子」に。タルト・パイとゼリーのアイコンを新しく作成（仮のデザイン）。「スイーツでお店を探す」の長い名前は「・」の後ろで折り返す
 - 店舗の写真を登録するときのルールを docs/CLAUDE.md に追加（リネーム → CMS 登録 → 画像フォルダに保存 → 出典台帳・撮影リスト・店舗リスト Excel に記録）。画像/命名規則.md にも手順を追記
 
 ## 作成・変更したファイル
@@ -91,6 +98,8 @@ Claude Code
 | web/src/app/shop/[slug]/page.tsx | 支払い・席数・駐車場・ペット同伴・食べログの表示 |
 | web/src/lib/terms.ts・components/top/ShopCard.tsx・TabNav.tsx | ペット同伴可の絞り込みと特徴アイコン |
 | web/public/images/top/icons/pet.svg | ペット同伴のアイコン（新規） |
+| web/src/lib/terms.ts・components/top/ShopsSection.tsx・TabNav.tsx・ui/SweetsIcon.tsx・types/index.ts | スイーツカテゴリの名前・表示順・絞り込み |
+| web/public/images/sweets/tart_pie.svg・jelly.svg | タルト・パイ、ゼリーのアイコン（新規） |
 | web/src/components/shop/ShopParts.tsx・web/src/app/globals.css・web/public/images/top/icons/web.svg | 観光スポットの説明の見た目（おすすめの囲み・基本情報の表・リンクボタン） |
 | docs/wordpress-acf-import.json | payment_note・seats・parking・pet_note・reservation・info_checked・食事/店内/外観/お店情報の写真欄を追加 |
 | web/src/components/shop/ShopGallery.tsx・web/src/components/top/ShopCard.tsx | 店舗詳細のスライダーと写真一覧モーダル |

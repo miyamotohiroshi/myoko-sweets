@@ -5,7 +5,7 @@ import { notFound } from 'next/navigation'
 import type { Shop, ShopACF, Spot, WPImage } from '@/types'
 import { getAllShops, getShopBySlug, getNearbySpots } from '@/lib/wordpress'
 import { SITE_INFO } from '@/config/site'
-import { SWEETS_CATEGORY_MAP, SWEETS_ICON_MAP, FEATURES_MAP } from '@/lib/terms'
+import { SWEETS_CATEGORY_MAP, SWEETS_CATEGORY_ORDER, SWEETS_ICON_MAP, FEATURES_MAP } from '@/lib/terms'
 import {
   stripTags,
   sanitizeHtml,
@@ -434,11 +434,11 @@ export default async function ShopDetailPage({ params }: Props) {
           <h2 className="text-[17px] md:text-[18px] font-bold tracking-[0.32px]">スイーツでお店を探す</h2>
           {/* 枠線なしの白いカード。アイコンは左上にはみ出させる */}
           <ul className="mt-5 grid grid-cols-2 md:grid-cols-4 gap-x-3 gap-y-1.5 md:gap-x-4 md:gap-y-2.5">
-            {Object.entries(SWEETS_CATEGORY_MAP).map(([id, name]) => (
+            {SWEETS_CATEGORY_ORDER.map(id => [id, SWEETS_CATEGORY_MAP[id]] as const).map(([id, name]) => (
               <li key={id} className="pt-3">
                 <Link
                   href={`/?sweets=${encodeURIComponent(name)}#store`}
-                  className="group relative flex items-center gap-1 h-12 md:h-[52px] pl-[58px] md:pl-[70px] pr-3 bg-white rounded-[14px] shadow-[0_4px_14px_rgba(92,74,42,0.07)] text-[12px] md:text-[14px] font-bold leading-[1.4] whitespace-nowrap transition-all duration-300 hover:-translate-y-0.5 hover:shadow-[0_8px_20px_rgba(92,74,42,0.12)]"
+                  className="group relative flex items-center gap-1 h-12 md:h-[52px] pl-[58px] md:pl-[70px] pr-3 bg-white rounded-[14px] shadow-[0_4px_14px_rgba(92,74,42,0.07)] text-[12px] md:text-[14px] font-bold leading-[1.3] transition-all duration-300 hover:-translate-y-0.5 hover:shadow-[0_8px_20px_rgba(92,74,42,0.12)]"
                 >
                   <Image
                     src={`/images/sweets/${SWEETS_ICON_MAP[Number(id)]}.svg`}
@@ -447,7 +447,10 @@ export default async function ShopDetailPage({ params }: Props) {
                     height={60}
                     className="absolute left-1.5 md:left-2 -top-[18px] md:-top-5 size-[50px] md:size-[60px] drop-shadow-[0_3px_3px_rgba(92,74,42,0.12)] transition-transform duration-300 group-hover:-rotate-6 group-hover:scale-110"
                   />
-                  {name}
+                  {/* 長い名前（パンケーキ・ワッフルなど）は「・」の後ろで折り返す */}
+                  <span className="[word-break:keep-all] [overflow-wrap:anywhere]">
+                    {name.split('・').map((part, i) => <span key={part}>{i > 0 && <>・<wbr /></>}{part}</span>)}
+                  </span>
                   <Image src="/images/top/icons/arrow-brown.svg" alt="" width={14} height={14} className="hidden md:block ml-auto shrink-0 opacity-40 transition-all group-hover:opacity-100 group-hover:translate-x-0.5" />
                 </Link>
               </li>

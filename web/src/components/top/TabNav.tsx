@@ -8,7 +8,7 @@ const TABS = [
   { id: 'plans',  label: 'モデルプラン', sub: null },
 ] as const
 
-const SWEETS_CATS  = ['ケーキ', 'プリン', 'クレープ', 'アイス', 'シュークリーム', '和菓子', 'かき氷', 'パンケーキ']
+const SWEETS_CATS  = ['ケーキ', 'タルト・パイ', '焼き菓子', 'プリン', 'ソフトクリーム', 'ジェラート・アイス', 'クレープ', '和菓子']
 const TYPE_OPTIONS = ['座席あり', '持ち帰り', '電源席あり', 'ペット同伴可']
 const AREA_OPTIONS = ['妙高高原', '野尻湖', '新井・中郷']
 

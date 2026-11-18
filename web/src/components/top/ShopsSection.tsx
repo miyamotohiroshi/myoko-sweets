@@ -9,6 +9,7 @@ import CategoryTabs from './CategoryTabs'
 import SectionHeading from './SectionHeading'
 import {
   SWEETS_CATEGORY_MAP,
+  SWEETS_CATEGORY_ORDER,
   TYPE_FILTER_MAP,
   AREA_FILTER_MAP,
 } from '@/lib/terms'
@@ -22,8 +23,9 @@ type ViewMode = 'list' | 'grid'
 const SWEETS_ID_BY_NAME = Object.fromEntries(
   Object.entries(SWEETS_CATEGORY_MAP).map(([id, name]) => [name, Number(id)]),
 )
-const SWEETS_MAIN  = ['ケーキ', 'プリン', 'クレープ', 'アイス', 'シュークリーム', '和菓子', 'かき氷', 'パンケーキ']
-const SWEETS_MORE  = Object.values(SWEETS_CATEGORY_MAP).filter(name => !SWEETS_MAIN.includes(name))
+// 最初から見せるのは登録の多いカテゴリ。残りは「すべて表示」で表示順どおりに出す
+const SWEETS_MAIN  = ['ケーキ', 'タルト・パイ', '焼き菓子', 'プリン', 'ソフトクリーム', 'ジェラート・アイス', 'クレープ', '和菓子']
+const SWEETS_MORE  = SWEETS_CATEGORY_ORDER.map(id => SWEETS_CATEGORY_MAP[id]).filter(name => !SWEETS_MAIN.includes(name))
 const TYPE_OPTIONS = Object.keys(TYPE_FILTER_MAP)
 const AREA_OPTIONS = Object.keys(AREA_FILTER_MAP)
 

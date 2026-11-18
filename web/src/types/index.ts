@@ -21,6 +21,8 @@ export type SweetsCategory =
   | 'kakigori'
   | 'cream_puff'
   | 'pancake'
+  | 'tart_pie'
+  | 'jelly'
 
 export type DrinkCategory =
   | 'coffee'
