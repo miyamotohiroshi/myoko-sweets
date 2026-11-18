@@ -83,6 +83,7 @@ Claude Code
   - 登録数：ケーキ18、地元食材12、ジェラート・アイス11、ソフトクリーム7、タルト・パイ7、プリン7、和菓子4、クレープ4、焼き菓子4、パンケーキ・ワッフル4、シュークリーム2、かき氷1、パフェ1、ゼリー1
   - 写真の「カテゴリ」欄（写真01〜20・メイン写真）の選択肢も同じ名前に揃え、タルト・パイとゼリーを追加
   - サイト：表示順を定義（ケーキ→タルト・パイ→焼き菓子→…）。TOP の絞り込みで最初に見せる8つを「ケーキ・タルト・パイ・焼き菓子・プリン・ソフトクリーム・ジェラート・アイス・クレープ・和菓子」に。タルト・パイとゼリーのアイコンを新しく作成（仮のデザイン）。「スイーツでお店を探す」の長い名前は「・」の後ろで折り返す
+- サイトの favicon を、ユーザー提供のケーキのアイコン（512×512 PNG、ケーキを大きくした版に差し替え済み）に変更：favicon.ico（16・32・48px）、icon.png（192px）、apple-icon.png（180px、iPhone 用に背景を白に）を web/src/app に作成。元の PNG は docs/02_ブランド/logo/favicon-512.png に保存
 - 店舗の写真を登録するときのルールを docs/CLAUDE.md に追加（リネーム → CMS 登録 → 画像フォルダに保存 → 出典台帳・撮影リスト・店舗リスト Excel に記録）。画像/命名規則.md にも手順を追記
 
 ## 作成・変更したファイル
@@ -100,6 +101,7 @@ Claude Code
 | web/public/images/top/icons/pet.svg | ペット同伴のアイコン（新規） |
 | web/src/lib/terms.ts・components/top/ShopsSection.tsx・TabNav.tsx・ui/SweetsIcon.tsx・types/index.ts | スイーツカテゴリの名前・表示順・絞り込み |
 | web/public/images/sweets/tart_pie.svg・jelly.svg | タルト・パイ、ゼリーのアイコン（新規） |
+| web/src/app/favicon.ico・icon.png・apple-icon.png | favicon（新しいケーキのアイコン） |
 | web/src/components/shop/ShopParts.tsx・web/src/app/globals.css・web/public/images/top/icons/web.svg | 観光スポットの説明の見た目（おすすめの囲み・基本情報の表・リンクボタン） |
 | docs/wordpress-acf-import.json | payment_note・seats・parking・pet_note・reservation・info_checked・食事/店内/外観/お店情報の写真欄を追加 |
 | web/src/components/shop/ShopGallery.tsx・web/src/components/top/ShopCard.tsx | 店舗詳細のスライダーと写真一覧モーダル |
