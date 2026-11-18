@@ -107,13 +107,26 @@ export function parseListHtml(html: string): string[] {
   return items.length ? items : stripTags(html).split('\n').map(s => s.trim()).filter(Boolean)
 }
 
-// 支払い方法の表示名
+// 支払い方法の表示名（WordPress の選択肢。credit・ic・qr は以前の値）
 export const PAYMENT_LABELS: Record<string, string> = {
-  cash:       '現金',
-  credit:     'クレジットカード',
-  ic:         '交通系IC',
-  qr:         'QRコード決済',
-  qr_payment: 'QRコード決済',
+  cash:        '現金',
+  credit_card: 'クレジットカード',
+  e_money:     '電子マネー',
+  qr_payment:  'QRコード決済',
+  credit:      'クレジットカード',
+  ic:          '交通系IC',
+  qr:          'QRコード決済',
+}
+
+// 支払い方法と補足（使えるブランドなど）の組み合わせ。補足は「支払い方法 | 内容」を1行に1つ
+export function getPayments(methods: string[] | undefined, note: string | undefined): { label: string; detail: string }[] {
+  const details = new Map<string, string>()
+  for (const line of stripTags(note ?? '').split('\n')) {
+    const [label = '', detail = ''] = line.split(/\s*[|｜]\s*/)
+    if (label.trim() && detail.trim()) details.set(label.trim(), detail.trim())
+  }
+  const labels = [...new Set((methods ?? []).map(m => PAYMENT_LABELS[m]).filter(Boolean))]
+  return labels.map(label => ({ label, detail: details.get(label) ?? '' }))
 }
 
 // 記事本文の h2 に id を振り、目次を作る

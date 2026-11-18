@@ -138,6 +138,7 @@ const FEATURE_TEXT_ICONS: { id: number; icon: string; label: string }[] = [
   { id: 29, icon: 'seat',    label: '座席あり' },
   { id: 30, icon: 'takeout', label: '持ち帰り可' },
   { id: 31, icon: 'takeout', label: '持ち帰りのみ' },
+  { id: 45, icon: 'pet',     label: 'ペット同伴可' },
 ]
 const FEATURE_ONLY_ICONS: { id: number; icon: string; label: string }[] = [
   { id: 34, icon: 'power', label: '電源あり' },

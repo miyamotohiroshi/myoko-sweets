@@ -34,6 +34,16 @@ Claude Code
   - 途中で条件の書き方を誤り、約2分間 https が認証なしで見られた。その間に取得されたトップと NAGOMI CAFE のページを Xserver のサーバーキャッシュが保存し、条件を直した後も認証なしで返していた
   - 認証中はサーバーキャッシュを止める設定に変更（Ngx_Cache_NoCacheMode）。キャッシュが切れた後、全ページで ID・パスワードなしは 401 になることを確認
 
+- NAGOMI CAFE のメニューを追加：スイーツ（豆花 small・regular、妙高発酵ジェラート シングル・ダブル）、食事・他（ヴィーガントースト、自家製あんこ）、ドリンクセット +¥500
+- 店舗ページのメニュー表をスマホで見やすく変更：見出しの列を約100px→56pxに縮めた。商品名は太字、価格は右端に太字で同じ行。末尾の（）の補足（Hot / Iced など）は商品名の下に小さく。商品の間に点線
+- 支払い方法に補足欄（payment_note、「支払い方法 | 内容」を1行に1つ）を追加し、店舗ページで方法ごとにブランドを小さく表示。NAGOMI CAFE は現金・クレジットカード（VISA、Master、JCB）・電子マネー（交通系電子マネー（Suicaなど）、iD、QUICPay）・QRコード決済
+  - WordPress の選択肢（credit_card・e_money）がサイト側の表示名と合っておらず、カード・電子マネーが表示されない不具合があったので修正
+- 席数・駐車場・ペット同伴に対応
+  - WordPress に「席数（seats）」「駐車場（parking）」「ペット同伴の補足（pet_note）」の入力欄を追加
+  - 特徴（features）タクソノミーに「ペット同伴可」（ID 45、スラッグ pet_ok）を追加し、TOP の絞り込み「タイプ」に「ペット同伴可」を追加
+  - 店舗ページのお店情報に「席数」「駐車場」「ペット同伴」の行を追加。上部の特徴にも足あとアイコン付きで「ペット同伴可」を表示
+  - NAGOMI CAFE：20席、駐車場あり（6台）、ペット同伴可（テラス席のみ可）
+
 ## 作成・変更したファイル
 | ファイルパス | 変更内容 |
 |---|---|
@@ -42,6 +52,13 @@ Claude Code
 | サーバー public_html/.htaccess | https・www なしへの転送、ベーシック認証、サーバーキャッシュ停止を反映 |
 | web/public/.htaccess | ベーシック認証・X-Robots-Tag・認証中のキャッシュ停止を追加 |
 | web/src/config/site.ts・web/src/app/layout.tsx | 公開前の noindex（SITE_OPEN で切り替え） |
+| web/src/components/shop/ShopMenu.tsx | メニュー表の見た目（スマホ向け） |
+| web/src/lib/utils.ts・web/src/types/index.ts | 支払い方法の表示名の修正と補足の読み込み、席数・駐車場・ペットの型 |
+| web/src/app/shop/[slug]/page.tsx | 支払い・席数・駐車場・ペット同伴の表示 |
+| web/src/lib/terms.ts・components/top/ShopCard.tsx・TabNav.tsx | ペット同伴可の絞り込みと特徴アイコン |
+| web/public/images/top/icons/pet.svg | ペット同伴のアイコン（新規） |
+| docs/wordpress-acf-import.json | payment_note・seats・parking・pet_note を追加 |
+| WordPress（店舗の入力欄・特徴タクソノミー・NAGOMI CAFE） | 上記の項目・ターム・データを登録 |
 | docs/03_WEBサイト/04_店舗リサーチ/画像（git 管理外） | 店舗フォルダの追加・8分類のフォルダ作成・写真の振り分け・CSV の更新 |
 
 ## Claude Chatへの申し送り事項
@@ -52,4 +69,6 @@ Claude Code
 - 写真を追加・差し替えるときは、分類フォルダと店フォルダ直下の両方を更新する必要がある
 - 99_未使用 は8分類にない写真（食事・重複など）の置き場として追加した。不要なら削除してよいか確認
 - 正式公開するときは、SITE_OPEN を true にする・.htaccess の認証ブロックを消す・サーバーキャッシュの2行を元に戻す、の3つが必要
+- 「ペット同伴可」のタームは ACF の JSON には入らないので、WordPress を作り直すときは特徴タクソノミーに手で追加する（スラッグ pet_ok、サイトは ID 45 を前提にしている）
+- NAGOMI CAFE の「現金」は元の登録のまま残している。使えるか確認
 - 残り：Vercel からドメインを外す、今後の更新方法（SSH で手動か、GitHub から自動か）を決める

@@ -12,7 +12,7 @@ import {
   parseMenu,
   parseListHtml,
   formatSeason,
-  PAYMENT_LABELS,
+  getPayments,
 } from '@/lib/utils'
 import { toCardData, getGallery, AccessTime, ShopLabel, AreaBadge, Tags, Features } from '@/components/top/ShopCard'
 import ShopGallery from '@/components/shop/ShopGallery'
@@ -126,8 +126,11 @@ export default async function ShopDetailPage({ params }: Props) {
   const popularFood   = getPopular(acf, 'food')
   const reviews       = parseListHtml(acf.review_summary ?? '')
   const xPosts        = getXPosts(acf)
-  const featureLabels = (shop.features ?? []).map(id => FEATURES_MAP[id]).filter(Boolean)
-  const payments      = (acf.payment_methods ?? []).map(p => PAYMENT_LABELS[p]).filter(Boolean)
+  // ペット同伴は専用の行で出すので「その他」からは外す
+  const PET_ID        = 45
+  const petOk         = (shop.features ?? []).includes(PET_ID)
+  const featureLabels = (shop.features ?? []).filter(id => id !== PET_ID).map(id => FEATURES_MAP[id]).filter(Boolean)
+  const payments      = getPayments(acf.payment_methods, acf.payment_note)
   const hashtags      = [SITE_INFO.hashtag, `#${d.name.replace(/\s+/g, '')}`]
   const hasMenu       = menuGroups.length > 0 || popularSweets.length > 0 || popularFood.length > 0
 
@@ -313,10 +316,35 @@ export default async function ShopDetailPage({ params }: Props) {
                   </dd>
                 </>
               )}
+              {acf.seats && <><dt>席数</dt><dd>{acf.seats}</dd></>}
+              {acf.parking && <><dt>駐車場</dt><dd>{acf.parking}</dd></>}
+              {(petOk || acf.pet_note) && (
+                <>
+                  <dt>ペット同伴</dt>
+                  <dd>
+                    {petOk && <span className="font-bold">可</span>}
+                    {acf.pet_note && <span className={petOk ? 'block text-[12px] leading-[1.6] text-brand-brown-sub' : ''}>{acf.pet_note}</span>}
+                  </dd>
+                </>
+              )}
               {featureLabels.length > 0 && (
                 <><dt>その他</dt><dd><ul>{featureLabels.map(f => <li key={f}>・{f}</li>)}</ul></dd></>
               )}
-              {payments.length > 0 && <><dt>支払い</dt><dd>{payments.join(' / ')}</dd></>}
+              {payments.length > 0 && (
+                <>
+                  <dt>支払い</dt>
+                  <dd>
+                    <ul className="flex flex-col gap-1.5">
+                      {payments.map(p => (
+                        <li key={p.label}>
+                          <span className="font-bold">{p.label}</span>
+                          {p.detail && <span className="block text-[12px] leading-[1.6] text-brand-brown-sub">{p.detail}</span>}
+                        </li>
+                      ))}
+                    </ul>
+                  </dd>
+                </>
+              )}
               {d.hours && <><dt>営業</dt><dd className="whitespace-pre-line">{d.hours}</dd></>}
               {acf.holiday && <><dt>定休日</dt><dd>{acf.holiday}</dd></>}
               {!d.hours && !acf.holiday && <><dt>営業</dt><dd className="text-brand-brown-sub">{HOURS_UNKNOWN}</dd></>}

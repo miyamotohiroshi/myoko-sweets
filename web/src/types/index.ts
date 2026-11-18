@@ -51,10 +51,12 @@ export type SeasonType =
 
 export type PaymentMethod =
   | 'cash'
+  | 'credit_card'
+  | 'e_money'
+  | 'qr_payment'
   | 'credit'
   | 'ic'
   | 'qr'
-  | 'qr_payment'
 
 // ============================================
 // 画像
@@ -204,6 +206,10 @@ export type ShopACF = {
 
   // 設備・支払い
   payment_methods: PaymentMethod[]
+  payment_note?: string  // 「支払い方法 | 内容」を1行に1つ
+  seats?: string         // 席数（例：20席）
+  parking?: string       // 駐車場（例：あり（6台））
+  pet_note?: string      // ペット同伴の補足（例：テラス席のみ可）
 
   // 近くの施設（手動ピックアップ）
   featured_spots: (number | { ID: number })[]  // スポットの投稿ID（REST では投稿オブジェクトで返る）

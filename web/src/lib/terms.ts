@@ -71,6 +71,7 @@ export const FEATURES_MAP: Record<number, string> = {
   32: '食事あり',
   33: 'Wi-Fiあり',
   34: '電源あり',
+  45: 'ペット同伴可',
 }
 
 // フィルターラベル → term ID（タブ内フィルター用）
@@ -89,6 +90,7 @@ export const TYPE_FILTER_MAP: Record<string, number[]> = {
   '座席あり':   [29],
   '持ち帰り':   [30, 31],  // 持ち帰りあり OR 持ち帰りのみ
   '電源席あり': [34],
+  'ペット同伴可': [45],
 }
 
 export const AREA_FILTER_MAP: Record<string, number> = {

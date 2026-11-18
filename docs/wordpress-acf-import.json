@@ -2287,6 +2287,82 @@
         "save_custom": 0
       },
       {
+        "key": "field_shop_payment_note",
+        "label": "支払い方法の補足",
+        "name": "payment_note",
+        "type": "textarea",
+        "instructions": "使えるブランドなど。1行に1つ「支払い方法 | 内容」で入力します。支払い方法は上でチェックした項目名（現金・クレジットカード・電子マネー・QRコード決済）。例：クレジットカード | VISA、Master、JCB",
+        "required": 0,
+        "conditional_logic": 0,
+        "wrapper": {
+          "width": "",
+          "class": "",
+          "id": ""
+        },
+        "default_value": "",
+        "placeholder": "",
+        "maxlength": "",
+        "rows": 4,
+        "new_lines": ""
+      },
+      {
+        "key": "field_shop_seats",
+        "label": "席数",
+        "name": "seats",
+        "type": "text",
+        "instructions": "例：20席、カウンター4席・テーブル16席。持ち帰りのみの店は空欄",
+        "required": 0,
+        "conditional_logic": 0,
+        "wrapper": {
+          "width": "",
+          "class": "",
+          "id": ""
+        },
+        "default_value": "",
+        "placeholder": "",
+        "prepend": "",
+        "append": "",
+        "maxlength": ""
+      },
+      {
+        "key": "field_shop_parking",
+        "label": "駐車場",
+        "name": "parking",
+        "type": "text",
+        "instructions": "例：あり（6台）、なし、近くに市営駐車場あり",
+        "required": 0,
+        "conditional_logic": 0,
+        "wrapper": {
+          "width": "",
+          "class": "",
+          "id": ""
+        },
+        "default_value": "",
+        "placeholder": "",
+        "prepend": "",
+        "append": "",
+        "maxlength": ""
+      },
+      {
+        "key": "field_shop_pet_note",
+        "label": "ペット同伴の補足",
+        "name": "pet_note",
+        "type": "text",
+        "instructions": "同伴できる場所や条件。例：テラス席のみ可、小型犬のみ。ペット同伴できる店は、右側の「特徴」で「ペット同伴可」にもチェックを入れてください（絞り込みに使います）",
+        "required": 0,
+        "conditional_logic": 0,
+        "wrapper": {
+          "width": "",
+          "class": "",
+          "id": ""
+        },
+        "default_value": "",
+        "placeholder": "",
+        "prepend": "",
+        "append": "",
+        "maxlength": ""
+      },
+      {
         "key": "field_shop_tab_nearby",
         "label": "近くの施設",
         "name": "",
