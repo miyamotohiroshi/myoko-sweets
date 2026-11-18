@@ -117,7 +117,8 @@ export default async function ShopDetailPage({ params }: Props) {
 
   const gallery     = getDetailGallery(acf)
   const photoGroups = getPhotoGroups(acf)
-  const infoImage   = acf.info_image?.url ? acf.info_image : acf.image_main
+  // お店情報の写真：専用の写真 → お店の雰囲気写真 → メイン写真 の順に使う
+  const infoImage   = [acf.info_image, acf.image_sub, acf.image_main].find(img => img?.url)
   const categories  = (shop.sweets_category ?? []).map(id => SWEETS_CATEGORY_MAP[id]).filter(Boolean)
   const description = acf.shop_description ? sanitizeHtml(acf.shop_description) : ''
   const menuGroups  = [
@@ -169,7 +170,8 @@ export default async function ShopDetailPage({ params }: Props) {
       >
         <ul className="max-w-[1080px] mx-auto md:px-10 flex">
           {anchors.map(a => (
-            <li key={a.href} className="relative flex-1 [&+li]:before:absolute [&+li]:before:left-0 [&+li]:before:top-1/2 [&+li]:before:-translate-y-1/2 [&+li]:before:h-6 [&+li]:before:w-px [&+li]:before:bg-brand-line">
+            // 項目の間に縦線。PC は両端（本文の幅の左右）にも同じ縦線を引く
+            <li key={a.href} className="relative flex-1 [&+li]:before:absolute [&+li]:before:left-0 [&+li]:before:top-1/2 [&+li]:before:-translate-y-1/2 [&+li]:before:h-6 [&+li]:before:w-px [&+li]:before:bg-brand-line md:first:before:absolute md:first:before:left-0 md:first:before:top-1/2 md:first:before:-translate-y-1/2 md:first:before:h-6 md:first:before:w-px md:first:before:bg-brand-line md:last:after:absolute md:last:after:right-0 md:last:after:top-1/2 md:last:after:-translate-y-1/2 md:last:after:h-6 md:last:after:w-px md:last:after:bg-brand-line">
               <a
                 href={a.href}
                 className="group relative flex flex-col items-center gap-0.5 py-3 md:py-4 transition-colors hover:bg-white"

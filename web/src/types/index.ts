@@ -68,6 +68,7 @@ export type WPImage = {
   height: number
   alt: string
   title: string
+  sizes?: Record<string, string | number>  // WordPress が作る縮小版（medium・medium_large など）
 }
 
 // ============================================
@@ -124,7 +125,7 @@ export type ShopACF = {
   image_main: WPImage | null
   image_main_categories: SweetsCategory[]
   image_sub: WPImage | null
-  info_image?: WPImage | null  // お店情報の写真（空ならメイン写真）
+  info_image?: WPImage | null  // お店情報の写真（空ならお店の雰囲気写真）
   // 食事・店内・外観の写真は food_photo_01_image〜10、interior_photo_01_image〜05、exterior_photo_01_image〜05（ShopCard.tsx の getNumberedImages で読む）
   photo_01_image: WPImage | null
   photo_01_categories: SweetsCategory[]

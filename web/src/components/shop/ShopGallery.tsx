@@ -24,6 +24,12 @@ function pcAspect(photo: WPImage): number {
   return Math.min(Math.max(r, 3 / 4), 16 / 9)
 }
 
+// 一覧の小さい表示には WordPress の縮小版を使う（なければ元の画像）
+function thumbUrl(photo: WPImage): string {
+  const medium = photo.sizes?.medium_large ?? photo.sizes?.medium
+  return typeof medium === 'string' ? medium : photo.url
+}
+
 function CloseIcon() {
   return (
     <svg aria-hidden="true" viewBox="0 0 14 14" className="size-3.5" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round">
@@ -81,7 +87,7 @@ function PhotoListModal({ groups, name, onClose }: { groups: PhotoGroup[]; name:
                       aria-label="大きく表示"
                       className="relative block w-full aspect-square overflow-hidden rounded-[6px] bg-[#E5E5E5] transition-opacity hover:opacity-85"
                     >
-                      <Image src={photo.url} alt={photo.alt || `${name}の${group.label}の写真`} fill sizes="(max-width: 767px) 33vw, 200px" className="object-cover" />
+                      <Image src={thumbUrl(photo)} alt={photo.alt || `${name}の${group.label}の写真`} fill sizes="(max-width: 767px) 33vw, 200px" className="object-cover" />
                     </button>
                   </li>
                 ))}
