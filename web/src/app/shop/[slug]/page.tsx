@@ -322,7 +322,7 @@ export default async function ShopDetailPage({ params }: Props) {
                 <>
                   <dt>ペット同伴</dt>
                   <dd>
-                    {petOk && <span className="font-bold">可</span>}
+                    {petOk && <span>可</span>}
                     {acf.pet_note && <span className={petOk ? 'block text-[12px] leading-[1.6] text-brand-brown-sub' : ''}>{acf.pet_note}</span>}
                   </dd>
                 </>
@@ -334,11 +334,12 @@ export default async function ShopDetailPage({ params }: Props) {
                 <>
                   <dt>支払い</dt>
                   <dd>
-                    <ul className="flex flex-col gap-1.5">
+                    {/* 2つ以上あるときは「その他」と同じ「・」付きのリストにする */}
+                    <ul className="flex flex-col gap-1">
                       {payments.map(p => (
                         <li key={p.label}>
-                          <span className="font-bold">{p.label}</span>
-                          {p.detail && <span className="block text-[12px] leading-[1.6] text-brand-brown-sub">{p.detail}</span>}
+                          {payments.length > 1 && '・'}{p.label}
+                          {p.detail && <span className={`block text-[12px] leading-[1.6] text-brand-brown-sub ${payments.length > 1 ? 'pl-[1em]' : ''}`}>{p.detail}</span>}
                         </li>
                       ))}
                     </ul>
