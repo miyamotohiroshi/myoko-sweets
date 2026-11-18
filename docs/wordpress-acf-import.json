@@ -2363,6 +2363,42 @@
         "maxlength": ""
       },
       {
+        "key": "field_shop_reservation",
+        "label": "予約",
+        "name": "reservation",
+        "type": "text",
+        "instructions": "例：予約可、予約不可、ランチは要予約、前日までに電話で予約",
+        "required": 0,
+        "conditional_logic": 0,
+        "wrapper": {
+          "width": "",
+          "class": "",
+          "id": ""
+        },
+        "default_value": "",
+        "placeholder": "",
+        "prepend": "",
+        "append": "",
+        "maxlength": ""
+      },
+      {
+        "key": "field_shop_info_checked",
+        "label": "情報確認日",
+        "name": "info_checked",
+        "type": "date_picker",
+        "instructions": "営業時間・メニューなどを最後に確認した日。店舗ページのお店情報の最後に表示します",
+        "required": 0,
+        "conditional_logic": 0,
+        "wrapper": {
+          "width": "",
+          "class": "",
+          "id": ""
+        },
+        "display_format": "Y/m/d",
+        "return_format": "Ymd",
+        "first_day": 1
+      },
+      {
         "key": "field_shop_tab_nearby",
         "label": "近くの施設",
         "name": "",

@@ -56,6 +56,12 @@ Claude Code
 - 台所micchi の写真05（空き）に2枚目の店内写真（窓際のカウンター席、メディアID 463）を登録。画像フォルダ（37_台所micchi_ミッチ_07店内_02.jpg）・出典台帳・店舗リスト Excel のメモを更新
 - 店舗ページ「近くの施設」の観光スポットの見た目を調整（WordPress の説明文はそのまま、表示時に組み替え）：「ここがおすすめ」を水色の角丸の囲み＋チェックマークに。「基本情報」「温泉の情報」など「見出し：内容」のリストを表に。公式サイト・Google マップを、アイコン付きの丸いボタンに。スマホでは説明を横幅いっぱいに表示
 - 台所micchi の口コミサマリー（レビュー欄）を5点登録。食べログ（口コミ1件、評価3.02）と Google マップ（18件・本文が読めたのは5件、星5が11件）の内容を要約：野菜たっぷりのやさしい味のランチ／景色を眺めながらゆったり／レトロで清潔感のある店内／キャロットケーキや豆花などデザートも好評／こだわりのコーヒーとパン。食べログの URL も登録
+- 店舗ページのお店情報（INFO）に「食べログ」の行を SNS の次に追加（「食べログで口コミを見る」のリンク）。食べログ URL が入っている30店で表示
+- 店舗ページのお店情報（INFO）を整理
+  - 並び順をグループごとに：住所・アクセス・TEL → 営業・定休日・営業月 → 席・設備・駐車場・ペット同伴・予約・支払い → HP・SNS・食べログ
+  - 「席数」と「その他」をまとめて「席・設備」に（例：20席／下に小さく「食事あり」。持ち帰りのみの店は「持ち帰りのみ（イートインなし）」）
+  - WordPress に「予約」（reservation）と「情報確認日」（info_checked、日付）を追加。台所micchi に「予約可」（食べログの情報）
+  - 全38店の情報確認日を店舗リスト Excel の「情報確認日」から登録（11/02：33店、11/04：3店、11/18：2店）。お店情報の最後に「情報確認日：2026年11月18日」と、来店前に確認してほしい旨の注記を表示
 - 店舗の写真を登録するときのルールを docs/CLAUDE.md に追加（リネーム → CMS 登録 → 画像フォルダに保存 → 出典台帳・撮影リスト・店舗リスト Excel に記録）。画像/命名規則.md にも手順を追記
 
 ## 作成・変更したファイル
@@ -68,11 +74,11 @@ Claude Code
 | web/src/config/site.ts・web/src/app/layout.tsx | 公開前の noindex（SITE_OPEN で切り替え） |
 | web/src/components/shop/ShopMenu.tsx | メニュー表の見た目（スマホ向け） |
 | web/src/lib/utils.ts・web/src/types/index.ts | 支払い方法の表示名の修正と補足の読み込み、席数・駐車場・ペットの型 |
-| web/src/app/shop/[slug]/page.tsx | 支払い・席数・駐車場・ペット同伴の表示 |
+| web/src/app/shop/[slug]/page.tsx | 支払い・席数・駐車場・ペット同伴・食べログの表示 |
 | web/src/lib/terms.ts・components/top/ShopCard.tsx・TabNav.tsx | ペット同伴可の絞り込みと特徴アイコン |
 | web/public/images/top/icons/pet.svg | ペット同伴のアイコン（新規） |
 | web/src/components/shop/ShopParts.tsx・web/src/app/globals.css・web/public/images/top/icons/web.svg | 観光スポットの説明の見た目（おすすめの囲み・基本情報の表・リンクボタン） |
-| docs/wordpress-acf-import.json | payment_note・seats・parking・pet_note を追加 |
+| docs/wordpress-acf-import.json | payment_note・seats・parking・pet_note・reservation・info_checked を追加 |
 | docs/CLAUDE.md | 店舗の写真を登録するときのルールを追加 |
 | WordPress（店舗の入力欄・特徴タクソノミー・NAGOMI CAFE） | 上記の項目・ターム・データを登録 |
 | docs/03_WEBサイト/04_店舗リサーチ/画像（git 管理外） | 店舗フォルダの追加・8分類のフォルダ作成・写真の振り分け・CSV の更新 |

@@ -13,6 +13,7 @@ import {
   parseListHtml,
   formatSeason,
   getPayments,
+  formatYmd,
 } from '@/lib/utils'
 import { toCardData, getGallery, AccessTime, ShopLabel, AreaBadge, Tags, Features } from '@/components/top/ShopCard'
 import ShopGallery from '@/components/shop/ShopGallery'
@@ -126,10 +127,14 @@ export default async function ShopDetailPage({ params }: Props) {
   const popularFood   = getPopular(acf, 'food')
   const reviews       = parseListHtml(acf.review_summary ?? '')
   const xPosts        = getXPosts(acf)
-  // ペット同伴は専用の行で出すので「その他」からは外す
+  // 特徴（features）のうち、席・持ち帰りのみ・ペットは専用の書き方をし、残りは「席・設備」の補足に並べる
+  const features      = shop.features ?? []
   const PET_ID        = 45
-  const petOk         = (shop.features ?? []).includes(PET_ID)
-  const featureLabels = (shop.features ?? []).filter(id => id !== PET_ID).map(id => FEATURES_MAP[id]).filter(Boolean)
+  const petOk         = features.includes(PET_ID)
+  const takeoutOnly   = features.includes(31)
+  const seatText      = takeoutOnly ? '持ち帰りのみ（イートインなし）' : acf.seats || (features.includes(29) ? 'あり' : '')
+  const extraFeatures = features.filter(id => ![29, 31, PET_ID].includes(id)).map(id => FEATURES_MAP[id]).filter(Boolean)
+  const checkedDate   = formatYmd(acf.info_checked)
   const payments      = getPayments(acf.payment_methods, acf.payment_note)
   const hashtags      = [SITE_INFO.hashtag, `#${d.name.replace(/\s+/g, '')}`]
   const hasMenu       = menuGroups.length > 0 || popularSweets.length > 0 || popularFood.length > 0
@@ -277,6 +282,7 @@ export default async function ShopDetailPage({ params }: Props) {
             </div>
 
             <dl className="mt-5 grid grid-cols-[80px_1fr] md:grid-cols-[110px_1fr] text-[14px] leading-[1.8] [&>dt]:py-3 [&>dd]:py-3 [&>dt]:border-t [&>dd]:border-t [&>dt]:border-dashed [&>dd]:border-dashed [&>dt]:border-brand-line [&>dd]:border-brand-line [&>dt]:font-bold">
+              {/* 場所・連絡 */}
               {acf.address && (
                 <>
                   <dt>住所</dt>
@@ -286,7 +292,69 @@ export default async function ShopDetailPage({ params }: Props) {
                   </dd>
                 </>
               )}
+              {(d.access.main || d.access.sub.length > 0) && (
+                <>
+                  <dt>アクセス</dt>
+                  <dd className="flex flex-col">
+                    {d.access.main && <span>{d.access.main}</span>}
+                    {d.access.sub.map(line => <AccessTime key={line.from} {...line} />)}
+                  </dd>
+                </>
+              )}
               {acf.tel && <><dt>TEL</dt><dd><a href={`tel:${acf.tel.replace(/[^\d+]/g, '')}`} className="underline underline-offset-2">{acf.tel}</a></dd></>}
+              {/* 営業 */}
+              {d.hours && <><dt>営業</dt><dd className="whitespace-pre-line">{d.hours}</dd></>}
+              {acf.holiday && <><dt>定休日</dt><dd>{acf.holiday}</dd></>}
+              {!d.hours && !acf.holiday && <><dt>営業</dt><dd className="text-brand-brown-sub">{HOURS_UNKNOWN}</dd></>}
+              {acf.operating_months?.length > 0 && (
+                <>
+                  <dt>営業月</dt>
+                  <dd className="flex flex-col gap-2">
+                    <MonthCalendar months={acf.operating_months} />
+                    {acf.operating_months_note && <span className="text-[13px] text-brand-brown-sub">{stripTags(acf.operating_months_note)}</span>}
+                  </dd>
+                </>
+              )}
+              {/* お店の設備 */}
+              {(seatText || extraFeatures.length > 0) && (
+                <>
+                  <dt>席・設備</dt>
+                  <dd>
+                    {seatText && <span>{seatText}</span>}
+                    {extraFeatures.length > 0 && (
+                      <span className={seatText ? 'block text-[12px] leading-[1.6] text-brand-brown-sub' : ''}>{extraFeatures.join('・')}</span>
+                    )}
+                  </dd>
+                </>
+              )}
+              {acf.parking && <><dt>駐車場</dt><dd>{acf.parking}</dd></>}
+              {(petOk || acf.pet_note) && (
+                <>
+                  <dt>ペット同伴</dt>
+                  <dd>
+                    {petOk && <span>可</span>}
+                    {acf.pet_note && <span className={petOk ? 'block text-[12px] leading-[1.6] text-brand-brown-sub' : ''}>{acf.pet_note}</span>}
+                  </dd>
+                </>
+              )}
+              {acf.reservation && <><dt>予約</dt><dd>{acf.reservation}</dd></>}
+              {payments.length > 0 && (
+                <>
+                  <dt>支払い</dt>
+                  <dd>
+                    {/* 2つ以上あるときは「・」付きのリストにする */}
+                    <ul className="flex flex-col gap-1">
+                      {payments.map(p => (
+                        <li key={p.label}>
+                          {payments.length > 1 && '・'}{p.label}
+                          {p.detail && <span className={`block text-[12px] leading-[1.6] text-brand-brown-sub ${payments.length > 1 ? 'pl-[1em]' : ''}`}>{p.detail}</span>}
+                        </li>
+                      ))}
+                    </ul>
+                  </dd>
+                </>
+              )}
+              {/* リンク */}
               {acf.website_url && (
                 <><dt>HP</dt><dd><a href={acf.website_url} target="_blank" rel="noopener noreferrer" className="break-all underline underline-offset-2">{acf.website_url}</a></dd></>
               )}
@@ -307,58 +375,24 @@ export default async function ShopDetailPage({ params }: Props) {
                   </dd>
                 </>
               )}
-              {(d.access.main || d.access.sub.length > 0) && (
+              {acf.tabelog_url && (
                 <>
-                  <dt>アクセス</dt>
-                  <dd className="flex flex-col">
-                    {d.access.main && <span>{d.access.main}</span>}
-                    {d.access.sub.map(line => <AccessTime key={line.from} {...line} />)}
-                  </dd>
-                </>
-              )}
-              {acf.seats && <><dt>席数</dt><dd>{acf.seats}</dd></>}
-              {acf.parking && <><dt>駐車場</dt><dd>{acf.parking}</dd></>}
-              {(petOk || acf.pet_note) && (
-                <>
-                  <dt>ペット同伴</dt>
+                  <dt>食べログ</dt>
                   <dd>
-                    {petOk && <span>可</span>}
-                    {acf.pet_note && <span className={petOk ? 'block text-[12px] leading-[1.6] text-brand-brown-sub' : ''}>{acf.pet_note}</span>}
-                  </dd>
-                </>
-              )}
-              {featureLabels.length > 0 && (
-                <><dt>その他</dt><dd><ul>{featureLabels.map(f => <li key={f}>・{f}</li>)}</ul></dd></>
-              )}
-              {payments.length > 0 && (
-                <>
-                  <dt>支払い</dt>
-                  <dd>
-                    {/* 2つ以上あるときは「その他」と同じ「・」付きのリストにする */}
-                    <ul className="flex flex-col gap-1">
-                      {payments.map(p => (
-                        <li key={p.label}>
-                          {payments.length > 1 && '・'}{p.label}
-                          {p.detail && <span className={`block text-[12px] leading-[1.6] text-brand-brown-sub ${payments.length > 1 ? 'pl-[1em]' : ''}`}>{p.detail}</span>}
-                        </li>
-                      ))}
-                    </ul>
-                  </dd>
-                </>
-              )}
-              {d.hours && <><dt>営業</dt><dd className="whitespace-pre-line">{d.hours}</dd></>}
-              {acf.holiday && <><dt>定休日</dt><dd>{acf.holiday}</dd></>}
-              {!d.hours && !acf.holiday && <><dt>営業</dt><dd className="text-brand-brown-sub">{HOURS_UNKNOWN}</dd></>}
-              {acf.operating_months?.length > 0 && (
-                <>
-                  <dt>営業月</dt>
-                  <dd className="flex flex-col gap-2">
-                    <MonthCalendar months={acf.operating_months} />
-                    {acf.operating_months_note && <span className="text-[13px] text-brand-brown-sub">{stripTags(acf.operating_months_note)}</span>}
+                    <a href={acf.tabelog_url} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-1.5 underline underline-offset-2 hover:opacity-75">
+                      食べログで口コミを見る
+                      <Image src="/images/top/icons/external-link.svg" alt="" width={11} height={11} />
+                    </a>
                   </dd>
                 </>
               )}
             </dl>
+            {checkedDate && (
+              <p className="mt-4 text-[12px] leading-[1.8] text-brand-brown-sub">
+                情報確認日：{checkedDate}<br />
+                ※営業時間・メニューなどは変わることがあります。お出かけ前にお店にご確認ください
+              </p>
+            )}
           </section>
         </div>
 

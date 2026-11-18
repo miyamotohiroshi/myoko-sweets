@@ -107,6 +107,12 @@ export function parseListHtml(html: string): string[] {
   return items.length ? items : stripTags(html).split('\n').map(s => s.trim()).filter(Boolean)
 }
 
+// ACF の日付（20261118）を「2026年11月18日」にする
+export function formatYmd(value: string | undefined | null): string {
+  const m = String(value ?? '').match(/^(\d{4})-?(\d{2})-?(\d{2})/)
+  return m ? `${m[1]}年${Number(m[2])}月${Number(m[3])}日` : ''
+}
+
 // 支払い方法の表示名（WordPress の選択肢。credit・ic・qr は以前の値）
 export const PAYMENT_LABELS: Record<string, string> = {
   cash:        '現金',

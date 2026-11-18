@@ -210,6 +210,8 @@ export type ShopACF = {
   seats?: string         // 席数（例：20席）
   parking?: string       // 駐車場（例：あり（6台））
   pet_note?: string      // ペット同伴の補足（例：テラス席のみ可）
+  reservation?: string   // 予約（例：予約可、ランチは要予約）
+  info_checked?: string  // 情報確認日（20261118）
 
   // 近くの施設（手動ピックアップ）
   featured_spots: (number | { ID: number })[]  // スポットの投稿ID（REST では投稿オブジェクトで返る）
