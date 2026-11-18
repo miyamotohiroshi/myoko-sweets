@@ -1604,6 +1604,452 @@
         "save_custom": 0
       },
       {
+        "key": "field_shop_food_photos_heading",
+        "label": "食事メニューの写真",
+        "name": "",
+        "type": "message",
+        "instructions": "",
+        "required": 0,
+        "conditional_logic": 0,
+        "wrapper": {
+          "width": "",
+          "class": "",
+          "id": ""
+        },
+        "message": "ランチ・軽食など食事メニューの写真（最大10枚）。店舗ページのスライダーと写真一覧の「食事」に出ます。お店一覧には出ません",
+        "new_lines": "",
+        "esc_html": 0
+      },
+      {
+        "key": "field_shop_food_photo_01_image",
+        "label": "食事写真01",
+        "name": "food_photo_01_image",
+        "type": "image",
+        "instructions": "",
+        "required": 0,
+        "conditional_logic": 0,
+        "wrapper": {
+          "width": "20",
+          "class": "",
+          "id": ""
+        },
+        "return_format": "array",
+        "library": "all",
+        "mime_types": "jpg,jpeg,png,webp",
+        "preview_size": "medium"
+      },
+      {
+        "key": "field_shop_food_photo_02_image",
+        "label": "食事写真02",
+        "name": "food_photo_02_image",
+        "type": "image",
+        "instructions": "",
+        "required": 0,
+        "conditional_logic": 0,
+        "wrapper": {
+          "width": "20",
+          "class": "",
+          "id": ""
+        },
+        "return_format": "array",
+        "library": "all",
+        "mime_types": "jpg,jpeg,png,webp",
+        "preview_size": "medium"
+      },
+      {
+        "key": "field_shop_food_photo_03_image",
+        "label": "食事写真03",
+        "name": "food_photo_03_image",
+        "type": "image",
+        "instructions": "",
+        "required": 0,
+        "conditional_logic": 0,
+        "wrapper": {
+          "width": "20",
+          "class": "",
+          "id": ""
+        },
+        "return_format": "array",
+        "library": "all",
+        "mime_types": "jpg,jpeg,png,webp",
+        "preview_size": "medium"
+      },
+      {
+        "key": "field_shop_food_photo_04_image",
+        "label": "食事写真04",
+        "name": "food_photo_04_image",
+        "type": "image",
+        "instructions": "",
+        "required": 0,
+        "conditional_logic": 0,
+        "wrapper": {
+          "width": "20",
+          "class": "",
+          "id": ""
+        },
+        "return_format": "array",
+        "library": "all",
+        "mime_types": "jpg,jpeg,png,webp",
+        "preview_size": "medium"
+      },
+      {
+        "key": "field_shop_food_photo_05_image",
+        "label": "食事写真05",
+        "name": "food_photo_05_image",
+        "type": "image",
+        "instructions": "",
+        "required": 0,
+        "conditional_logic": 0,
+        "wrapper": {
+          "width": "20",
+          "class": "",
+          "id": ""
+        },
+        "return_format": "array",
+        "library": "all",
+        "mime_types": "jpg,jpeg,png,webp",
+        "preview_size": "medium"
+      },
+      {
+        "key": "field_shop_food_photo_06_image",
+        "label": "食事写真06",
+        "name": "food_photo_06_image",
+        "type": "image",
+        "instructions": "",
+        "required": 0,
+        "conditional_logic": 0,
+        "wrapper": {
+          "width": "20",
+          "class": "",
+          "id": ""
+        },
+        "return_format": "array",
+        "library": "all",
+        "mime_types": "jpg,jpeg,png,webp",
+        "preview_size": "medium"
+      },
+      {
+        "key": "field_shop_food_photo_07_image",
+        "label": "食事写真07",
+        "name": "food_photo_07_image",
+        "type": "image",
+        "instructions": "",
+        "required": 0,
+        "conditional_logic": 0,
+        "wrapper": {
+          "width": "20",
+          "class": "",
+          "id": ""
+        },
+        "return_format": "array",
+        "library": "all",
+        "mime_types": "jpg,jpeg,png,webp",
+        "preview_size": "medium"
+      },
+      {
+        "key": "field_shop_food_photo_08_image",
+        "label": "食事写真08",
+        "name": "food_photo_08_image",
+        "type": "image",
+        "instructions": "",
+        "required": 0,
+        "conditional_logic": 0,
+        "wrapper": {
+          "width": "20",
+          "class": "",
+          "id": ""
+        },
+        "return_format": "array",
+        "library": "all",
+        "mime_types": "jpg,jpeg,png,webp",
+        "preview_size": "medium"
+      },
+      {
+        "key": "field_shop_food_photo_09_image",
+        "label": "食事写真09",
+        "name": "food_photo_09_image",
+        "type": "image",
+        "instructions": "",
+        "required": 0,
+        "conditional_logic": 0,
+        "wrapper": {
+          "width": "20",
+          "class": "",
+          "id": ""
+        },
+        "return_format": "array",
+        "library": "all",
+        "mime_types": "jpg,jpeg,png,webp",
+        "preview_size": "medium"
+      },
+      {
+        "key": "field_shop_food_photo_10_image",
+        "label": "食事写真10",
+        "name": "food_photo_10_image",
+        "type": "image",
+        "instructions": "",
+        "required": 0,
+        "conditional_logic": 0,
+        "wrapper": {
+          "width": "20",
+          "class": "",
+          "id": ""
+        },
+        "return_format": "array",
+        "library": "all",
+        "mime_types": "jpg,jpeg,png,webp",
+        "preview_size": "medium"
+      },
+      {
+        "key": "field_shop_interior_photos_heading",
+        "label": "店内の写真",
+        "name": "",
+        "type": "message",
+        "instructions": "",
+        "required": 0,
+        "conditional_logic": 0,
+        "wrapper": {
+          "width": "",
+          "class": "",
+          "id": ""
+        },
+        "message": "店内の写真（最大5枚）。店舗ページのスライダーと写真一覧の「店内」に出ます。お店一覧には出ません",
+        "new_lines": "",
+        "esc_html": 0
+      },
+      {
+        "key": "field_shop_interior_photo_01_image",
+        "label": "店内写真01",
+        "name": "interior_photo_01_image",
+        "type": "image",
+        "instructions": "",
+        "required": 0,
+        "conditional_logic": 0,
+        "wrapper": {
+          "width": "20",
+          "class": "",
+          "id": ""
+        },
+        "return_format": "array",
+        "library": "all",
+        "mime_types": "jpg,jpeg,png,webp",
+        "preview_size": "medium"
+      },
+      {
+        "key": "field_shop_interior_photo_02_image",
+        "label": "店内写真02",
+        "name": "interior_photo_02_image",
+        "type": "image",
+        "instructions": "",
+        "required": 0,
+        "conditional_logic": 0,
+        "wrapper": {
+          "width": "20",
+          "class": "",
+          "id": ""
+        },
+        "return_format": "array",
+        "library": "all",
+        "mime_types": "jpg,jpeg,png,webp",
+        "preview_size": "medium"
+      },
+      {
+        "key": "field_shop_interior_photo_03_image",
+        "label": "店内写真03",
+        "name": "interior_photo_03_image",
+        "type": "image",
+        "instructions": "",
+        "required": 0,
+        "conditional_logic": 0,
+        "wrapper": {
+          "width": "20",
+          "class": "",
+          "id": ""
+        },
+        "return_format": "array",
+        "library": "all",
+        "mime_types": "jpg,jpeg,png,webp",
+        "preview_size": "medium"
+      },
+      {
+        "key": "field_shop_interior_photo_04_image",
+        "label": "店内写真04",
+        "name": "interior_photo_04_image",
+        "type": "image",
+        "instructions": "",
+        "required": 0,
+        "conditional_logic": 0,
+        "wrapper": {
+          "width": "20",
+          "class": "",
+          "id": ""
+        },
+        "return_format": "array",
+        "library": "all",
+        "mime_types": "jpg,jpeg,png,webp",
+        "preview_size": "medium"
+      },
+      {
+        "key": "field_shop_interior_photo_05_image",
+        "label": "店内写真05",
+        "name": "interior_photo_05_image",
+        "type": "image",
+        "instructions": "",
+        "required": 0,
+        "conditional_logic": 0,
+        "wrapper": {
+          "width": "20",
+          "class": "",
+          "id": ""
+        },
+        "return_format": "array",
+        "library": "all",
+        "mime_types": "jpg,jpeg,png,webp",
+        "preview_size": "medium"
+      },
+      {
+        "key": "field_shop_exterior_photos_heading",
+        "label": "外観の写真",
+        "name": "",
+        "type": "message",
+        "instructions": "",
+        "required": 0,
+        "conditional_logic": 0,
+        "wrapper": {
+          "width": "",
+          "class": "",
+          "id": ""
+        },
+        "message": "外観の写真（最大5枚）。店舗ページのスライダーと写真一覧の「外観」に出ます。お店一覧には出ません",
+        "new_lines": "",
+        "esc_html": 0
+      },
+      {
+        "key": "field_shop_exterior_photo_01_image",
+        "label": "外観写真01",
+        "name": "exterior_photo_01_image",
+        "type": "image",
+        "instructions": "",
+        "required": 0,
+        "conditional_logic": 0,
+        "wrapper": {
+          "width": "20",
+          "class": "",
+          "id": ""
+        },
+        "return_format": "array",
+        "library": "all",
+        "mime_types": "jpg,jpeg,png,webp",
+        "preview_size": "medium"
+      },
+      {
+        "key": "field_shop_exterior_photo_02_image",
+        "label": "外観写真02",
+        "name": "exterior_photo_02_image",
+        "type": "image",
+        "instructions": "",
+        "required": 0,
+        "conditional_logic": 0,
+        "wrapper": {
+          "width": "20",
+          "class": "",
+          "id": ""
+        },
+        "return_format": "array",
+        "library": "all",
+        "mime_types": "jpg,jpeg,png,webp",
+        "preview_size": "medium"
+      },
+      {
+        "key": "field_shop_exterior_photo_03_image",
+        "label": "外観写真03",
+        "name": "exterior_photo_03_image",
+        "type": "image",
+        "instructions": "",
+        "required": 0,
+        "conditional_logic": 0,
+        "wrapper": {
+          "width": "20",
+          "class": "",
+          "id": ""
+        },
+        "return_format": "array",
+        "library": "all",
+        "mime_types": "jpg,jpeg,png,webp",
+        "preview_size": "medium"
+      },
+      {
+        "key": "field_shop_exterior_photo_04_image",
+        "label": "外観写真04",
+        "name": "exterior_photo_04_image",
+        "type": "image",
+        "instructions": "",
+        "required": 0,
+        "conditional_logic": 0,
+        "wrapper": {
+          "width": "20",
+          "class": "",
+          "id": ""
+        },
+        "return_format": "array",
+        "library": "all",
+        "mime_types": "jpg,jpeg,png,webp",
+        "preview_size": "medium"
+      },
+      {
+        "key": "field_shop_exterior_photo_05_image",
+        "label": "外観写真05",
+        "name": "exterior_photo_05_image",
+        "type": "image",
+        "instructions": "",
+        "required": 0,
+        "conditional_logic": 0,
+        "wrapper": {
+          "width": "20",
+          "class": "",
+          "id": ""
+        },
+        "return_format": "array",
+        "library": "all",
+        "mime_types": "jpg,jpeg,png,webp",
+        "preview_size": "medium"
+      },
+      {
+        "key": "field_shop_info_image_heading",
+        "label": "お店情報の写真",
+        "name": "",
+        "type": "message",
+        "instructions": "",
+        "required": 0,
+        "conditional_logic": 0,
+        "wrapper": {
+          "width": "",
+          "class": "",
+          "id": ""
+        },
+        "message": "店舗ページ下部の「お店情報」に出す写真（1枚）。空のときはメインスイーツ写真を使います",
+        "new_lines": "",
+        "esc_html": 0
+      },
+      {
+        "key": "field_shop_info_image",
+        "label": "お店情報の写真",
+        "name": "info_image",
+        "type": "image",
+        "instructions": "",
+        "required": 0,
+        "conditional_logic": 0,
+        "wrapper": {
+          "width": "",
+          "class": "",
+          "id": ""
+        },
+        "return_format": "array",
+        "library": "all",
+        "mime_types": "jpg,jpeg,png,webp",
+        "preview_size": "medium"
+      },
+      {
         "key": "field_shop_tab_popular",
         "label": "人気メニュー",
         "name": "",

@@ -24,10 +24,48 @@ export function getPhotos(acf: ShopACF): WPImage[] {
   return photos
 }
 
-// メイン → サブ → photo_01〜20 の順に並べた全写真（重複は除く）
-export function getGallery(acf: ShopACF): WPImage[] {
-  const all = [acf.image_main, acf.image_sub, ...getPhotos(acf)].filter((img): img is WPImage => Boolean(img?.url))
+// 写真の配列から空と重複（同じメディア）を除く
+function uniqueImages(images: (WPImage | null | undefined)[]): WPImage[] {
+  const all = images.filter((img): img is WPImage => Boolean(img?.url))
   return all.filter((img, i) => all.findIndex(x => x.ID === img.ID) === i)
+}
+
+// 番号付きの画像欄（food_photo_01_image など）をまとめて取り出す
+function getNumberedImages(acf: ShopACF, prefix: string, count: number): WPImage[] {
+  const fields = acf as unknown as Record<string, WPImage | null | undefined>
+  return uniqueImages(Array.from({ length: count }, (_, i) => fields[`${prefix}_${String(i + 1).padStart(2, '0')}_image`]))
+}
+
+// お店一覧のカード用：メイン → サブ → photo_01〜20
+export function getGallery(acf: ShopACF): WPImage[] {
+  return uniqueImages([acf.image_main, acf.image_sub, ...getPhotos(acf)])
+}
+
+// 店舗詳細のスライダー用：一覧の写真に、食事 → 店内 → 外観 を足す
+export function getDetailGallery(acf: ShopACF): WPImage[] {
+  return uniqueImages([
+    ...getGallery(acf),
+    ...getNumberedImages(acf, 'food_photo', 10),
+    ...getNumberedImages(acf, 'interior_photo', 5),
+    ...getNumberedImages(acf, 'exterior_photo', 5),
+  ])
+}
+
+// 店舗詳細の「写真一覧」用：カテゴリごと（空のカテゴリは除く。同じ写真は最初のカテゴリだけに出す）
+export type PhotoGroup = { label: string; photos: WPImage[] }
+
+export function getPhotoGroups(acf: ShopACF): PhotoGroup[] {
+  const groups: PhotoGroup[] = [
+    { label: 'スイーツ',     photos: uniqueImages([acf.image_main, ...getPhotos(acf)]) },
+    { label: 'お店の雰囲気', photos: uniqueImages([acf.image_sub]) },
+    { label: '食事',         photos: getNumberedImages(acf, 'food_photo', 10) },
+    { label: '店内',         photos: getNumberedImages(acf, 'interior_photo', 5) },
+    { label: '外観',         photos: getNumberedImages(acf, 'exterior_photo', 5) },
+  ]
+  const seen = new Set<number>()
+  return groups
+    .map(g => ({ ...g, photos: g.photos.filter(img => !seen.has(img.ID) && seen.add(img.ID)) }))
+    .filter(g => g.photos.length > 0)
 }
 
 export type AccessLine = { from: string; time: string }

@@ -15,7 +15,7 @@ import {
   getPayments,
   formatYmd,
 } from '@/lib/utils'
-import { toCardData, getGallery, AccessTime, ShopLabel, AreaBadge, Tags, Features } from '@/components/top/ShopCard'
+import { toCardData, getDetailGallery, getPhotoGroups, AccessTime, ShopLabel, AreaBadge, Tags, Features } from '@/components/top/ShopCard'
 import ShopGallery from '@/components/shop/ShopGallery'
 import ShopMenu from '@/components/shop/ShopMenu'
 import HashtagCopy from '@/components/shop/HashtagCopy'
@@ -115,7 +115,9 @@ export default async function ShopDetailPage({ params }: Props) {
   const d = toCardData(shop)
   const spots = await loadSpots(acf)
 
-  const gallery     = getGallery(acf)
+  const gallery     = getDetailGallery(acf)
+  const photoGroups = getPhotoGroups(acf)
+  const infoImage   = acf.info_image?.url ? acf.info_image : acf.image_main
   const categories  = (shop.sweets_category ?? []).map(id => SWEETS_CATEGORY_MAP[id]).filter(Boolean)
   const description = acf.shop_description ? sanitizeHtml(acf.shop_description) : ''
   const menuGroups  = [
@@ -202,7 +204,7 @@ export default async function ShopDetailPage({ params }: Props) {
 
       {/* ==================== 写真（PC は画面幅いっぱい） ==================== */}
       <div className="pt-5 md:pt-6">
-        <ShopGallery photos={gallery} name={d.name} />
+        <ShopGallery photos={gallery} groups={photoGroups} name={d.name} />
       </div>
 
       <div className="max-w-[1080px] mx-auto px-5 md:px-10 pt-8 md:pt-10 md:pb-24 md:grid md:grid-cols-[1fr_300px] md:gap-12 lg:gap-16">
@@ -276,7 +278,7 @@ export default async function ShopDetailPage({ params }: Props) {
             <DetailHeading en="INFO" ja="お店情報" id="info" />
             <div className="mt-5 flex items-center gap-4">
               <div className="relative size-[88px] md:size-[110px] shrink-0 overflow-hidden rounded-[8px] bg-[#E5E5E5]">
-                {acf.image_main && <Image src={acf.image_main.url} alt={d.name} fill sizes="110px" className="object-cover" />}
+                {infoImage && <Image src={infoImage.url} alt={d.name} fill sizes="110px" className="object-cover" />}
               </div>
               <p className="text-[17px] md:text-[18px] font-bold leading-[1.5]">{d.name}</p>
             </div>

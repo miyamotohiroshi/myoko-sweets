@@ -62,6 +62,11 @@ Claude Code
   - 「席数」と「その他」をまとめて「席・設備」に（例：20席／下に小さく「食事あり」。持ち帰りのみの店は「持ち帰りのみ（イートインなし）」）
   - WordPress に「予約」（reservation）と「情報確認日」（info_checked、日付）を追加。台所micchi に「予約可」（食べログの情報）
   - 全38店の情報確認日を店舗リスト Excel の「情報確認日」から登録（11/02：33店、11/04：3店、11/18：2店）。お店情報の最後に「情報確認日：2026年11月18日」と、来店前に確認してほしい旨の注記を表示
+- 店舗の写真の仕組みを整理
+  - WordPress の「画像」タブに、食事写真01〜10・店内写真01〜05・外観写真01〜05・お店情報の写真（1枚、空ならメイン写真）を追加（見出し付き）。変更前の項目設定は ~/backup/acf_group62_fields_20261118.json
+  - お店一覧のカードはこれまでどおり「メイン＋サブ＋写真01〜20」。店舗詳細のスライダーは、それに食事→店内→外観を足して表示
+  - スライダーの右下に「写真一覧（◯枚）」ボタンを追加。押すとカテゴリ別（スイーツ／お店の雰囲気／食事／店内／外観）に、スマホ3列・PC4列で小さく並べたモーダルを表示。写真を押すと拡大表示
+  - 「写真01〜20」にあった店内・外観の写真（タイトルで判定）を、37店で店内写真・外観写真の欄に移し替え（実写真 店内13枚・外観7枚、仮画像「店内写真予定」25枚）。残った写真01〜20は前に詰めた（カテゴリも一緒に移動）。移し替え前の値は ~/backup/shop_photo_slots_20261118.json。移した写真はお店一覧のカードには出なくなった
 - 店舗の写真を登録するときのルールを docs/CLAUDE.md に追加（リネーム → CMS 登録 → 画像フォルダに保存 → 出典台帳・撮影リスト・店舗リスト Excel に記録）。画像/命名規則.md にも手順を追記
 
 ## 作成・変更したファイル
@@ -78,7 +83,8 @@ Claude Code
 | web/src/lib/terms.ts・components/top/ShopCard.tsx・TabNav.tsx | ペット同伴可の絞り込みと特徴アイコン |
 | web/public/images/top/icons/pet.svg | ペット同伴のアイコン（新規） |
 | web/src/components/shop/ShopParts.tsx・web/src/app/globals.css・web/public/images/top/icons/web.svg | 観光スポットの説明の見た目（おすすめの囲み・基本情報の表・リンクボタン） |
-| docs/wordpress-acf-import.json | payment_note・seats・parking・pet_note・reservation・info_checked を追加 |
+| docs/wordpress-acf-import.json | payment_note・seats・parking・pet_note・reservation・info_checked・食事/店内/外観/お店情報の写真欄を追加 |
+| web/src/components/shop/ShopGallery.tsx・web/src/components/top/ShopCard.tsx | 店舗詳細のスライダーと写真一覧モーダル |
 | docs/CLAUDE.md | 店舗の写真を登録するときのルールを追加 |
 | WordPress（店舗の入力欄・特徴タクソノミー・NAGOMI CAFE） | 上記の項目・ターム・データを登録 |
 | docs/03_WEBサイト/04_店舗リサーチ/画像（git 管理外） | 店舗フォルダの追加・8分類のフォルダ作成・写真の振り分け・CSV の更新 |
