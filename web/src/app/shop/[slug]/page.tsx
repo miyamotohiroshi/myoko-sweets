@@ -65,6 +65,7 @@ async function loadSpots(acf: ShopACF): Promise<Spot[]> {
   }
 }
 
+// 店舗ページの「人気のスイーツ／食事」は①〜③だけ出す（スイーツは CMS で⑥まで登録できる）
 function getPopular(acf: ShopACF, kind: 'sweets' | 'food'): PopularItem[] {
   return [1, 2, 3]
     .map(n => ({

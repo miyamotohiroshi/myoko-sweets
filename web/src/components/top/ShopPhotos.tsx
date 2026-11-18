@@ -159,9 +159,9 @@ export default function ShopPhotos({ images, thumbs, name }: Props) {
         )}
       </div>
 
-      {/* サムネイル */}
+      {/* サムネイル（写真01〜20と人気スイーツ①〜⑥を全部並べ、横にスクロール。PC は細いスクロールバーを出す） */}
       {thumbs.length > 0 && (
-        <div className="flex gap-[10px] md:gap-[13px] overflow-x-auto md:overflow-hidden px-5 md:px-0 py-1 [scrollbar-width:none]">
+        <div className="flex gap-[10px] md:gap-[13px] overflow-x-auto px-5 md:px-0 py-1 md:pb-2.5 [scrollbar-width:none] md:[scrollbar-width:thin] md:[scrollbar-color:var(--color-brand-beige)_transparent]">
           {thumbs.map(p => {
             const index = images.findIndex(img => img.ID === p.ID)
             const active = isOpen && index === current

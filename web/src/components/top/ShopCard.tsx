@@ -36,9 +36,24 @@ function getNumberedImages(acf: ShopACF, prefix: string, count: number): WPImage
   return uniqueImages(Array.from({ length: count }, (_, i) => fields[`${prefix}_${String(i + 1).padStart(2, '0')}_image`]))
 }
 
-// お店一覧のカード用：メイン → サブ → photo_01〜20
+// 人気スイーツ①〜⑥の写真（仮画像「〇〇写真予定」は除く）。店舗ページの「人気のスイーツ」に出すのは①〜③だけ
+export const POPULAR_SWEETS_MAX = 6
+export function getPopularSweetImages(acf: ShopACF): WPImage[] {
+  const fields = acf as unknown as Record<string, WPImage | null | undefined>
+  return uniqueImages(
+    Array.from({ length: POPULAR_SWEETS_MAX }, (_, i) => fields[`popular_sweets_${i + 1}_image`])
+      .filter(img => !img?.title?.includes('仮画像')),
+  )
+}
+
+// お店一覧のカードのサムネイル用：photo_01〜20 → 人気スイーツ①〜⑥
+export function getThumbs(acf: ShopACF): WPImage[] {
+  return uniqueImages([...getPhotos(acf), ...getPopularSweetImages(acf)])
+}
+
+// お店一覧のカード用：メイン → サブ → photo_01〜20 → 人気スイーツ①〜⑥
 export function getGallery(acf: ShopACF): WPImage[] {
-  return uniqueImages([acf.image_main, acf.image_sub, ...getPhotos(acf)])
+  return uniqueImages([acf.image_main, acf.image_sub, ...getThumbs(acf)])
 }
 
 // 店舗詳細のスライダー用：一覧の写真に、食事 → 店内 → 外観 を足す
@@ -56,7 +71,7 @@ export type PhotoGroup = { label: string; photos: WPImage[] }
 
 export function getPhotoGroups(acf: ShopACF): PhotoGroup[] {
   const groups: PhotoGroup[] = [
-    { label: 'スイーツ',     photos: uniqueImages([acf.image_main, ...getPhotos(acf)]) },
+    { label: 'スイーツ',     photos: uniqueImages([acf.image_main, ...getPhotos(acf), ...getPopularSweetImages(acf)]) },
     { label: 'お店の雰囲気', photos: uniqueImages([acf.image_sub]) },
     { label: '食事',         photos: getNumberedImages(acf, 'food_photo', 10) },
     { label: '店内',         photos: getNumberedImages(acf, 'interior_photo', 5) },
@@ -110,7 +125,7 @@ export function toCardData(shop: Shop) {
     access:     getAccessLines(acf),
     mainImg:    acf.image_main,
     subImg:     acf.image_sub,
-    photos:     getPhotos(acf),
+    photos:     getThumbs(acf),
     gallery:    getGallery(acf),
     mapUrl:     acf.google_map_url,
     href:       `/shop/${shop.slug}`,
@@ -120,7 +135,7 @@ export function toCardData(shop: Shop) {
 type CardData = ReturnType<typeof toCardData>
 
 // スイーツで絞り込んだときの写真の並び
-// メイン：そのスイーツのカテゴリが付いた写真のうち、登録順（メイン写真 → 写真01〜20）で最初のもの
+// メイン：そのスイーツのカテゴリが付いた写真のうち、登録順（メイン写真 → 写真01〜20 → 人気スイーツ①〜⑥）で最初のもの
 // サムネイル：同じカテゴリの残りの写真を先頭に、元のメイン写真とほかの写真を後ろに並べる
 // サブ（右）はそのまま。該当する写真がなければ並びは変えない
 function arrangeForSweets(acf: ShopACF, d: CardData, sweetsKey?: string) {
@@ -133,7 +148,12 @@ function arrangeForSweets(acf: ShopACF, d: CardData, sweetsKey?: string) {
     const img = fields[`photo_${n}_image`] as WPImage | null
     if (img?.url) ordered.push({ img, match: has(fields[`photo_${n}_categories`]) })
   }
-  const matches = ordered.filter(o => o.match).map(o => o.img)
+  // 人気スイーツ①〜⑥の写真（仮画像「〇〇写真予定」は使わない）
+  for (let i = 1; i <= POPULAR_SWEETS_MAX; i++) {
+    const img = fields[`popular_sweets_${i}_image`] as WPImage | null
+    if (img?.url && !img.title?.includes('仮画像')) ordered.push({ img, match: has(fields[`popular_sweets_${i}_categories`]) })
+  }
+  const matches = ordered.filter(o => o.match && !o.img.title?.includes('仮画像')).map(o => o.img)
   if (!sweetsKey || matches.length === 0) return { gallery: d.gallery, thumbs: d.photos }
 
   const main = matches[0]
@@ -297,7 +317,7 @@ export default function ShopCard({ shop, sweetsKey }: { shop: Shop; sweetsKey?: 
 
       {/* ---- 写真 ---- */}
       <div className="order-2 md:order-1 flex flex-col gap-3 md:gap-5 md:w-[570px] shrink-0 -mx-5 md:mx-0">
-        <ShopPhotos images={photos.gallery} thumbs={photos.thumbs.slice(0, 8)} name={d.name} />
+        <ShopPhotos images={photos.gallery} thumbs={photos.thumbs} name={d.name} />
       </div>
 
       {/* ---- テキスト ---- */}

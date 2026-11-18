@@ -5,7 +5,7 @@ import Image from 'next/image'
 import Link from 'next/link'
 import type { Shop, ShopACF, WPImage } from '@/types'
 import { stripTags } from '@/lib/utils'
-import { toCardData, ShopLabel, AreaBadge, Tags, Features, InfoRow } from './ShopCard'
+import { toCardData, ShopLabel, AreaBadge, Tags, Features, InfoRow, POPULAR_SWEETS_MAX } from './ShopCard'
 
 type Panel = {
   key:   string
@@ -15,10 +15,10 @@ type Panel = {
   shop:  Shop
 }
 
-// 各お店の「人気のスイーツ」TOP3 をパネルにする（画像があるものだけ）
+// 各お店の「人気のスイーツ」①〜⑥をパネルにする（画像があるものだけ）
 function toPanels(shops: Shop[]): Panel[] {
   return shops.flatMap(shop =>
-    [1, 2, 3].flatMap(n => {
+    Array.from({ length: POPULAR_SWEETS_MAX }, (_, i) => i + 1).flatMap(n => {
       const acf   = shop.acf
       const image = acf[`popular_sweets_${n}_image` as keyof ShopACF] as WPImage | null
       const name  = (acf[`popular_sweets_${n}_name` as keyof ShopACF] as string) ?? ''
