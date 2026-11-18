@@ -119,6 +119,31 @@ export function toCardData(shop: Shop) {
 
 type CardData = ReturnType<typeof toCardData>
 
+// スイーツで絞り込んだときの写真の並び
+// メイン：そのスイーツのカテゴリが付いた写真のうち、登録順（メイン写真 → 写真01〜20）で最初のもの
+// サムネイル：同じカテゴリの残りの写真を先頭に、元のメイン写真とほかの写真を後ろに並べる
+// サブ（右）はそのまま。該当する写真がなければ並びは変えない
+function arrangeForSweets(acf: ShopACF, d: CardData, sweetsKey?: string) {
+  const fields = acf as unknown as Record<string, unknown>
+  const has = (cats: unknown) => Array.isArray(cats) && sweetsKey !== undefined && cats.includes(sweetsKey)
+  const ordered: { img: WPImage; match: boolean }[] = []
+  if (acf.image_main?.url) ordered.push({ img: acf.image_main, match: has(acf.image_main_categories) })
+  for (let i = 1; i <= 20; i++) {
+    const n = String(i).padStart(2, '0')
+    const img = fields[`photo_${n}_image`] as WPImage | null
+    if (img?.url) ordered.push({ img, match: has(fields[`photo_${n}_categories`]) })
+  }
+  const matches = ordered.filter(o => o.match).map(o => o.img)
+  if (!sweetsKey || matches.length === 0) return { gallery: d.gallery, thumbs: d.photos }
+
+  const main = matches[0]
+  const rest = [...matches.slice(1), ...ordered.filter(o => !o.match).map(o => o.img)]
+  const sub = acf.image_sub?.url ? acf.image_sub : null
+  const unique = (list: (WPImage | null)[]) => list.filter((img, i, all): img is WPImage => Boolean(img) && all.findIndex(x => x?.ID === img!.ID) === i)
+  const thumbs = unique(rest).filter(img => img.ID !== main.ID && img.ID !== sub?.ID)
+  return { gallery: unique([main, sub, ...thumbs]), thumbs }
+}
+
 // ============================================================
 // パーツ
 // ============================================================
@@ -247,8 +272,9 @@ function Buttons({ mapUrl, href, className = '' }: Pick<CardData, 'mapUrl' | 'hr
 // ============================================================
 // リスト表示カード（Figma: Article - card）
 // ============================================================
-export default function ShopCard({ shop }: { shop: Shop }) {
+export default function ShopCard({ shop, sweetsKey }: { shop: Shop; sweetsKey?: string }) {
   const d = toCardData(shop)
+  const photos = arrangeForSweets(shop.acf, d, sweetsKey)
 
   const hasAccess = Boolean(d.access.main || d.access.sub.length > 0)
 
@@ -271,7 +297,7 @@ export default function ShopCard({ shop }: { shop: Shop }) {
 
       {/* ---- 写真 ---- */}
       <div className="order-2 md:order-1 flex flex-col gap-3 md:gap-5 md:w-[570px] shrink-0 -mx-5 md:mx-0">
-        <ShopPhotos images={d.gallery} thumbs={d.photos.slice(0, 8)} name={d.name} />
+        <ShopPhotos images={photos.gallery} thumbs={photos.thumbs.slice(0, 8)} name={d.name} />
       </div>
 
       {/* ---- テキスト ---- */}

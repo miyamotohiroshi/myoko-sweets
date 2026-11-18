@@ -10,6 +10,7 @@ import SectionHeading from './SectionHeading'
 import {
   SWEETS_CATEGORY_MAP,
   SWEETS_CATEGORY_ORDER,
+  SWEETS_ICON_MAP,
   TYPE_FILTER_MAP,
   AREA_FILTER_MAP,
 } from '@/lib/terms'
@@ -99,6 +100,9 @@ export default function ShopsSection({ shops }: { shops: Shop[] }) {
   }, [])
 
   const searchTexts = useMemo(() => new Map(shops.map(shop => [shop.id, searchText(shop)])), [shops])
+  // 絞り込んだスイーツの写真カテゴリ（ShopCard で該当写真を先頭に出す）
+  const sweetsKey = sweetsFilter === ALL ? undefined : SWEETS_ICON_MAP[SWEETS_ID_BY_NAME[sweetsFilter]]
+
   const filteredShops = useMemo(
     () => filterShops(shops, searchTexts, sweetsFilter, typeFilter, areaFilter, keyword),
     [shops, searchTexts, sweetsFilter, typeFilter, areaFilter, keyword],
@@ -166,7 +170,7 @@ export default function ShopsSection({ shops }: { shops: Shop[] }) {
               <p className="py-20 text-center text-sm text-brand-brown-sub">条件に合うお店が見つかりませんでした</p>
             ) : view === 'list' ? (
               <div className="flex flex-col gap-16 md:gap-[100px]">
-                {pageShops.map(shop => <ShopCard key={shop.id} shop={shop} />)}
+                {pageShops.map(shop => <ShopCard key={shop.id} shop={shop} sweetsKey={sweetsKey} />)}
               </div>
             ) : (
               // パネル表示：絞り込んだ全店舗の「人気のスイーツ」を写真で並べる（ページ送りなし）
