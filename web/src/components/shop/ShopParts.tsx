@@ -190,19 +190,31 @@ export function SpotAccordion({ spots }: { spots: Spot[] }) {
 export function MonthCalendar({ months }: { months: string[] }) {
   const current = new Date().getMonth() + 1
   return (
-    <ol className="grid grid-cols-6 md:grid-cols-12 gap-1 text-center text-[12px]">
-      {Array.from({ length: 12 }, (_, i) => i + 1).map(m => {
-        const open = months.includes(String(m))
-        return (
-          <li
-            key={m}
-            className={`flex flex-col rounded-[4px] py-1 ${open ? 'bg-brand-green/40' : 'bg-brand-gray text-brand-brown-sub/60'} ${m === current ? 'ring-1 ring-brand-brown-main' : ''}`}
-          >
-            <span>{m}月</span>
-            <span aria-label={open ? '営業' : '休業'} className="font-bold">{open ? '○' : '−'}</span>
-          </li>
-        )
-      })}
-    </ol>
+    <div className="flex flex-col gap-1.5">
+      {/* 1〜12月を細い帯で並べる。営業月は緑、休業月はグレー、今月は枠で示す */}
+      <ol className="grid grid-cols-12 gap-[3px] text-center text-[11px] md:text-[12px] leading-none tabular-nums">
+        {Array.from({ length: 12 }, (_, i) => i + 1).map(m => {
+          const open = months.includes(String(m))
+          return (
+            <li
+              key={m}
+              aria-label={`${m}月：${open ? '営業' : '休業'}${m === current ? '（今月）' : ''}`}
+              className={[
+                'grid place-items-center h-7 rounded-[4px]',
+                open ? 'bg-brand-green/55 font-bold text-brand-brown-main' : 'bg-brand-gray text-brand-brown-sub/50',
+                m === current ? 'outline outline-[1.5px] outline-offset-1 outline-brand-brown-main' : '',
+              ].join(' ')}
+            >
+              {m}
+            </li>
+          )
+        })}
+      </ol>
+      <p className="flex items-center gap-3 text-[11px] text-brand-brown-sub">
+        <span className="flex items-center gap-1"><span className="size-2.5 rounded-[2px] bg-brand-green/55" />営業</span>
+        <span className="flex items-center gap-1"><span className="size-2.5 rounded-[2px] bg-brand-gray" />休業</span>
+        <span className="flex items-center gap-1"><span className="size-2.5 rounded-[2px] outline outline-1 outline-brand-brown-main" />今月</span>
+      </p>
+    </div>
   )
 }
