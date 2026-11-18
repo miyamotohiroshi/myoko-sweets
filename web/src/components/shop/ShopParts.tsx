@@ -106,6 +106,39 @@ export function ReviewList({ items }: { items: string[] }) {
 // ============================================================
 // 近くの施設（アコーディオン）
 // ============================================================
+// スポット説明の HTML を見やすく組み替える
+// ・「ここがおすすめ」の見出しとリスト → 水色の囲み
+// ・すべての項目が「<strong>見出し</strong>：内容」のリスト（基本情報・温泉の情報など）→ 表
+function decorateSpotHtml(html: string): string {
+  return html
+    .replace(
+      /<h4>\s*ここがおすすめ\s*<\/h4>\s*(<ul>[\s\S]*?<\/ul>)/,
+      '<div class="spot-point"><p class="spot-point-title">ここがおすすめ</p>$1</div>',
+    )
+    .replace(/<ul>([\s\S]*?)<\/ul>/g, (list, inner: string) => {
+      const items = inner.match(/<li>[\s\S]*?<\/li>/g) ?? []
+      const rows = items.map(li => li.match(/^<li>\s*<strong>([\s\S]+?)<\/strong>\s*[：:]\s*([\s\S]*?)<\/li>$/))
+      if (rows.length === 0 || rows.some(r => !r)) return list
+      return `<table class="spot-info"><tbody>${rows.map(r => `<tr><th>${r![1]}</th><td>${r![2]}</td></tr>`).join('')}</tbody></table>`
+    })
+}
+
+/** スポットの外部リンク（公式サイト・Google マップ）をボタンで出す */
+function SpotLinkButton({ href, icon, label }: { href: string; icon: string; label: string }) {
+  return (
+    <a
+      href={href}
+      target="_blank"
+      rel="noopener noreferrer"
+      className="inline-flex items-center gap-2 h-10 pl-3.5 pr-3 rounded-full border border-brand-line bg-white text-[13px] font-bold tracking-[0.32px] shadow-[0_2px_0_rgba(92,74,42,0.08)] transition-colors hover:bg-brand-ivory"
+    >
+      <Image src={`${ICON}/${icon}.svg`} alt="" width={16} height={16} />
+      {label}
+      <Image src={`${ICON}/external-link.svg`} alt="" width={11} height={11} />
+    </a>
+  )
+}
+
 export function SpotAccordion({ spots }: { spots: Spot[] }) {
   return (
     <ul className="flex flex-col">
@@ -113,7 +146,7 @@ export function SpotAccordion({ spots }: { spots: Spot[] }) {
         const name = stripTags(spot.title.rendered)
         const tags = (spot.spot_category ?? []).map(id => SPOT_CATEGORY_MAP[id]).filter(Boolean)
         // 説明は WordPress で HTML（写真・見出し・リスト入り）として書いているので、記事と同じスタイルで表示
-        const desc = sanitizeHtml(spot.acf?.spot_description ?? '')
+        const desc = decorateSpotHtml(sanitizeHtml(spot.acf?.spot_description ?? ''))
         return (
           <li key={spot.id} className="border-b border-brand-line">
             <details className="group">
@@ -133,23 +166,15 @@ export function SpotAccordion({ spots }: { spots: Spot[] }) {
                 </div>
                 <Image src={`${ICON}/chev-down.svg`} alt="" width={14} height={14} className="shrink-0 transition-transform group-open:rotate-180" />
               </summary>
-              <div className="mb-5 pl-[76px] md:pl-[88px] flex flex-col gap-3 text-[14px] leading-[1.8]">
-                {desc && <div className="article-body text-[14px] md:text-[14px] leading-[1.9] [&_h4]:mt-5" dangerouslySetInnerHTML={{ __html: desc }} />}
+              <div className="mb-5 pt-1 md:pt-0 md:pl-[88px] flex flex-col gap-3 text-[14px] leading-[1.8]">
+                {desc && <div className="article-body spot-body text-[14px] md:text-[14px] leading-[1.9] [&_h4]:mt-5" dangerouslySetInnerHTML={{ __html: desc }} />}
                 {spot.acf?.address && <p className="text-brand-brown-sub">{spot.acf.address}</p>}
-                <div className="flex flex-col gap-1.5">
-                  {spot.acf?.website_url && (
-                    <a href={spot.acf.website_url} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-1.5 font-bold hover:opacity-75">
-                      ▸ 公式サイト
-                      <Image src={`${ICON}/external-link.svg`} alt="" width={11} height={11} />
-                    </a>
-                  )}
-                  {spot.acf?.google_map_url && (
-                    <a href={spot.acf.google_map_url} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-1.5 font-bold hover:opacity-75">
-                      ▸ Google Map
-                      <Image src={`${ICON}/external-link.svg`} alt="" width={11} height={11} />
-                    </a>
-                  )}
-                </div>
+                {(spot.acf?.website_url || spot.acf?.google_map_url) && (
+                  <div className="flex flex-wrap gap-2">
+                    {spot.acf?.website_url && <SpotLinkButton href={spot.acf.website_url} icon="web" label="公式サイト" />}
+                    {spot.acf?.google_map_url && <SpotLinkButton href={spot.acf.google_map_url} icon="google-map" label="Google マップ" />}
+                  </div>
+                )}
               </div>
             </details>
           </li>

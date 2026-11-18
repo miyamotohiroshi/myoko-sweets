@@ -145,4 +145,37 @@
   .article-body th, .article-body td { padding: 0.7em 0.9em; border: 1px solid var(--color-brand-line); text-align: left; }
   .article-body th { background: var(--color-brand-gray); font-weight: 700; }
   .article-body hr { border: 0; border-top: 1px dashed var(--color-brand-line); }
+
+  /* 観光スポットの説明：「ここがおすすめ」の水色の囲み */
+  .spot-body .spot-point {
+    padding: 1em 1.2em;
+    border-radius: 12px;
+    background: #EAF4F8;
+  }
+  .spot-body .spot-point-title { font-weight: 700; color: #3D7590; }
+  .spot-body .spot-point ul { margin-top: 0.5em; padding-left: 0; list-style: none; }
+  .spot-body .spot-point li { position: relative; padding-left: 1.4em; }
+  .spot-body .spot-point li::before {
+    content: '✓';
+    position: absolute;
+    left: 0;
+    font-weight: 700;
+    color: #4A90B0;
+  }
+  /* 基本情報・温泉の情報などの表 */
+  .spot-body table.spot-info { font-size: 0.95em; border-top: 1px solid var(--color-brand-line); }
+  .spot-body table.spot-info th,
+  .spot-body table.spot-info td {
+    padding: 0.6em 0.8em;
+    border: 0;
+    border-bottom: 1px solid var(--color-brand-line);
+    vertical-align: top;
+    line-height: 1.7;
+  }
+  .spot-body table.spot-info th {
+    width: 6.5em;
+    white-space: nowrap;
+    background: var(--color-brand-gray);
+    font-size: 0.9em;
+  }
 }
