@@ -150,6 +150,16 @@ export default async function ShopDetailPage({ params }: Props) {
     { href: '#info', en: 'INFO', label: 'お店情報' },
   ].filter((a): a is { href: string; en: string; label: string } => Boolean(a))
 
+  // PC サイドバー：営業時間の1行目を大きく、2行目以降は小さく出す
+  // 1行目の後ろの（…）も補足として小さく出す
+  const [hoursFirst = '', ...hoursRestLines] = (d.hours ?? '').split('\n').map(l => l.trim()).filter(Boolean)
+  const hoursNote = hoursFirst.match(/^(.+?)[（(](.+)[）)]$/)
+  const hoursMain = hoursNote ? hoursNote[1] : hoursFirst
+  const hoursRest = [hoursNote?.[2], ...hoursRestLines].filter(Boolean).join('\n')
+  // 地図の埋め込み（座標があれば座標、なければ住所で表示。API キー不要の埋め込み）
+  const mapQuery = acf.location?.lat && acf.location?.lng ? `${acf.location.lat},${acf.location.lng}` : acf.address
+  const mapEmbedUrl = mapQuery ? `https://maps.google.com/maps?q=${encodeURIComponent(mapQuery)}&z=15&output=embed` : ''
+
   // 営業時間・アクセス（PC サイドバーと INFO で共用）
   const hoursBlock = (
     <dl className="grid grid-cols-[64px_1fr] gap-y-3 text-[14px] leading-[1.8]">
@@ -363,7 +373,7 @@ export default async function ShopDetailPage({ params }: Props) {
               {acf.website_url && (
                 <><dt>HP</dt><dd><a href={acf.website_url} target="_blank" rel="noopener noreferrer" className="break-all underline underline-offset-2">{acf.website_url}</a></dd></>
               )}
-              {(acf.instagram_url || acf.twitter_url) && (
+              {(acf.instagram_url || acf.twitter_url || acf.facebook_url) && (
                 <>
                   <dt>SNS</dt>
                   <dd className="flex flex-col gap-1.5">
@@ -375,6 +385,11 @@ export default async function ShopDetailPage({ params }: Props) {
                     {acf.twitter_url && (
                       <a href={acf.twitter_url} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 hover:opacity-75">
                         <Image src="/images/top/sns/icon-x.svg" alt="" width={18} height={18} />X（旧Twitter）
+                      </a>
+                    )}
+                    {acf.facebook_url && (
+                      <a href={acf.facebook_url} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 hover:opacity-75">
+                        <Image src="/images/top/sns/icon-facebook.svg" alt="" width={18} height={18} />Facebook
                       </a>
                     )}
                   </dd>
@@ -402,28 +417,57 @@ export default async function ShopDetailPage({ params }: Props) {
         </div>
 
         {/* ==================== PC サイドバー（営業・アクセス） ==================== */}
+        {/* 上：営業時間を大きく見せる緑の帯 / 中：小さな地図 / 下：住所・アクセスとボタン */}
         <aside className="hidden md:block">
-          <div className="sticky top-[168px] [html[data-header-hidden]_&]:top-[96px] transition-[top] duration-300 flex flex-col gap-6">
-            <div className="rounded-[14px] border border-brand-line bg-brand-store-bg p-6">
-              <h2 className="flex items-baseline gap-2 font-klee font-semibold text-[22px] leading-none"><span className="[-webkit-text-stroke:0.5px_currentColor]">OPEN</span><span className="font-sans text-[13px] font-bold text-brand-brown-sub">営業</span></h2>
-              <div className="mt-4">{hoursBlock}</div>
+          <div className="sticky top-[168px] [html[data-header-hidden]_&]:top-[96px] transition-[top] duration-300 overflow-hidden rounded-[14px] border border-brand-line bg-white">
+            <div className="bg-brand-green/45 px-6 py-5">
+              <p className="font-klee font-semibold text-[13px] leading-none tracking-[1.5px] text-brand-brown-sub">OPEN</p>
+              {hoursMain
+                ? <p className="mt-2 text-[24px] font-bold leading-[1.3] tracking-[0.5px]">{hoursMain}</p>
+                : <p className="mt-2 text-[14px] text-brand-brown-sub">{HOURS_UNKNOWN}</p>}
+              {hoursRest && <p className="mt-1 text-[12px] leading-[1.7] whitespace-pre-line">{hoursRest}</p>}
+              {(acf.holiday || acf.season) && (
+                <dl className="mt-3 grid grid-cols-[auto_1fr] gap-x-3 gap-y-1 text-[13px] leading-[1.7]">
+                  {acf.holiday && <><dt className="font-bold">定休日</dt><dd>{acf.holiday}</dd></>}
+                  {acf.season && <><dt className="font-bold">シーズン</dt><dd>{formatSeason(acf.season)}{acf.operating_months_note && `（${stripTags(acf.operating_months_note)}）`}</dd></>}
+                </dl>
+              )}
             </div>
-            <div className="rounded-[14px] border border-brand-line bg-brand-store-bg p-6">
-              <h2 className="flex items-baseline gap-2 font-klee font-semibold text-[22px] leading-none"><span className="[-webkit-text-stroke:0.5px_currentColor]">ACCESS</span><span className="font-sans text-[13px] font-bold text-brand-brown-sub">アクセス</span></h2>
-              <dl className="mt-4 flex flex-col gap-3 text-[14px] leading-[1.8]">
-                {acf.tel && <div><dt className="font-bold">TEL</dt><dd><a href={`tel:${acf.tel.replace(/[^\d+]/g, '')}`}>{acf.tel}</a></dd></div>}
-                {acf.address && <div><dt className="font-bold">住所</dt><dd>{acf.address}</dd></div>}
-                {(d.access.main || d.access.sub.length > 0) && (
-                  <div>
-                    <dt className="font-bold">アクセス</dt>
-                    <dd className="flex flex-col">
-                      {d.access.main && <span>{d.access.main}</span>}
-                      {d.access.sub.map(line => <AccessTime key={line.from} {...line} />)}
-                    </dd>
-                  </div>
-                )}
-              </dl>
-              {acf.google_map_url && <div className="mt-4"><MapButton href={acf.google_map_url} /></div>}
+
+            {mapEmbedUrl && (
+              <iframe
+                src={mapEmbedUrl}
+                title={`${d.name}の地図`}
+                loading="lazy"
+                referrerPolicy="no-referrer-when-downgrade"
+                className="block w-full h-[180px] border-y border-brand-line"
+              />
+            )}
+
+            <div className="px-6 py-5">
+              <p className="font-klee font-semibold text-[13px] leading-none tracking-[1.5px] text-brand-brown-sub">ACCESS</p>
+              {acf.address && <p className="mt-2 text-[14px] leading-[1.8]">{acf.address}</p>}
+              {(d.access.main || d.access.sub.length > 0) && (
+                <div className="mt-1 flex flex-col text-[13px] leading-[1.8] text-brand-brown-sub">
+                  {d.access.main && <span>{d.access.main}</span>}
+                  {d.access.sub.map(line => <AccessTime key={line.from} {...line} />)}
+                </div>
+              )}
+              {acf.tel && <p className="mt-2 text-[14px] leading-[1.8]"><span className="font-bold mr-2">TEL</span>{acf.tel}</p>}
+              {(acf.google_map_url || acf.tel) && (
+                <div className="mt-4 grid grid-cols-2 gap-2">
+                  {acf.google_map_url && (
+                    <a href={acf.google_map_url} target="_blank" rel="noopener noreferrer" className="inline-flex items-center justify-center h-10 rounded-full bg-brand-brown-main text-white text-[13px] font-bold transition-opacity hover:opacity-85">
+                      地図を開く
+                    </a>
+                  )}
+                  {acf.tel && (
+                    <a href={`tel:${acf.tel.replace(/[^\d+]/g, '')}`} className="inline-flex items-center justify-center h-10 rounded-full border border-brand-brown-main bg-white text-[13px] font-bold transition-colors hover:bg-brand-ivory">
+                      電話する
+                    </a>
+                  )}
+                </div>
+              )}
             </div>
           </div>
         </aside>

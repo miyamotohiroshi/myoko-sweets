@@ -14,9 +14,13 @@ type MenuGroup = {
 const COLLAPSED_COUNT = 3
 
 // 商品名の末尾の（…）は補足として小さく出す（例：なごみブレンド（Hot / Iced））
+// ただし「生ビール（中）」「清酒（1合）」のような短い補足（5文字まで）は商品名と同じ行のままにする
+const SHORT_NOTE_MAX = 5
+
 function splitName(name: string): { main: string; sub: string } {
   const m = name.match(/^(.+?)[（(]([^（）()]+)[）)]$/)
-  return m ? { main: m[1].trim(), sub: m[2].trim() } : { main: name, sub: '' }
+  if (!m || m[2].trim().length <= SHORT_NOTE_MAX) return { main: name, sub: '' }
+  return { main: m[1].trim(), sub: m[2].trim() }
 }
 
 /** 商品名（太め）と価格（右寄せ・太字）を同じ行に並べる。補足は商品名の下に小さく */

@@ -207,6 +207,7 @@ export type ShopACF = {
   tabelog_url: string
   instagram_url: string
   twitter_url: string
+  facebook_url?: string
   website_url: string
 
   // 設備・支払い

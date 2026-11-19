@@ -3114,6 +3114,22 @@
         "placeholder": "https://x.com/..."
       },
       {
+        "key": "field_shop_facebook_url",
+        "label": "Facebook URL",
+        "name": "facebook_url",
+        "type": "url",
+        "instructions": "",
+        "required": 0,
+        "conditional_logic": 0,
+        "wrapper": {
+          "width": "33",
+          "class": "",
+          "id": ""
+        },
+        "default_value": "",
+        "placeholder": "https://x.com/..."
+      },
+      {
         "key": "field_shop_website_url",
         "label": "公式サイトURL",
         "name": "website_url",
