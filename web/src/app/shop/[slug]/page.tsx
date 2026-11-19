@@ -158,7 +158,16 @@ export default async function ShopDetailPage({ params }: Props) {
   const hoursRest = [hoursNote?.[2], ...hoursRestLines].filter(Boolean).join('\n')
   // 地図の埋め込み（座標があれば座標、なければ住所で表示。API キー不要の埋め込み）
   const mapQuery = acf.location?.lat && acf.location?.lng ? `${acf.location.lat},${acf.location.lng}` : acf.address
-  const mapEmbedUrl = mapQuery ? `https://maps.google.com/maps?q=${encodeURIComponent(mapQuery)}&z=15&output=embed` : ''
+  const mapEmbedUrl = mapQuery ? `https://maps.google.com/maps?q=${encodeURIComponent(mapQuery)}&z=13&output=embed` : ''
+
+  // SP の店名の下に並べるリンク（登録のあるものだけ）
+  const headerLinks = [
+    acf.instagram_url  && { href: acf.instagram_url,  icon: 'instagram',  label: 'Instagram' },
+    acf.twitter_url    && { href: acf.twitter_url,    icon: 'x',          label: 'X（旧Twitter）' },
+    acf.facebook_url   && { href: acf.facebook_url,   icon: 'facebook',   label: 'Facebook' },
+    acf.tabelog_url    && { href: acf.tabelog_url,    icon: 'tabelog',    label: '食べログ' },
+    acf.google_map_url && { href: acf.google_map_url, icon: 'google-map', label: 'Google マップ' },
+  ].filter((l): l is { href: string; icon: string; label: string } => Boolean(l))
 
   // 営業時間・アクセス（PC サイドバーと INFO で共用）
   const hoursBlock = (
@@ -212,6 +221,28 @@ export default async function ShopDetailPage({ params }: Props) {
             <Tags categories={categories} drinks={d.drinks} />
             <Features features={d.features} />
           </div>
+
+          {/* SP だけ：営業時間・定休日を1行で、その下に SNS・食べログ・地図のアイコン（PC はサイドバーと INFO に出す） */}
+          {(hoursMain || acf.holiday) && (
+            <p className="md:hidden mt-3 flex items-start gap-1.5 text-[13px] leading-[1.7]">
+              <Image src="/images/top/icons/clock.svg" alt="" width={16} height={16} className="mt-[3px] shrink-0" />
+              <span>
+                {hoursMain}
+                {acf.holiday && <span className="text-brand-brown-sub">{hoursMain && ' ／ '}定休日 {acf.holiday}</span>}
+              </span>
+            </p>
+          )}
+          {headerLinks.length > 0 && (
+            <ul className="md:hidden mt-3 flex gap-2.5">
+              {headerLinks.map(link => (
+                <li key={link.label}>
+                  <a href={link.href} target="_blank" rel="noopener noreferrer" aria-label={link.label} className="block transition-opacity hover:opacity-75">
+                    <Image src={`/images/shop/links/${link.icon}.svg`} alt="" width={36} height={36} />
+                  </a>
+                </li>
+              ))}
+            </ul>
+          )}
         </header>
       </div>
 
